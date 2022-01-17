@@ -1,6 +1,7 @@
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { KeyringPair } from "@polkadot/keyring/types";
-import R from "ramda";
+import { IKeyringPair } from "@polkadot/types/types";
+import Web3 from "web3";
+const web3 = new Web3(process.env.GANACHE_URL || "")
 
 export const buildApi = async (substrateNodeUrl: string): Promise<ApiPromise | null> => {
     try {
@@ -17,12 +18,9 @@ export const buildApi = async (substrateNodeUrl: string): Promise<ApiPromise | n
 export const toHexString = (bytes: Uint8Array) =>
     Array.prototype.map.call(bytes, (x) => ("0" + (x & 0xff).toString(16)).slice(-2)).join("");
 
-export const generateTestRewardAccounts = (account: KeyringPair, vestingPeriod: number, maxAccounts: number = 10) => {
-    return R.unfold(
-        (n) =>
-            n > maxAccounts
-                ? false
-                : [[{ RelayChain: account.derive("/contributor-" + n.toString()).publicKey }, n * 1_000_000_000_000, vestingPeriod], n + 1],
-        1
-    );
-};
+    // The prefix is defined as pallet config
+export const proofMessage = (account: IKeyringPair) =>
+  "picasso-" + toHexString(account.publicKey);
+
+export const ethAccount = (seed: number) =>
+  web3.eth.accounts.privateKeyToAccount("0x" + seed.toString(16).padStart(64, '0'))

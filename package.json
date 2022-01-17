@@ -3,15 +3,16 @@
     "@polkadot/api": "^7.3.1",
     "@polkadot/keyring": "^8.3.1",
     "@types/ramda": "^0.27.63",
-    "typescript": "^4.5.4"
+    "ethers": "^5.5.3",
+    "ramda": "^0.27.2",
+    "typescript": "^4.5.4",
+    "web3": "^1.6.1"
   },
   "scripts": {
     "start": "npx ts-node index.ts"
   },
   "devDependencies": {
     "dotenv": "^11.0.0",
-    "ethers": "^5.5.3",
-    "ramda": "^0.27.2",
     "ts-node": "^10.4.0"
   }
 }
