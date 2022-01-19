@@ -8,6 +8,7 @@ const main = async () => {
     await cryptoWaitReady();
     const api = await buildApi(process.env.PICASSO_RPC_URL || "");
     const walletSudo = new Keyring({ type: "sr25519" }).addFromUri("//Alice"); // alice
+
     const populatetx = await crowdloanRewardsPopulateTest(api, walletSudo);
     const initTx = await initialize(api, walletSudo);
     const tx = await associateKSM(api, walletSudo.derive('/contributor-10'), walletSudo)
