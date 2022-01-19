@@ -8,7 +8,7 @@ import { sendAndWaitForSuccess } from "../../polkautils";
 import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../interfaces";
 
 export const associateKSM = async (api: ApiPromise, contributorAccount: KeyringPair, rewardAccount: KeyringPair) => {
-    const message = `picasso-${toHexString(rewardAccount.publicKey)}`;
+    const message = `<Bytes>picasso-${toHexString(rewardAccount.publicKey)}</Bytes>`;
     const signature = await contributorAccount.sign(message);
 
     const tx = await api.tx.crowdloanRewards
