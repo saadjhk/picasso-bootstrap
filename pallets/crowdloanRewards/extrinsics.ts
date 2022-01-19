@@ -12,10 +12,10 @@ export const associateKSM = async (api: ApiPromise, contributorAccount: KeyringP
     const signature = await contributorAccount.sign(message);
 
     const tx = await api.tx.crowdloanRewards
-        .associate(contributorAccount.publicKey, {
+        .associate(rewardAccount.publicKey, {
             RelayChain: [contributorAccount.publicKey, { Sr25519: signature }],
         })
-        .signAndSend(contributorAccount);
+        .send();
 
     return tx.hash;
 };
@@ -55,6 +55,7 @@ export const crowdloanRewardsPopulateTest = async (api: ApiPromise, walletAlice:
         reward,
         vesting48weeks,
       ], n + 1], 1);
+
     const eth_accounts =
       R.unfold<number, [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]>(n => n > 50 ? false : [[
         api.createType(
