@@ -33,41 +33,39 @@ export const associateEth = async (api: ApiPromise, signer: ethers.Signer, rewar
     return tx.hash;
 };
 
+export const initialize = async (api: ApiPromise, sudoAccount: KeyringPair) => {
+  const tx = await api.tx.sudo.sudo(api.tx.crowdloanRewards
+      .initialize()
+      ).signAndSend(sudoAccount);
+
+  return tx.hash;
+};
+
 export const crowdloanRewardsPopulateTest = async (api: ApiPromise, walletAlice: KeyringPair) => {
     const sudoKey = walletAlice;
     const vesting48weeks = api.createType("u32", 100800);
     const reward = api.createType("u128", 1_000_000_000_000);
-    const relay_accounts = R.unfold<number, [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]>(
-        (n) =>
-            n > 50
-                ? false
-                : [
-                      [
-                          api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
-                              RelayChain: walletAlice.derive("/contributor-" + n.toString()).publicKey,
-                          }),
-                          reward,
-                          vesting48weeks,
-                      ],
-                      n + 1,
-                  ],
-        1
-    );
-    const eth_accounts = R.unfold<number, [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]>(
-        (n) =>
-            n > 50
-                ? false
-                : [
-                      [
-                          api.createType("PalletCrowdloanRewardsModelsRemoteAccount", { Ethereum: ethAccount(n).address }),
-                          reward,
-                          vesting48weeks,
-                      ],
-                      n + 1,
-                  ],
-        1
-    );
-    const accounts = relay_accounts.concat(eth_accounts);
+
+    const relay_accounts =
+      R.unfold<number, [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]>(n => n > 50 ? false : [[
+        api.createType(
+          'PalletCrowdloanRewardsModelsRemoteAccount',
+          { RelayChain: walletAlice.derive("/contributor-" + n.toString()).publicKey }
+        ),
+        reward,
+        vesting48weeks,
+      ], n + 1], 1);
+    const eth_accounts =
+      R.unfold<number, [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]>(n => n > 50 ? false : [[
+        api.createType(
+          'PalletCrowdloanRewardsModelsRemoteAccount',
+          { Ethereum: ethAccount(n).address }
+        ),
+        reward,
+        vesting48weeks,
+      ], n + 1], 1);
+
+      const accounts = relay_accounts.concat(eth_accounts);
     return await sendAndWaitForSuccess(
         api,
         sudoKey,

@@ -1,16 +1,13 @@
 require("dotenv").config();
 import Keyring from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { crowdloanRewardsPopulateTest } from "./pallets/crowdloanRewards";
-import { buildApi } from "./utils";
+import { crowdloanRewardsPopulateTest, initialize } from "./pallets/crowdloanRewards";
+import { buildApi, toHexString } from "./utils";
+import { decodeAddress } from "@polkadot/util-crypto";
 
 const main = async () => {
     await cryptoWaitReady();
-
-    const walletAlice = new Keyring().addFromUri("//Alice");
-    const api = await buildApi(process.env.PICASSO_RPC_URL || "");
-    const tx = await crowdloanRewardsPopulateTest(api, walletAlice);
-    console.log(tx);
+    console.log(`Hello PolkadotJS!`)
     process.exit(0);
 };
 

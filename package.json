@@ -2,7 +2,10 @@
   "dependencies": {
     "@polkadot/api": "^7.3.1",
     "@polkadot/keyring": "^8.3.1",
+    "@polkadot/util": "^8.3.2",
+    "@polkadot/util-crypto": "^8.3.2",
     "@types/ramda": "^0.27.63",
+    "convert-array-to-csv": "^2.0.0",
     "ethers": "^5.5.3",
     "ramda": "^0.27.2",
     "typescript": "^4.5.4",
