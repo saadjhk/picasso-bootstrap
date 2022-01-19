@@ -7,8 +7,14 @@ import { decodeAddress } from "@polkadot/util-crypto";
 
 const main = async () => {
     await cryptoWaitReady();
-    console.log(`Hello PolkadotJS!`)
-    process.exit(0);
+    const api = await buildApi(process.env.PICASSO_RPC_URL || "");
+    // alice
+    const walletSudo = new Keyring({ type: "sr25519" }).addFromUri("//Alice");
+    const populatetx = await crowdloanRewardsPopulateTest(api, walletSudo);
+    const initTx = await initialize(api, walletSudo);
+
+    console.log(populatetx.method);
+    console.log(initTx.toString());
 };
 
 cryptoWaitReady().then(() => {
