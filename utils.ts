@@ -3,11 +3,11 @@ import { IKeyringPair } from "@polkadot/types/types";
 import Web3 from "web3";
 const web3 = new Web3(process.env.GANACHE_URL || "");
 
-export const buildApi = async (substrateNodeUrl: string): Promise<ApiPromise> => {
+export const buildApi = async (substrateNodeUrl: string, types: any): Promise<ApiPromise> => {
     const wsProvider = new WsProvider(substrateNodeUrl, 1000);
-    const polkadotApi = new ApiPromise({ provider: wsProvider });
+    const api = await ApiPromise.create({ provider: wsProvider, types });
 
-    return await polkadotApi.isReady;
+    return await api.isReady;
 };
 
 export const toHexString = (bytes: Uint8Array) =>
