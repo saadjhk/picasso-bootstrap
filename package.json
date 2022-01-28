@@ -13,7 +13,7 @@
     "polkadot-utils":"git+https://github.com/saadjhk/polkadot-utils.git"
   },
   "scripts": {
-    "start": "npx ts-node index.ts"
+    "start": "npx ts-node src/index.ts"
   },
   "devDependencies": {
     "dotenv": "^11.0.0",

@@ -99,7 +99,6 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"],
       "@polkadot/api/augment": ["interfaces/augment-api.ts"],
       "@polkadot/types/augment": ["interfaces/augment-types.ts"]
     }

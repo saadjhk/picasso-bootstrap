@@ -2,10 +2,10 @@ import { ApiPromise } from "@polkadot/api";
 import { u128, u32 } from "@polkadot/types-codec";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { ethers } from "ethers";
-import { ethAccount, toHexString } from "@/utils";
 import * as R from "ramda";
 import { sendAndWaitForSuccess } from "polkadot-utils";
 import { PalletCrowdloanRewardsModelsRemoteAccount } from "interfaces";
+import { toHexString, ethAccount } from "../../utils";
 
 export const associateKSM = async (
   api: ApiPromise,

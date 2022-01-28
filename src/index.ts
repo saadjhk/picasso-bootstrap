@@ -1,14 +1,15 @@
 require("dotenv").config();
 import Keyring from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { crowdloanRewardsPopulateTest, initialize } from "./pallets/crowdloanRewards";
+import { crowdloanRewardsPopulateTest, initialize } from "./pallets";
 
 import * as definitions from './interfaces/definitions';
-import { buildApi } from "@/utils";
+import { buildApi } from "./utils";
 
 const main = async () => {
-    const types = Object.values(definitions).reduce((res, { types }): object => ({ ...res, ...types }), {});
     await cryptoWaitReady();
+
+    const types = Object.values(definitions).reduce((res, { types }): object => ({ ...res, ...types }), {});
     const api = await buildApi(process.env.PICASSO_RPC_URL || "", types);
     const kr = new Keyring({ type: "sr25519" })
 
