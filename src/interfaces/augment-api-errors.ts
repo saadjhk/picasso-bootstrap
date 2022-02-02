@@ -16,6 +16,7 @@ declare module '@polkadot/api-base/types/errors' {
     assetsRegistry: {
       ForeignAssetIdAlreadyUsed: AugmentedError<ApiType>;
       LocalAssetIdAlreadyUsed: AugmentedError<ApiType>;
+      LocalAssetIdNotFound: AugmentedError<ApiType>;
       OnlyAllowedForAdmins: AugmentedError<ApiType>;
       /**
        * Generic error
@@ -385,6 +386,7 @@ declare module '@polkadot/api-base/types/errors' {
       [key: string]: AugmentedError<ApiType>;
     };
     dutchAuction: {
+      NotEnoughNativeCurrentyToPayForAuction: AugmentedError<ApiType>;
       OrderNotFound: AugmentedError<ApiType>;
       OrderParametersIsInvalid: AugmentedError<ApiType>;
       RequestedOrderDoesNotExists: AugmentedError<ApiType>;
@@ -502,6 +504,26 @@ declare module '@polkadot/api-base/types/errors' {
        * The index is permanent and may not be freed/changed.
        **/
       Permanent: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    mosaic: {
+      AmountMismatch: AugmentedError<ApiType>;
+      BadTimelockPeriod: AugmentedError<ApiType>;
+      BadTTL: AugmentedError<ApiType>;
+      ExceedsMaxTransferSize: AugmentedError<ApiType>;
+      InsufficientBudget: AugmentedError<ApiType>;
+      NetworkDisabled: AugmentedError<ApiType>;
+      NoClaimableTx: AugmentedError<ApiType>;
+      NoOutgoingTx: AugmentedError<ApiType>;
+      NoStaleTransactions: AugmentedError<ApiType>;
+      Overflow: AugmentedError<ApiType>;
+      RelayerNotSet: AugmentedError<ApiType>;
+      TxStillLocked: AugmentedError<ApiType>;
+      UnsupportedAsset: AugmentedError<ApiType>;
+      UnsupportedNetwork: AugmentedError<ApiType>;
       /**
        * Generic error
        **/

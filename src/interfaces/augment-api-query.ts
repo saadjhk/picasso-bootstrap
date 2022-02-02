@@ -28,6 +28,10 @@ declare module '@polkadot/api-base/types/storage' {
        **/
       foreignAdmin: AugmentedQuery<ApiType, () => Observable<AccountId32>, []> & QueryableStorageEntry<ApiType, []>;
       /**
+       * Mapping local asset to foreign asset metadata.
+       **/
+      foreignAssetMetadata: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<PalletAssetsRegistryForeignMetadata>>, [u128]> & QueryableStorageEntry<ApiType, [u128]>;
+      /**
        * Mapping foreign asset to local asset.
        **/
       foreignToLocal: AugmentedQuery<ApiType, (arg: ComposableTraitsAssetsXcmAssetLocation | { parents?: any; interior?: any } | string | Uint8Array) => Observable<Option<u128>>, [ComposableTraitsAssetsXcmAssetLocation]> & QueryableStorageEntry<ApiType, [ComposableTraitsAssetsXcmAssetLocation]>;
@@ -409,6 +413,25 @@ declare module '@polkadot/api-base/types/storage' {
        **/
       [key: string]: QueryableStorageEntry<ApiType>;
     };
+    mosaic: {
+      assetsInfo: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<PalletMosaicAssetInfo>>, [u128]> & QueryableStorageEntry<ApiType, [u128]>;
+      /**
+       * Locked incoming tx into Picasso that the user needs to claim.
+       **/
+      incomingTransactions: AugmentedQuery<ApiType, (arg1: AccountId32 | string | Uint8Array, arg2: u128 | AnyNumber | Uint8Array) => Observable<Option<ITuple<[u128, u32]>>>, [AccountId32, u128]> & QueryableStorageEntry<ApiType, [AccountId32, u128]>;
+      networkInfos: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<Option<PalletMosaicNetworkInfo>>, [u32]> & QueryableStorageEntry<ApiType, [u32]>;
+      nonce: AugmentedQuery<ApiType, () => Observable<u128>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * Locked outgoing tx out of Picasso, that a relayer needs to process.
+       **/
+      outgoingTransactions: AugmentedQuery<ApiType, (arg1: AccountId32 | string | Uint8Array, arg2: u128 | AnyNumber | Uint8Array) => Observable<Option<ITuple<[u128, u32]>>>, [AccountId32, u128]> & QueryableStorageEntry<ApiType, [AccountId32, u128]>;
+      relayer: AugmentedQuery<ApiType, () => Observable<Option<PalletMosaicRelayerStaleRelayer>>, []> & QueryableStorageEntry<ApiType, []>;
+      timeLockPeriod: AugmentedQuery<ApiType, () => Observable<u32>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * Generic query
+       **/
+      [key: string]: QueryableStorageEntry<ApiType>;
+    };
     multisig: {
       calls: AugmentedQuery<ApiType, (arg: U8aFixed | string | Uint8Array) => Observable<Option<ITuple<[WrapperKeepOpaque<Call>, AccountId32, u128]>>>, [U8aFixed]> & QueryableStorageEntry<ApiType, [U8aFixed]>;
       /**
@@ -432,7 +455,7 @@ declare module '@polkadot/api-base/types/storage' {
       /**
        * Information about asset, including precision threshold and max/min answers
        **/
-      assetsInfo: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<PalletOracleAssetInfo>, [u128]> & QueryableStorageEntry<ApiType, [u128]>;
+      assetsInfo: AugmentedQuery<ApiType, (arg: u128 | AnyNumber | Uint8Array) => Observable<Option<PalletOracleAssetInfo>>, [u128]> & QueryableStorageEntry<ApiType, [u128]>;
       /**
        * Mapping Controller key to signer key
        **/

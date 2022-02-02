@@ -11,6 +11,7 @@ import type { FrameSupportTokensMiscBalanceStatus, FrameSupportWeightsDispatchIn
 declare module '@polkadot/api-base/types/events' {
   export interface AugmentedEvents<ApiType extends ApiTypes> {
     assetsRegistry: {
+      AssetMetadataUpdated: AugmentedEvent<ApiType, [u128]>;
       AssetsMappingCandidateUpdated: AugmentedEvent<ApiType, [u128, ComposableTraitsAssetsXcmAssetLocation]>;
       ForeignAdminUpdated: AugmentedEvent<ApiType, [AccountId32]>;
       LocalAdminUpdated: AugmentedEvent<ApiType, [AccountId32]>;
@@ -402,6 +403,54 @@ declare module '@polkadot/api-base/types/events' {
        * A account index has been frozen to its current account ID.
        **/
       IndexFrozen: AugmentedEvent<ApiType, [u32, AccountId32]>;
+      /**
+       * Generic event
+       **/
+      [key: string]: AugmentedEvent<ApiType>;
+    };
+    mosaic: {
+      BudgetUpdated: AugmentedEvent<ApiType, [u128, u128, PalletMosaicDecayBudgetPenaltyDecayer]>;
+      /**
+       * The `NetworkInfos` `network_info` was updated for `network_id`.
+       **/
+      NetworksUpdated: AugmentedEvent<ApiType, [u32, PalletMosaicNetworkInfo]>;
+      /**
+       * The relayer partially accepted the user's `OutgoingTransaction`.
+       **/
+      PartialTransferAccepted: AugmentedEvent<ApiType, [AccountId32, u128, u128]>;
+      /**
+       * The relayer has been rotated to `account_id`.
+       **/
+      RelayerRotated: AugmentedEvent<ApiType, [u32, AccountId32]>;
+      /**
+       * The account of the relayer has been set.
+       **/
+      RelayerSet: AugmentedEvent<ApiType, [AccountId32]>;
+      /**
+       * User claimed outgoing tx that was not (yet) picked up by the relayer
+       **/
+      StaleTxClaimed: AugmentedEvent<ApiType, [AccountId32, AccountId32, u128]>;
+      /**
+       * The relayer accepted the user's `OutgoingTransaction`.
+       **/
+      TransferAccepted: AugmentedEvent<ApiType, [AccountId32, u128, u128]>;
+      /**
+       * The user claims his `IncomingTransaction` and unlocks the locked amount.
+       **/
+      TransferClaimed: AugmentedEvent<ApiType, [AccountId32, AccountId32, u128, u128]>;
+      /**
+       * An incoming tx is created and waiting for the user to claim.
+       **/
+      TransferInto: AugmentedEvent<ApiType, [AccountId32, u128, u128, H256]>;
+      /**
+       * When we have finality issues occur on the Ethereum chain,
+       * we burn the locked `IncomingTransaction` for which we know that it is invalid.
+       **/
+      TransferIntoRescined: AugmentedEvent<ApiType, [AccountId32, u128, u128]>;
+      /**
+       * An outgoing tx is created, and locked in the outgoing tx pool.
+       **/
+      TransferOut: AugmentedEvent<ApiType, [H256, U8aFixed, u128, u32]>;
       /**
        * Generic event
        **/

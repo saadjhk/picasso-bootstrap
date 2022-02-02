@@ -98,6 +98,7 @@ declare module '@polkadot/api-base/types/submittable' {
       approveAssetsMappingCandidate: AugmentedSubmittable<(localAssetId: u128 | AnyNumber | Uint8Array, foreignAssetId: ComposableTraitsAssetsXcmAssetLocation | { parents?: any; interior?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, ComposableTraitsAssetsXcmAssetLocation]>;
       setForeignAdmin: AugmentedSubmittable<(foreignAdmin: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
       setLocalAdmin: AugmentedSubmittable<(localAdmin: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
+      setMetadata: AugmentedSubmittable<(localAssetId: u128 | AnyNumber | Uint8Array, metadata: PalletAssetsRegistryForeignMetadata | { decimals?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, PalletAssetsRegistryForeignMetadata]>;
       /**
        * Generic tx
        **/
@@ -206,6 +207,9 @@ declare module '@polkadot/api-base/types/submittable' {
     bondedFinance: {
       /**
        * Bond to an offer.
+       * And user should provide the number of contracts she is willing to buy.
+       * On offer completion (a.k.a. no more contract on the offer), the `stake` put by the
+       * creator is refunded.
        * 
        * The dispatch origin for this call must be _Signed_ and the sender must have the
        * appropriate funds.
@@ -215,15 +219,15 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       bond: AugmentedSubmittable<(offerId: u64 | AnyNumber | Uint8Array, nbOfBonds: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64, u128]>;
       /**
-       * Cancel an offer.
-       * 
+       * Cancel a running offer. Blocking further bond but not cancelling the
+       * currently vested rewards. The `stake` put by the creator is refunded.
        * The dispatch origin for this call must be _Signed_ and the sender must be `AdminOrigin`
        * 
        * Emits a `OfferCancelled`.
        **/
       cancel: AugmentedSubmittable<(offerId: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u64]>;
       /**
-       * Create a new offer.
+       * Create a new offer. So later can `bond` it.
        * 
        * The dispatch origin for this call must be _Signed_ and the sender must have the
        * appropriate funds.
@@ -1291,6 +1295,85 @@ declare module '@polkadot/api-base/types/submittable' {
        * # </weight>
        **/
       transfer: AugmentedSubmittable<(updated: AccountId32 | string | Uint8Array, index: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32, u32]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    mosaic: {
+      /**
+       * Called by the relayer to confirm that it will relay a transaction, disabling the user
+       * from reclaiming their tokens.
+       * 
+       * # Restrictions
+       * - Origin must be relayer
+       * - Outgoing transaction must exist for the user
+       * - Amount must be equal or lower than what the user has locked
+       * 
+       * # Note
+       * - Reclaim period is not reset if not all the funds are moved; menaing that the clock
+       * remains ticking for the relayer to pick up the rest of the transaction.
+       **/
+      acceptTransfer: AugmentedSubmittable<(from: AccountId32 | string | Uint8Array, assetId: u128 | AnyNumber | Uint8Array, amount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32, u128, u128]>;
+      /**
+       * Claims user funds from the `OutgoingTransactions`, in case that the relayer has not
+       * picked them up.
+       **/
+      claimStaleTo: AugmentedSubmittable<(assetId: u128 | AnyNumber | Uint8Array, to: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, AccountId32]>;
+      /**
+       * Collects funds deposited by the relayer into the owner's account
+       **/
+      claimTo: AugmentedSubmittable<(assetId: u128 | AnyNumber | Uint8Array, to: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, AccountId32]>;
+      /**
+       * Burns funds waiting in incoming_transactions that are still unclaimed. May be used by
+       * the relayer in case of finality issues on the other side of the bridge.
+       **/
+      rescindTimelockedMint: AugmentedSubmittable<(assetId: u128 | AnyNumber | Uint8Array, account: AccountId32 | string | Uint8Array, untrustedAmount: u128 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, AccountId32, u128]>;
+      /**
+       * Rotates the Relayer Account
+       * 
+       * # Restrictions
+       * - Only callable by the current relayer.
+       * - TTL must be sufficiently long.
+       **/
+      rotateRelayer: AugmentedSubmittable<(updated: AccountId32 | string | Uint8Array, ttl: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32, u32]>;
+      /**
+       * Sets the relayer budget for _incoming_ transactions for specific assets. Does not reset
+       * the current `penalty`.
+       * 
+       * # Restrictions
+       * - Only callable by root
+       **/
+      setBudget: AugmentedSubmittable<(assetId: u128 | AnyNumber | Uint8Array, amount: u128 | AnyNumber | Uint8Array, decay: PalletMosaicDecayBudgetPenaltyDecayer | { Linear: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, u128, PalletMosaicDecayBudgetPenaltyDecayer]>;
+      /**
+       * Sets supported networks and maximum transaction sizes accepted by the relayer.
+       **/
+      setNetwork: AugmentedSubmittable<(networkId: u32 | AnyNumber | Uint8Array, networkInfo: PalletMosaicNetworkInfo | { enabled?: any; maxTransferSize?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, PalletMosaicNetworkInfo]>;
+      /**
+       * Sets the current relayer configuration. This is enacted immediately and invalidates
+       * inflight, incoming transactions from the previous relayer. Budgets remain in place
+       * however.
+       **/
+      setRelayer: AugmentedSubmittable<(relayer: AccountId32 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId32]>;
+      setTimelockDuration: AugmentedSubmittable<(period: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32]>;
+      /**
+       * Mints new tokens into the pallet's wallet, ready for the user to be picked up after
+       * `lock_time` blocks have expired.
+       **/
+      timelockedMint: AugmentedSubmittable<(assetId: u128 | AnyNumber | Uint8Array, to: AccountId32 | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, lockTime: u32 | AnyNumber | Uint8Array, id: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [u128, AccountId32, u128, u32, H256]>;
+      /**
+       * Creates an outgoing transaction request, locking the funds locally until picked up by
+       * the relayer.
+       * 
+       * # Restrictions
+       * - Network must be supported.
+       * - AssetId must be supported.
+       * - Amount must be lower than the networks `max_transfer_size`.
+       * - Origin must have sufficient funds.
+       * - Transfers near Balance::max may result in overflows, which are caught and returned as
+       * an error.
+       **/
+      transferTo: AugmentedSubmittable<(networkId: u32 | AnyNumber | Uint8Array, assetId: u128 | AnyNumber | Uint8Array, address: U8aFixed | string | Uint8Array, amount: u128 | AnyNumber | Uint8Array, keepAlive: bool | boolean | Uint8Array) => SubmittableExtrinsic<ApiType>, [u32, u128, U8aFixed, u128, bool]>;
       /**
        * Generic tx
        **/
