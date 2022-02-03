@@ -19,12 +19,10 @@ export const setNetwork = async (api: ApiPromise, sudoAccount: KeyringPair) => {
   return sendAndWaitForSuccess(
     api,
     sudoAccount,
-    api.events.sudo.Sudid.is,
-    api.tx.sudo.sudo(
-      api.tx.mosaic.setNetwork(1, {
-        enabled: true,
-        maxTransferSize: api.createType("u128", 100_000_000_000_000),
-      })
-    )
+    api.events.mosaic.NetworksUpdated.is,
+    api.tx.mosaic.setNetwork(1, {
+      enabled: true,
+      maxTransferSize: api.createType("u128", 100_000_000_000_000),
+    })
   );
 };
