@@ -23,6 +23,7 @@ const main = async () => {
 
     console.log(crPopRes.data.toHuman());
     console.log(initRes.data.toHuman());
+    console.log(sRelRes.data.toHuman());
     console.log(sNetRes.data.toHuman());
     process.exit(0);
 };
