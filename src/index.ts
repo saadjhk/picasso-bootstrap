@@ -16,14 +16,14 @@ const main = async () => {
 
     const walletSudo = kr.addFromUri("//Alice"); // alice
 
-    // const crPopRes = await crowdloanRewardsPopulateTest(api, walletSudo);
-    // const initRes = await initialize(api, walletSudo);
-    // const sRelRes = await setRelayer(api, walletSudo, walletSudo);
+    const crPopRes = await crowdloanRewardsPopulateTest(api, walletSudo);
+    const initRes = await initialize(api, walletSudo);
+    const sRelRes = await setRelayer(api, walletSudo, walletSudo);
     const sNetRes = await setNetwork(api, walletSudo);
 
-    // console.log(crPopRes.data.toHuman());
-    // console.log(initRes.data.toHuman());
-    // console.log(sRelRes.data.toHuman());
+    console.log(crPopRes.data.toHuman());
+    console.log(initRes.data.toHuman());
+    console.log(sRelRes.data.toHuman());
     console.log(sNetRes.data.toHuman());
     process.exit(0);
 };
