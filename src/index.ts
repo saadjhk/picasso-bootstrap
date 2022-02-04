@@ -5,7 +5,7 @@ import { crowdloanRewardsPopulateTest, initialize } from "./pallets";
 
 import * as definitions from './interfaces/definitions';
 import { buildApi } from "./utils";
-import { setNetwork, setRelayer } from "./pallets/mosaic/extrinsics";
+import { setBudget, setNetwork, setRelayer } from "./pallets/mosaic/extrinsics";
 
 const main = async () => {
     await cryptoWaitReady();
@@ -20,11 +20,13 @@ const main = async () => {
     const initRes = await initialize(api, walletSudo);
     const sRelRes = await setRelayer(api, walletSudo, walletSudo);
     const sNetRes = await setNetwork(api, walletSudo);
+    const sBudgetRes = await setBudget(1, api, walletSudo);
 
     console.log(crPopRes.data.toHuman());
     console.log(initRes.data.toHuman());
     console.log(sRelRes.data.toHuman());
     console.log(sNetRes.data.toHuman());
+    console.log(sBudgetRes.data.toHuman());
     process.exit(0);
 };
 

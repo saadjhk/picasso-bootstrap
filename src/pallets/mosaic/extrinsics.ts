@@ -15,14 +15,39 @@ export const setRelayer = async (
   );
 };
 
-export const setNetwork = async (api: ApiPromise, sudoAccount: KeyringPair) => {
+// add dynamic parameters
+export const setNetwork = async (
+  api: ApiPromise,
+  relayerAccount: KeyringPair
+) => {
   return sendAndWaitForSuccess(
     api,
-    sudoAccount,
+    relayerAccount,
     api.events.mosaic.NetworksUpdated.is,
     api.tx.mosaic.setNetwork(1, {
       enabled: true,
       maxTransferSize: api.createType("u128", 100_000_000_000_000),
     })
+  );
+};
+
+// to-do add dynamic parameters
+// all params are from repo benchamarks
+export const setBudget = async (
+  assetId: number,
+  api: ApiPromise,
+  sudoAccount: KeyringPair
+) => {
+  return sendAndWaitForSuccess(
+    api,
+    sudoAccount,
+    api.events.sudo.Sudid.is,
+    api.tx.sudo.sudo(
+      api.tx.mosaic.setBudget(
+        api.createType("u128", assetId),
+        api.createType("u128", 100_000_000_000_000),
+        { Linear: api.createType("u128", 5) }
+      )
+    )
   );
 };
