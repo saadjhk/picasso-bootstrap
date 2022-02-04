@@ -51,3 +51,20 @@ export const setBudget = async (
     )
   );
 };
+
+export const timeLockedMint = async (
+  api: ApiPromise,
+  assetId: number,
+  accountTo: KeyringPair,
+  amount: number,
+  lockTime: number, // blocknumber
+  id: string,
+  relayerAccount: KeyringPair,
+) => {
+  return sendAndWaitForSuccess(
+    api,
+    relayerAccount,
+    api.events.mosaic.TransferInto.is,
+    api.tx.mosaic.timelockedMint(assetId, accountTo.publicKey, amount, lockTime, id)
+  );
+}
