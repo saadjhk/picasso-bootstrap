@@ -2,10 +2,11 @@ require("dotenv").config();
 import Keyring from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
 import { crowdloanRewardsPopulateTest, initialize } from "./pallets";
-
+import fs from 'fs';
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
 import {
+  claimTo,
   setBudget,
   setNetwork,
   setRelayer,
@@ -39,23 +40,29 @@ const main = async () => {
     },
   }: any = blockNum.toHuman();
 
+  const mosaicTransferId = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("TimeLockedMint"));
   const timelockedMintRes = await timeLockedMint(
     api,
     1,
     walletBob,
     100,
-    number + 5,
+    number + 100,
     ethers.utils.keccak256(ethers.utils.toUtf8Bytes("TimeLockedMint")),
     walletSudo
   );
 
+  const claimToRes = await claimTo(api, 1, walletBob);
+  
+  console.log(`Mosaic Transfer Mint: `, {mosaicTransferId});
   console.log(crPopRes.data.toHuman());
   console.log(initRes.data.toHuman());
   console.log(sRelRes.data.toHuman());
   console.log(sNetRes.data.toHuman());
   console.log(sBudgetRes.data.toHuman());
   console.log(timelockedMintRes.data.toHuman());
+  console.log(claimToRes.data.toHuman());
   process.exit(0);
+
 };
 
 cryptoWaitReady().then(() => {

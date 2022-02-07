@@ -68,3 +68,16 @@ export const timeLockedMint = async (
     api.tx.mosaic.timelockedMint(assetId, accountTo.publicKey, amount, lockTime, id)
   );
 }
+
+export const claimTo = async (
+  api: ApiPromise,
+  assetId: number,
+  claimerAccount: KeyringPair,
+) => {
+  return sendAndWaitForSuccess(
+    api,
+    claimerAccount,
+    api.events.mosaic.TransferClaimed.is,
+    api.tx.mosaic.claimTo(assetId, claimerAccount.publicKey)
+  );
+}
