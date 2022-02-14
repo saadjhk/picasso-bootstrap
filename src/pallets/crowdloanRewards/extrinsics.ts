@@ -54,7 +54,9 @@ export const initialize = async (api: ApiPromise, sudoAccount: KeyringPair) => {
 
 export const crowdloanRewardsPopulateTest = async (
   api: ApiPromise,
-  walletAlice: KeyringPair
+  walletAlice: KeyringPair,
+  myDotWallets: KeyringPair[],
+  myEthWallets: string[]
 ) => {
   const sudoKey = walletAlice;
   const vesting48weeks = api.createType("u32", 100800);
@@ -81,6 +83,18 @@ export const crowdloanRewardsPopulateTest = async (
     1
   );
 
+  if (myDotWallets.length) {
+    myDotWallets.forEach((wallet) => {
+      relay_accounts.push([
+        api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+          RelayChain: wallet.publicKey,
+        }),
+        reward,
+        vesting48weeks,
+      ])
+    })
+  }
+
   const eth_accounts = R.unfold<
     number,
     [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]
@@ -100,6 +114,20 @@ export const crowdloanRewardsPopulateTest = async (
           ],
     1
   );
+
+  if (myEthWallets.length) {
+    myEthWallets.forEach((wallet) => [
+      eth_accounts.push(
+        [
+          api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+            Ethereum: wallet,
+          }),
+          reward,
+          vesting48weeks,
+        ]
+      )
+    ])
+  }
 
   const accounts = relay_accounts.concat(eth_accounts);
   return await sendAndWaitForSuccess(
