@@ -21,21 +21,19 @@ const main = async () => {
   const myEth1 = new ethers.Wallet(process.env.ETH_PK ? process.env.ETH_PK : "")
   const myEth2 = new ethers.Wallet(process.env.ETH_PK ? process.env.ETH_PK : "")
 
-  const types = Object.values(definitions).reduce(
-    (res, { types }): object => ({ ...res, ...types }),
-    {}
-  );
-  const api = await buildApi(process.env.PICASSO_RPC_URL || "", types);
+  const rpc = Object.keys(definitions).reduce((accumulator, key) => ({ ...accumulator, [key]: (definitions as any)[key].rpc }), {});
+  const types = Object.values(definitions).reduce((accumulator, { types }) => ({ ...accumulator, ...types }), {});
+  const api = await buildApi(process.env.PICASSO_RPC_URL || "", types, rpc);
 
   // const walletBob = kr.addFromUri("//Bob");
 
-  // const crPopRes = await crowdloanRewardsPopulateTest(
-  //   api,
-  //   walletSudo,
-  //   [myDot1, myDot2],
-  //   [myEth1.address, myEth2.address]
-  // );
-  // const initRes = await initialize(api, walletSudo);
+  const crPopRes = await crowdloanRewardsPopulateTest(
+    api,
+    walletSudo,
+    [myDot1, myDot2],
+    [myEth1.address, myEth2.address]
+  );
+  const initRes = await initialize(api, walletSudo);
   // const sRelRes = await setRelayer(api, walletSudo, walletSudo);
   // const sNetRes = await setNetwork(api, walletSudo);
   // const sBudgetRes = await setBudget(1, api, walletSudo);
@@ -59,8 +57,8 @@ const main = async () => {
   // );
 
   // console.log(`Mosaic Transfer Mint: `, {mosaicTransferId});
-  // console.log(crPopRes.data.toHuman());
-  // console.log(initRes.data.toHuman());
+  console.log(crPopRes.data.toHuman());
+  console.log(initRes.data.toHuman());
   // console.log(sRelRes.data.toHuman());
   // console.log(sNetRes.data.toHuman());
   // console.log(sBudgetRes.data.toHuman());

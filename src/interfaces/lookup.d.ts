@@ -1,4 +1,7 @@
 declare const _default: {
+    /**
+     * Lookup3: frame_system::AccountInfo<Index, pallet_balances::AccountData<Balance>>
+     **/
     FrameSystemAccountInfo: {
         nonce: string;
         consumers: string;
@@ -6,20 +9,32 @@ declare const _default: {
         sufficients: string;
         data: string;
     };
+    /**
+     * Lookup5: pallet_balances::AccountData<Balance>
+     **/
     PalletBalancesAccountData: {
         free: string;
         reserved: string;
         miscFrozen: string;
         feeFrozen: string;
     };
+    /**
+     * Lookup7: frame_support::weights::PerDispatchClass<T>
+     **/
     FrameSupportWeightsPerDispatchClassU64: {
         normal: string;
         operational: string;
         mandatory: string;
     };
+    /**
+     * Lookup11: sp_runtime::generic::digest::Digest
+     **/
     SpRuntimeDigest: {
         logs: string;
     };
+    /**
+     * Lookup13: sp_runtime::generic::digest::DigestItem
+     **/
     SpRuntimeDigestDigestItem: {
         _enum: {
             Other: string;
@@ -33,11 +48,17 @@ declare const _default: {
             RuntimeEnvironmentUpdated: string;
         };
     };
+    /**
+     * Lookup16: frame_system::EventRecord<rococo_runtime::Event, primitive_types::H256>
+     **/
     FrameSystemEventRecord: {
         phase: string;
         event: string;
         topics: string;
     };
+    /**
+     * Lookup18: frame_system::pallet::Event<T>
+     **/
     FrameSystemEvent: {
         _enum: {
             ExtrinsicSuccess: string;
@@ -48,17 +69,29 @@ declare const _default: {
             Remarked: string;
         };
     };
+    /**
+     * Lookup19: frame_support::weights::DispatchInfo
+     **/
     FrameSupportWeightsDispatchInfo: {
         weight: string;
         class: string;
         paysFee: string;
     };
+    /**
+     * Lookup20: frame_support::weights::DispatchClass
+     **/
     FrameSupportWeightsDispatchClass: {
         _enum: string[];
     };
+    /**
+     * Lookup21: frame_support::weights::Pays
+     **/
     FrameSupportWeightsPays: {
         _enum: string[];
     };
+    /**
+     * Lookup22: sp_runtime::DispatchError
+     **/
     SpRuntimeDispatchError: {
         _enum: {
             Other: string;
@@ -74,12 +107,21 @@ declare const _default: {
             Arithmetic: string;
         };
     };
+    /**
+     * Lookup23: sp_runtime::TokenError
+     **/
     SpRuntimeTokenError: {
         _enum: string[];
     };
+    /**
+     * Lookup24: sp_runtime::ArithmeticError
+     **/
     SpRuntimeArithmeticError: {
         _enum: string[];
     };
+    /**
+     * Lookup25: pallet_indices::pallet::Event<T>
+     **/
     PalletIndicesEvent: {
         _enum: {
             IndexAssigned: {
@@ -95,6 +137,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup26: pallet_balances::pallet::Event<T, I>
+     **/
     PalletBalancesEvent: {
         _enum: {
             Endowed: {
@@ -143,9 +188,15 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup27: frame_support::traits::tokens::misc::BalanceStatus
+     **/
     FrameSupportTokensMiscBalanceStatus: {
         _enum: string[];
     };
+    /**
+     * Lookup28: pallet_offences::pallet::Event
+     **/
     PalletOffencesEvent: {
         _enum: {
             Offence: {
@@ -154,6 +205,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup30: pallet_session::pallet::Event
+     **/
     PalletSessionEvent: {
         _enum: {
             NewSession: {
@@ -161,6 +215,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup31: pallet_grandpa::pallet::Event
+     **/
     PalletGrandpaEvent: {
         _enum: {
             NewAuthorities: {
@@ -170,8 +227,17 @@ declare const _default: {
             Resumed: string;
         };
     };
+    /**
+     * Lookup34: sp_finality_grandpa::app::Public
+     **/
     SpFinalityGrandpaAppPublic: string;
+    /**
+     * Lookup35: sp_core::ed25519::Public
+     **/
     SpCoreEd25519Public: string;
+    /**
+     * Lookup36: pallet_im_online::pallet::Event<T>
+     **/
     PalletImOnlineEvent: {
         _enum: {
             HeartbeatReceived: {
@@ -183,8 +249,17 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup37: pallet_im_online::sr25519::app_sr25519::Public
+     **/
     PalletImOnlineSr25519AppSr25519Public: string;
+    /**
+     * Lookup38: sp_core::sr25519::Public
+     **/
     SpCoreSr25519Public: string;
+    /**
+     * Lookup42: polkadot_runtime_parachains::inclusion::pallet::Event<T>
+     **/
     PolkadotRuntimeParachainsInclusionPalletEvent: {
         _enum: {
             CandidateBacked: string;
@@ -192,10 +267,16 @@ declare const _default: {
             CandidateTimedOut: string;
         };
     };
+    /**
+     * Lookup43: polkadot_primitives::v1::CandidateReceipt<primitive_types::H256>
+     **/
     PolkadotPrimitivesV1CandidateReceipt: {
         descriptor: string;
         commitmentsHash: string;
     };
+    /**
+     * Lookup44: polkadot_primitives::v1::CandidateDescriptor<primitive_types::H256>
+     **/
     PolkadotPrimitivesV1CandidateDescriptor: {
         paraId: string;
         relayParent: string;
@@ -207,9 +288,21 @@ declare const _default: {
         paraHead: string;
         validationCodeHash: string;
     };
+    /**
+     * Lookup46: polkadot_primitives::v0::collator_app::Public
+     **/
     PolkadotPrimitivesV0CollatorAppPublic: string;
+    /**
+     * Lookup47: polkadot_primitives::v0::collator_app::Signature
+     **/
     PolkadotPrimitivesV0CollatorAppSignature: string;
+    /**
+     * Lookup48: sp_core::sr25519::Signature
+     **/
     SpCoreSr25519Signature: string;
+    /**
+     * Lookup54: polkadot_runtime_parachains::paras::pallet::Event
+     **/
     PolkadotRuntimeParachainsParasPalletEvent: {
         _enum: {
             CurrentCodeUpdated: string;
@@ -219,6 +312,9 @@ declare const _default: {
             ActionQueued: string;
         };
     };
+    /**
+     * Lookup55: polkadot_runtime_parachains::ump::pallet::Event
+     **/
     PolkadotRuntimeParachainsUmpPalletEvent: {
         _enum: {
             InvalidFormat: string;
@@ -230,6 +326,9 @@ declare const _default: {
             OverweightServiced: string;
         };
     };
+    /**
+     * Lookup56: xcm::v2::traits::Outcome
+     **/
     XcmV2TraitsOutcome: {
         _enum: {
             Complete: string;
@@ -237,6 +336,9 @@ declare const _default: {
             Error: string;
         };
     };
+    /**
+     * Lookup57: xcm::v2::traits::Error
+     **/
     XcmV2TraitsError: {
         _enum: {
             Overflow: string;
@@ -267,6 +369,9 @@ declare const _default: {
             WeightNotComputable: string;
         };
     };
+    /**
+     * Lookup58: polkadot_runtime_parachains::hrmp::pallet::Event<T>
+     **/
     PolkadotRuntimeParachainsHrmpPalletEvent: {
         _enum: {
             OpenChannelRequested: string;
@@ -275,10 +380,16 @@ declare const _default: {
             ChannelClosed: string;
         };
     };
+    /**
+     * Lookup59: polkadot_parachain::primitives::HrmpChannelId
+     **/
     PolkadotParachainPrimitivesHrmpChannelId: {
         sender: string;
         recipient: string;
     };
+    /**
+     * Lookup60: polkadot_runtime_parachains::disputes::pallet::Event<T>
+     **/
     PolkadotRuntimeParachainsDisputesPalletEvent: {
         _enum: {
             DisputeInitiated: string;
@@ -287,12 +398,21 @@ declare const _default: {
             Revert: string;
         };
     };
+    /**
+     * Lookup62: polkadot_runtime_parachains::disputes::DisputeLocation
+     **/
     PolkadotRuntimeParachainsDisputesDisputeLocation: {
         _enum: string[];
     };
+    /**
+     * Lookup63: polkadot_runtime_parachains::disputes::DisputeResult
+     **/
     PolkadotRuntimeParachainsDisputesDisputeResult: {
         _enum: string[];
     };
+    /**
+     * Lookup64: polkadot_runtime_common::paras_registrar::pallet::Event<T>
+     **/
     PolkadotRuntimeCommonParasRegistrarPalletEvent: {
         _enum: {
             Registered: string;
@@ -300,6 +420,9 @@ declare const _default: {
             Reserved: string;
         };
     };
+    /**
+     * Lookup65: polkadot_runtime_common::auctions::pallet::Event<T>
+     **/
     PolkadotRuntimeCommonAuctionsPalletEvent: {
         _enum: {
             AuctionStarted: string;
@@ -311,6 +434,9 @@ declare const _default: {
             WinningOffset: string;
         };
     };
+    /**
+     * Lookup66: polkadot_runtime_common::crowdloan::pallet::Event<T>
+     **/
     PolkadotRuntimeCommonCrowdloanPalletEvent: {
         _enum: {
             Created: string;
@@ -325,12 +451,18 @@ declare const _default: {
             AddedToNewRaise: string;
         };
     };
+    /**
+     * Lookup68: polkadot_runtime_common::slots::pallet::Event<T>
+     **/
     PolkadotRuntimeCommonSlotsPalletEvent: {
         _enum: {
             NewLeasePeriod: string;
             Leased: string;
         };
     };
+    /**
+     * Lookup69: pallet_sudo::pallet::Event<T>
+     **/
     PalletSudoEvent: {
         _enum: {
             Sudid: {
@@ -344,12 +476,18 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup70: rococo_runtime::validator_manager::RawEvent<sp_core::crypto::AccountId32>
+     **/
     RococoRuntimeValidatorManagerRawEvent: {
         _enum: {
             ValidatorsRegistered: string;
             ValidatorsDeregistered: string;
         };
     };
+    /**
+     * Lookup72: pallet_collective::pallet::Event<T, I>
+     **/
     PalletCollectiveEvent: {
         _enum: {
             Proposed: {
@@ -386,9 +524,15 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup74: pallet_membership::pallet::Event<T, I>
+     **/
     PalletMembershipEvent: {
         _enum: string[];
     };
+    /**
+     * Lookup75: pallet_utility::pallet::Event
+     **/
     PalletUtilityEvent: {
         _enum: {
             BatchInterrupted: {
@@ -400,6 +544,9 @@ declare const _default: {
             DispatchedAs: string;
         };
     };
+    /**
+     * Lookup76: pallet_proxy::pallet::Event<T>
+     **/
     PalletProxyEvent: {
         _enum: {
             ProxyExecuted: {
@@ -424,9 +571,15 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup77: rococo_runtime::ProxyType
+     **/
     RococoRuntimeProxyType: {
         _enum: string[];
     };
+    /**
+     * Lookup79: pallet_multisig::pallet::Event<T>
+     **/
     PalletMultisigEvent: {
         _enum: {
             NewMultisig: {
@@ -455,10 +608,16 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup80: pallet_multisig::Timepoint<BlockNumber>
+     **/
     PalletMultisigTimepoint: {
         height: string;
         index: string;
     };
+    /**
+     * Lookup81: pallet_xcm::pallet::Event<T>
+     **/
     PalletXcmEvent: {
         _enum: {
             Attempted: string;
@@ -479,10 +638,16 @@ declare const _default: {
             NotifyTargetMigrationFail: string;
         };
     };
+    /**
+     * Lookup82: xcm::v1::multilocation::MultiLocation
+     **/
     XcmV1MultiLocation: {
         parents: string;
         interior: string;
     };
+    /**
+     * Lookup83: xcm::v1::multilocation::Junctions
+     **/
     XcmV1MultilocationJunctions: {
         _enum: {
             Here: string;
@@ -496,6 +661,9 @@ declare const _default: {
             X8: string;
         };
     };
+    /**
+     * Lookup84: xcm::v1::junction::Junction
+     **/
     XcmV1Junction: {
         _enum: {
             Parachain: string;
@@ -521,6 +689,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup86: xcm::v0::junction::NetworkId
+     **/
     XcmV0JunctionNetworkId: {
         _enum: {
             Any: string;
@@ -529,6 +700,9 @@ declare const _default: {
             Kusama: string;
         };
     };
+    /**
+     * Lookup90: xcm::v0::junction::BodyId
+     **/
     XcmV0JunctionBodyId: {
         _enum: {
             Unit: string;
@@ -540,6 +714,9 @@ declare const _default: {
             Judicial: string;
         };
     };
+    /**
+     * Lookup91: xcm::v0::junction::BodyPart
+     **/
     XcmV0JunctionBodyPart: {
         _enum: {
             Voice: string;
@@ -560,7 +737,13 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup92: xcm::v2::Xcm<Call>
+     **/
     XcmV2Xcm: string;
+    /**
+     * Lookup94: xcm::v2::Instruction<Call>
+     **/
     XcmV2Instruction: {
         _enum: {
             WithdrawAsset: string;
@@ -656,23 +839,38 @@ declare const _default: {
             UnsubscribeVersion: string;
         };
     };
+    /**
+     * Lookup95: xcm::v1::multiasset::MultiAssets
+     **/
     XcmV1MultiassetMultiAssets: string;
+    /**
+     * Lookup97: xcm::v1::multiasset::MultiAsset
+     **/
     XcmV1MultiAsset: {
         id: string;
         fun: string;
     };
+    /**
+     * Lookup98: xcm::v1::multiasset::AssetId
+     **/
     XcmV1MultiassetAssetId: {
         _enum: {
             Concrete: string;
             Abstract: string;
         };
     };
+    /**
+     * Lookup99: xcm::v1::multiasset::Fungibility
+     **/
     XcmV1MultiassetFungibility: {
         _enum: {
             Fungible: string;
             NonFungible: string;
         };
     };
+    /**
+     * Lookup100: xcm::v1::multiasset::AssetInstance
+     **/
     XcmV1MultiassetAssetInstance: {
         _enum: {
             Undefined: string;
@@ -684,6 +882,9 @@ declare const _default: {
             Blob: string;
         };
     };
+    /**
+     * Lookup102: xcm::v2::Response
+     **/
     XcmV2Response: {
         _enum: {
             Null: string;
@@ -692,18 +893,30 @@ declare const _default: {
             Version: string;
         };
     };
+    /**
+     * Lookup105: xcm::v0::OriginKind
+     **/
     XcmV0OriginKind: {
         _enum: string[];
     };
+    /**
+     * Lookup106: xcm::double_encoded::DoubleEncoded<T>
+     **/
     XcmDoubleEncoded: {
         encoded: string;
     };
+    /**
+     * Lookup107: xcm::v1::multiasset::MultiAssetFilter
+     **/
     XcmV1MultiassetMultiAssetFilter: {
         _enum: {
             Definite: string;
             Wild: string;
         };
     };
+    /**
+     * Lookup108: xcm::v1::multiasset::WildMultiAsset
+     **/
     XcmV1MultiassetWildMultiAsset: {
         _enum: {
             All: string;
@@ -713,21 +926,33 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup109: xcm::v1::multiasset::WildFungibility
+     **/
     XcmV1MultiassetWildFungibility: {
         _enum: string[];
     };
+    /**
+     * Lookup110: xcm::v2::WeightLimit
+     **/
     XcmV2WeightLimit: {
         _enum: {
             Unlimited: string;
             Limited: string;
         };
     };
+    /**
+     * Lookup112: xcm::VersionedMultiAssets
+     **/
     XcmVersionedMultiAssets: {
         _enum: {
             V0: string;
             V1: string;
         };
     };
+    /**
+     * Lookup114: xcm::v0::multi_asset::MultiAsset
+     **/
     XcmV0MultiAsset: {
         _enum: {
             None: string;
@@ -764,6 +989,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup115: xcm::v0::multi_location::MultiLocation
+     **/
     XcmV0MultiLocation: {
         _enum: {
             Null: string;
@@ -777,6 +1005,9 @@ declare const _default: {
             X8: string;
         };
     };
+    /**
+     * Lookup116: xcm::v0::junction::Junction
+     **/
     XcmV0Junction: {
         _enum: {
             Parent: string;
@@ -803,12 +1034,18 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup117: xcm::VersionedMultiLocation
+     **/
     XcmVersionedMultiLocation: {
         _enum: {
             V0: string;
             V1: string;
         };
     };
+    /**
+     * Lookup118: frame_system::Phase
+     **/
     FrameSystemPhase: {
         _enum: {
             ApplyExtrinsic: string;
@@ -816,10 +1053,16 @@ declare const _default: {
             Initialization: string;
         };
     };
+    /**
+     * Lookup122: frame_system::LastRuntimeUpgradeInfo
+     **/
     FrameSystemLastRuntimeUpgradeInfo: {
         specVersion: string;
         specName: string;
     };
+    /**
+     * Lookup124: frame_system::pallet::Call<T>
+     **/
     FrameSystemCall: {
         _enum: {
             fill_block: {
@@ -855,34 +1098,55 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup129: frame_system::limits::BlockWeights
+     **/
     FrameSystemLimitsBlockWeights: {
         baseBlock: string;
         maxBlock: string;
         perClass: string;
     };
+    /**
+     * Lookup130: frame_support::weights::PerDispatchClass<frame_system::limits::WeightsPerClass>
+     **/
     FrameSupportWeightsPerDispatchClassWeightsPerClass: {
         normal: string;
         operational: string;
         mandatory: string;
     };
+    /**
+     * Lookup131: frame_system::limits::WeightsPerClass
+     **/
     FrameSystemLimitsWeightsPerClass: {
         baseExtrinsic: string;
         maxExtrinsic: string;
         maxTotal: string;
         reserved: string;
     };
+    /**
+     * Lookup133: frame_system::limits::BlockLength
+     **/
     FrameSystemLimitsBlockLength: {
         max: string;
     };
+    /**
+     * Lookup134: frame_support::weights::PerDispatchClass<T>
+     **/
     FrameSupportWeightsPerDispatchClassU32: {
         normal: string;
         operational: string;
         mandatory: string;
     };
+    /**
+     * Lookup135: frame_support::weights::RuntimeDbWeight
+     **/
     FrameSupportWeightsRuntimeDbWeight: {
         read: string;
         write: string;
     };
+    /**
+     * Lookup136: sp_version::RuntimeVersion
+     **/
     SpVersionRuntimeVersion: {
         specName: string;
         implName: string;
@@ -892,10 +1156,19 @@ declare const _default: {
         apis: string;
         transactionVersion: string;
     };
+    /**
+     * Lookup140: frame_system::pallet::Error<T>
+     **/
     FrameSystemError: {
         _enum: string[];
     };
+    /**
+     * Lookup143: sp_consensus_babe::app::Public
+     **/
     SpConsensusBabeAppPublic: string;
+    /**
+     * Lookup146: sp_consensus_babe::digests::NextConfigDescriptor
+     **/
     SpConsensusBabeDigestsNextConfigDescriptor: {
         _enum: {
             __Unused0: string;
@@ -905,13 +1178,22 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup148: sp_consensus_babe::AllowedSlots
+     **/
     SpConsensusBabeAllowedSlots: {
         _enum: string[];
     };
+    /**
+     * Lookup152: sp_consensus_babe::BabeEpochConfiguration
+     **/
     SpConsensusBabeBabeEpochConfiguration: {
         c: string;
         allowedSlots: string;
     };
+    /**
+     * Lookup153: pallet_babe::pallet::Call<T>
+     **/
     PalletBabeCall: {
         _enum: {
             report_equivocation: {
@@ -927,12 +1209,18 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup154: sp_consensus_slots::EquivocationProof<sp_runtime::generic::header::Header<Number, sp_runtime::traits::BlakeTwo256>, sp_consensus_babe::app::Public>
+     **/
     SpConsensusSlotsEquivocationProof: {
         offender: string;
         slot: string;
         firstHeader: string;
         secondHeader: string;
     };
+    /**
+     * Lookup155: sp_runtime::generic::header::Header<Number, sp_runtime::traits::BlakeTwo256>
+     **/
     SpRuntimeHeader: {
         parentHash: string;
         number: string;
@@ -940,15 +1228,27 @@ declare const _default: {
         extrinsicsRoot: string;
         digest: string;
     };
+    /**
+     * Lookup156: sp_runtime::traits::BlakeTwo256
+     **/
     SpRuntimeBlakeTwo256: string;
+    /**
+     * Lookup157: sp_session::MembershipProof
+     **/
     SpSessionMembershipProof: {
         session: string;
         trieNodes: string;
         validatorCount: string;
     };
+    /**
+     * Lookup158: pallet_babe::pallet::Error<T>
+     **/
     PalletBabeError: {
         _enum: string[];
     };
+    /**
+     * Lookup159: pallet_timestamp::pallet::Call<T>
+     **/
     PalletTimestampCall: {
         _enum: {
             set: {
@@ -956,6 +1256,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup161: pallet_indices::pallet::Call<T>
+     **/
     PalletIndicesCall: {
         _enum: {
             claim: {
@@ -984,24 +1287,42 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup162: pallet_indices::pallet::Error<T>
+     **/
     PalletIndicesError: {
         _enum: string[];
     };
+    /**
+     * Lookup164: pallet_balances::BalanceLock<Balance>
+     **/
     PalletBalancesBalanceLock: {
         id: string;
         amount: string;
         reasons: string;
     };
+    /**
+     * Lookup165: pallet_balances::Reasons
+     **/
     PalletBalancesReasons: {
         _enum: string[];
     };
+    /**
+     * Lookup168: pallet_balances::ReserveData<ReserveIdentifier, Balance>
+     **/
     PalletBalancesReserveData: {
         id: string;
         amount: string;
     };
+    /**
+     * Lookup170: pallet_balances::Releases
+     **/
     PalletBalancesReleases: {
         _enum: string[];
     };
+    /**
+     * Lookup171: pallet_balances::pallet::Call<T, I>
+     **/
     PalletBalancesCall: {
         _enum: {
             transfer: {
@@ -1032,24 +1353,39 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup174: pallet_balances::pallet::Error<T, I>
+     **/
     PalletBalancesError: {
         _enum: string[];
     };
+    /**
+     * Lookup176: pallet_transaction_payment::Releases
+     **/
     PalletTransactionPaymentReleases: {
         _enum: string[];
     };
+    /**
+     * Lookup178: frame_support::weights::WeightToFeeCoefficient<Balance>
+     **/
     FrameSupportWeightsWeightToFeeCoefficient: {
         coeffInteger: string;
         coeffFrac: string;
         negative: string;
         degree: string;
     };
+    /**
+     * Lookup180: pallet_authorship::UncleEntryItem<BlockNumber, primitive_types::H256, sp_core::crypto::AccountId32>
+     **/
     PalletAuthorshipUncleEntryItem: {
         _enum: {
             InclusionHeight: string;
             Uncle: string;
         };
     };
+    /**
+     * Lookup182: pallet_authorship::pallet::Call<T>
+     **/
     PalletAuthorshipCall: {
         _enum: {
             set_uncles: {
@@ -1057,13 +1393,22 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup184: pallet_authorship::pallet::Error<T>
+     **/
     PalletAuthorshipError: {
         _enum: string[];
     };
+    /**
+     * Lookup185: sp_staking::offence::OffenceDetails<sp_core::crypto::AccountId32, Offender>
+     **/
     SpStakingOffenceOffenceDetails: {
         offender: string;
         reporters: string;
     };
+    /**
+     * Lookup189: rococo_runtime::SessionKeys
+     **/
     RococoRuntimeSessionKeys: {
         grandpa: string;
         babe: string;
@@ -1073,12 +1418,33 @@ declare const _default: {
         authorityDiscovery: string;
         beefy: string;
     };
+    /**
+     * Lookup190: polkadot_primitives::v0::validator_app::Public
+     **/
     PolkadotPrimitivesV0ValidatorAppPublic: string;
+    /**
+     * Lookup191: polkadot_primitives::v1::assignment_app::Public
+     **/
     PolkadotPrimitivesV1AssignmentAppPublic: string;
+    /**
+     * Lookup192: sp_authority_discovery::app::Public
+     **/
     SpAuthorityDiscoveryAppPublic: string;
+    /**
+     * Lookup193: beefy_primitives::crypto::Public
+     **/
     BeefyPrimitivesCryptoPublic: string;
+    /**
+     * Lookup194: sp_core::ecdsa::Public
+     **/
     SpCoreEcdsaPublic: string;
+    /**
+     * Lookup198: sp_core::crypto::KeyTypeId
+     **/
     SpCoreCryptoKeyTypeId: string;
+    /**
+     * Lookup199: pallet_session::pallet::Call<T>
+     **/
     PalletSessionCall: {
         _enum: {
             set_keys: {
@@ -1091,9 +1457,15 @@ declare const _default: {
             purge_keys: string;
         };
     };
+    /**
+     * Lookup200: pallet_session::pallet::Error<T>
+     **/
     PalletSessionError: {
         _enum: string[];
     };
+    /**
+     * Lookup201: pallet_grandpa::StoredState<N>
+     **/
     PalletGrandpaStoredState: {
         _enum: {
             Live: string;
@@ -1108,12 +1480,18 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup202: pallet_grandpa::StoredPendingChange<N, Limit>
+     **/
     PalletGrandpaStoredPendingChange: {
         scheduledAt: string;
         delay: string;
         nextAuthorities: string;
         forced: string;
     };
+    /**
+     * Lookup205: pallet_grandpa::pallet::Call<T>
+     **/
     PalletGrandpaCall: {
         _enum: {
             report_equivocation: {
@@ -1130,45 +1508,78 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup206: sp_finality_grandpa::EquivocationProof<primitive_types::H256, N>
+     **/
     SpFinalityGrandpaEquivocationProof: {
         setId: string;
         equivocation: string;
     };
+    /**
+     * Lookup207: sp_finality_grandpa::Equivocation<primitive_types::H256, N>
+     **/
     SpFinalityGrandpaEquivocation: {
         _enum: {
             Prevote: string;
             Precommit: string;
         };
     };
+    /**
+     * Lookup208: finality_grandpa::Equivocation<sp_finality_grandpa::app::Public, finality_grandpa::Prevote<primitive_types::H256, N>, sp_finality_grandpa::app::Signature>
+     **/
     FinalityGrandpaEquivocationPrevote: {
         roundNumber: string;
         identity: string;
         first: string;
         second: string;
     };
+    /**
+     * Lookup209: finality_grandpa::Prevote<primitive_types::H256, N>
+     **/
     FinalityGrandpaPrevote: {
         targetHash: string;
         targetNumber: string;
     };
+    /**
+     * Lookup210: sp_finality_grandpa::app::Signature
+     **/
     SpFinalityGrandpaAppSignature: string;
+    /**
+     * Lookup211: sp_core::ed25519::Signature
+     **/
     SpCoreEd25519Signature: string;
+    /**
+     * Lookup213: finality_grandpa::Equivocation<sp_finality_grandpa::app::Public, finality_grandpa::Precommit<primitive_types::H256, N>, sp_finality_grandpa::app::Signature>
+     **/
     FinalityGrandpaEquivocationPrecommit: {
         roundNumber: string;
         identity: string;
         first: string;
         second: string;
     };
+    /**
+     * Lookup214: finality_grandpa::Precommit<primitive_types::H256, N>
+     **/
     FinalityGrandpaPrecommit: {
         targetHash: string;
         targetNumber: string;
     };
+    /**
+     * Lookup216: pallet_grandpa::pallet::Error<T>
+     **/
     PalletGrandpaError: {
         _enum: string[];
     };
+    /**
+     * Lookup220: pallet_im_online::BoundedOpaqueNetworkState<PeerIdEncodingLimit, MultiAddrEncodingLimit, AddressesLimit>
+     **/
     PalletImOnlineBoundedOpaqueNetworkState: {
         peerId: string;
         externalAddresses: string;
     };
+    /**
+     * Lookup225: pallet_im_online::pallet::Call<T>
+     **/
     PalletImOnlineCall: {
         _enum: {
             heartbeat: {
@@ -1177,6 +1588,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup226: pallet_im_online::Heartbeat<BlockNumber>
+     **/
     PalletImOnlineHeartbeat: {
         blockNumber: string;
         networkState: string;
@@ -1184,14 +1598,26 @@ declare const _default: {
         authorityIndex: string;
         validatorsLen: string;
     };
+    /**
+     * Lookup227: sp_core::offchain::OpaqueNetworkState
+     **/
     SpCoreOffchainOpaqueNetworkState: {
         peerId: string;
         externalAddresses: string;
     };
+    /**
+     * Lookup231: pallet_im_online::sr25519::app_sr25519::Signature
+     **/
     PalletImOnlineSr25519AppSr25519Signature: string;
+    /**
+     * Lookup232: pallet_im_online::pallet::Error<T>
+     **/
     PalletImOnlineError: {
         _enum: string[];
     };
+    /**
+     * Lookup233: polkadot_runtime_parachains::configuration::HostConfiguration<BlockNumber>
+     **/
     PolkadotRuntimeParachainsConfigurationHostConfiguration: {
         maxCodeSize: string;
         maxHeadDataSize: string;
@@ -1234,6 +1660,9 @@ declare const _default: {
         relayVrfModuloSamples: string;
         umpMaxIndividualWeight: string;
     };
+    /**
+     * Lookup234: polkadot_runtime_parachains::configuration::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsConfigurationPalletCall: {
         _enum: {
             set_validation_upgrade_frequency: {
@@ -1484,15 +1913,30 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup235: polkadot_runtime_parachains::configuration::pallet::Error<T>
+     **/
     PolkadotRuntimeParachainsConfigurationPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup239: polkadot_runtime_parachains::shared::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsSharedPalletCall: string;
+    /**
+     * Lookup240: polkadot_runtime_parachains::inclusion::AvailabilityBitfieldRecord<N>
+     **/
     PolkadotRuntimeParachainsInclusionAvailabilityBitfieldRecord: {
         bitfield: string;
         submittedAt: string;
     };
+    /**
+     * Lookup243: bitvec::order::Lsb0
+     **/
     BitvecOrderLsb0: string;
+    /**
+     * Lookup244: polkadot_runtime_parachains::inclusion::CandidatePendingAvailability<primitive_types::H256, N>
+     **/
     PolkadotRuntimeParachainsInclusionCandidatePendingAvailability: {
         _alias: {
             hash_: string;
@@ -1506,6 +1950,9 @@ declare const _default: {
         backedInNumber: string;
         backingGroup: string;
     };
+    /**
+     * Lookup245: polkadot_primitives::v1::CandidateCommitments<N>
+     **/
     PolkadotPrimitivesV1CandidateCommitments: {
         upwardMessages: string;
         horizontalMessages: string;
@@ -1514,19 +1961,34 @@ declare const _default: {
         processedDownwardMessages: string;
         hrmpWatermark: string;
     };
+    /**
+     * Lookup247: polkadot_core_primitives::OutboundHrmpMessage<polkadot_parachain::primitives::Id>
+     **/
     PolkadotCorePrimitivesOutboundHrmpMessage: {
         recipient: string;
         data: string;
     };
+    /**
+     * Lookup250: polkadot_runtime_parachains::inclusion::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsInclusionPalletCall: string;
+    /**
+     * Lookup251: polkadot_runtime_parachains::inclusion::pallet::Error<T>
+     **/
     PolkadotRuntimeParachainsInclusionPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup252: polkadot_primitives::v1::ScrapedOnChainVotes<primitive_types::H256>
+     **/
     PolkadotPrimitivesV1ScrapedOnChainVotes: {
         session: string;
         backingValidatorsPerCandidate: string;
         disputes: string;
     };
+    /**
+     * Lookup257: polkadot_primitives::v0::ValidityAttestation
+     **/
     PolkadotPrimitivesV0ValidityAttestation: {
         _enum: {
             __Unused0: string;
@@ -1534,18 +1996,30 @@ declare const _default: {
             Explicit: string;
         };
     };
+    /**
+     * Lookup258: polkadot_primitives::v0::validator_app::Signature
+     **/
     PolkadotPrimitivesV0ValidatorAppSignature: string;
+    /**
+     * Lookup260: polkadot_primitives::v1::DisputeStatementSet
+     **/
     PolkadotPrimitivesV1DisputeStatementSet: {
         candidateHash: string;
         session: string;
         statements: string;
     };
+    /**
+     * Lookup263: polkadot_primitives::v1::DisputeStatement
+     **/
     PolkadotPrimitivesV1DisputeStatement: {
         _enum: {
             Valid: string;
             Invalid: string;
         };
     };
+    /**
+     * Lookup264: polkadot_primitives::v1::ValidDisputeStatementKind
+     **/
     PolkadotPrimitivesV1ValidDisputeStatementKind: {
         _enum: {
             Explicit: string;
@@ -1554,9 +2028,15 @@ declare const _default: {
             ApprovalChecking: string;
         };
     };
+    /**
+     * Lookup265: polkadot_primitives::v1::InvalidDisputeStatementKind
+     **/
     PolkadotPrimitivesV1InvalidDisputeStatementKind: {
         _enum: string[];
     };
+    /**
+     * Lookup266: polkadot_runtime_parachains::paras_inherent::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsParasInherentPalletCall: {
         _enum: {
             enter: {
@@ -1564,82 +2044,139 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup267: polkadot_primitives::v1::InherentData<sp_runtime::generic::header::Header<Number, sp_runtime::traits::BlakeTwo256>>
+     **/
     PolkadotPrimitivesV1InherentData: {
         bitfields: string;
         backedCandidates: string;
         disputes: string;
         parentHeader: string;
     };
+    /**
+     * Lookup269: polkadot_primitives::v1::signed::UncheckedSigned<polkadot_primitives::v1::AvailabilityBitfield, polkadot_primitives::v1::AvailabilityBitfield>
+     **/
     PolkadotPrimitivesV1SignedUncheckedSigned: {
         payload: string;
         validatorIndex: string;
         signature: string;
     };
+    /**
+     * Lookup271: polkadot_primitives::v1::BackedCandidate<primitive_types::H256>
+     **/
     PolkadotPrimitivesV1BackedCandidate: {
         candidate: string;
         validityVotes: string;
         validatorIndices: string;
     };
+    /**
+     * Lookup272: polkadot_primitives::v1::CommittedCandidateReceipt<primitive_types::H256>
+     **/
     PolkadotPrimitivesV1CommittedCandidateReceipt: {
         descriptor: string;
         commitments: string;
     };
+    /**
+     * Lookup274: polkadot_runtime_parachains::paras_inherent::pallet::Error<T>
+     **/
     PolkadotRuntimeParachainsParasInherentPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup276: polkadot_runtime_parachains::scheduler::ParathreadClaimQueue
+     **/
     PolkadotRuntimeParachainsSchedulerParathreadClaimQueue: {
         queue: string;
         nextCoreOffset: string;
     };
+    /**
+     * Lookup278: polkadot_runtime_parachains::scheduler::QueuedParathread
+     **/
     PolkadotRuntimeParachainsSchedulerQueuedParathread: {
         claim: string;
         coreOffset: string;
     };
+    /**
+     * Lookup279: polkadot_primitives::v1::ParathreadEntry
+     **/
     PolkadotPrimitivesV1ParathreadEntry: {
         claim: string;
         retries: string;
     };
+    /**
+     * Lookup280: polkadot_primitives::v1::ParathreadClaim
+     **/
     PolkadotPrimitivesV1ParathreadClaim: string;
+    /**
+     * Lookup283: polkadot_primitives::v1::CoreOccupied
+     **/
     PolkadotPrimitivesV1CoreOccupied: {
         _enum: {
             Parathread: string;
             Parachain: string;
         };
     };
+    /**
+     * Lookup286: polkadot_runtime_parachains::scheduler::CoreAssignment
+     **/
     PolkadotRuntimeParachainsSchedulerCoreAssignment: {
         core: string;
         paraId: string;
         kind: string;
         groupIdx: string;
     };
+    /**
+     * Lookup287: polkadot_runtime_parachains::scheduler::AssignmentKind
+     **/
     PolkadotRuntimeParachainsSchedulerAssignmentKind: {
         _enum: {
             Parachain: string;
             Parathread: string;
         };
     };
+    /**
+     * Lookup288: polkadot_runtime_parachains::paras::ParaLifecycle
+     **/
     PolkadotRuntimeParachainsParasParaLifecycle: {
         _enum: string[];
     };
+    /**
+     * Lookup290: polkadot_runtime_parachains::paras::ParaPastCodeMeta<N>
+     **/
     PolkadotRuntimeParachainsParasParaPastCodeMeta: {
         upgradeTimes: string;
         lastPruned: string;
     };
+    /**
+     * Lookup292: polkadot_runtime_parachains::paras::ReplacementTimes<N>
+     **/
     PolkadotRuntimeParachainsParasReplacementTimes: {
         expectedAt: string;
         activatedAt: string;
     };
+    /**
+     * Lookup294: polkadot_primitives::v1::UpgradeGoAhead
+     **/
     PolkadotPrimitivesV1UpgradeGoAhead: {
         _enum: string[];
     };
+    /**
+     * Lookup295: polkadot_primitives::v1::UpgradeRestriction
+     **/
     PolkadotPrimitivesV1UpgradeRestriction: {
         _enum: string[];
     };
+    /**
+     * Lookup296: polkadot_runtime_parachains::paras::ParaGenesisArgs
+     **/
     PolkadotRuntimeParachainsParasParaGenesisArgs: {
         genesisHead: string;
         validationCode: string;
         parachain: string;
     };
+    /**
+     * Lookup297: polkadot_runtime_parachains::paras::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsParasPalletCall: {
         _enum: {
             force_set_current_code: {
@@ -1664,14 +2201,23 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup298: polkadot_runtime_parachains::paras::pallet::Error<T>
+     **/
     PolkadotRuntimeParachainsParasPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup300: polkadot_runtime_parachains::initializer::BufferedSessionChange
+     **/
     PolkadotRuntimeParachainsInitializerBufferedSessionChange: {
         validators: string;
         queued: string;
         sessionIndex: string;
     };
+    /**
+     * Lookup301: polkadot_runtime_parachains::initializer::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsInitializerPalletCall: {
         _enum: {
             force_approve: {
@@ -1679,11 +2225,20 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup303: polkadot_core_primitives::InboundDownwardMessage<BlockNumber>
+     **/
     PolkadotCorePrimitivesInboundDownwardMessage: {
         sentAt: string;
         msg: string;
     };
+    /**
+     * Lookup304: polkadot_runtime_parachains::dmp::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsDmpPalletCall: string;
+    /**
+     * Lookup306: polkadot_runtime_parachains::ump::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsUmpPalletCall: {
         _enum: {
             service_overweight: {
@@ -1692,9 +2247,15 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup307: polkadot_runtime_parachains::ump::pallet::Error<T>
+     **/
     PolkadotRuntimeParachainsUmpPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup308: polkadot_runtime_parachains::hrmp::HrmpOpenChannelRequest
+     **/
     PolkadotRuntimeParachainsHrmpHrmpOpenChannelRequest: {
         confirmed: string;
         age: string;
@@ -1703,6 +2264,9 @@ declare const _default: {
         maxCapacity: string;
         maxTotalSize: string;
     };
+    /**
+     * Lookup310: polkadot_runtime_parachains::hrmp::HrmpChannel
+     **/
     PolkadotRuntimeParachainsHrmpHrmpChannel: {
         maxCapacity: string;
         maxTotalSize: string;
@@ -1713,10 +2277,16 @@ declare const _default: {
         senderDeposit: string;
         recipientDeposit: string;
     };
+    /**
+     * Lookup313: polkadot_core_primitives::InboundHrmpMessage<BlockNumber>
+     **/
     PolkadotCorePrimitivesInboundHrmpMessage: {
         sentAt: string;
         data: string;
     };
+    /**
+     * Lookup316: polkadot_runtime_parachains::hrmp::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsHrmpPalletCall: {
         _enum: {
             hrmp_init_open_channel: {
@@ -1740,9 +2310,15 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup317: polkadot_runtime_parachains::hrmp::pallet::Error<T>
+     **/
     PolkadotRuntimeParachainsHrmpPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup319: polkadot_primitives::v1::SessionInfo
+     **/
     PolkadotPrimitivesV1SessionInfo: {
         validators: string;
         discoveryKeys: string;
@@ -1755,23 +2331,38 @@ declare const _default: {
         noShowSlots: string;
         neededApprovals: string;
     };
+    /**
+     * Lookup322: polkadot_primitives::v1::DisputeState<N>
+     **/
     PolkadotPrimitivesV1DisputeState: {
         validatorsFor: string;
         validatorsAgainst: string;
         start: string;
         concludedAt: string;
     };
+    /**
+     * Lookup323: polkadot_runtime_parachains::disputes::pallet::Call<T>
+     **/
     PolkadotRuntimeParachainsDisputesPalletCall: {
         _enum: string[];
     };
+    /**
+     * Lookup324: polkadot_runtime_parachains::disputes::pallet::Error<T>
+     **/
     PolkadotRuntimeParachainsDisputesPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup325: polkadot_runtime_common::paras_registrar::ParaInfo<sp_core::crypto::AccountId32, Balance>
+     **/
     PolkadotRuntimeCommonParasRegistrarParaInfo: {
         manager: string;
         deposit: string;
         locked: string;
     };
+    /**
+     * Lookup326: polkadot_runtime_common::paras_registrar::pallet::Call<T>
+     **/
     PolkadotRuntimeCommonParasRegistrarPalletCall: {
         _enum: {
             register: {
@@ -1799,9 +2390,15 @@ declare const _default: {
             reserve: string;
         };
     };
+    /**
+     * Lookup327: polkadot_runtime_common::paras_registrar::pallet::Error<T>
+     **/
     PolkadotRuntimeCommonParasRegistrarPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup332: polkadot_runtime_common::auctions::pallet::Call<T>
+     **/
     PolkadotRuntimeCommonAuctionsPalletCall: {
         _enum: {
             new_auction: {
@@ -1818,9 +2415,15 @@ declare const _default: {
             cancel_auction: string;
         };
     };
+    /**
+     * Lookup334: polkadot_runtime_common::auctions::pallet::Error<T>
+     **/
     PolkadotRuntimeCommonAuctionsPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup335: polkadot_runtime_common::crowdloan::FundInfo<sp_core::crypto::AccountId32, Balance, BlockNumber, LeasePeriod>
+     **/
     PolkadotRuntimeCommonCrowdloanFundInfo: {
         depositor: string;
         verifier: string;
@@ -1833,6 +2436,9 @@ declare const _default: {
         lastPeriod: string;
         trieIndex: string;
     };
+    /**
+     * Lookup337: sp_runtime::MultiSigner
+     **/
     SpRuntimeMultiSigner: {
         _enum: {
             Ed25519: string;
@@ -1840,6 +2446,9 @@ declare const _default: {
             Ecdsa: string;
         };
     };
+    /**
+     * Lookup338: polkadot_runtime_common::crowdloan::LastContribution<BlockNumber>
+     **/
     PolkadotRuntimeCommonCrowdloanLastContribution: {
         _enum: {
             Never: string;
@@ -1847,6 +2456,9 @@ declare const _default: {
             Ending: string;
         };
     };
+    /**
+     * Lookup339: polkadot_runtime_common::crowdloan::pallet::Call<T>
+     **/
     PolkadotRuntimeCommonCrowdloanPalletCall: {
         _enum: {
             create: {
@@ -1889,6 +2501,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup341: sp_runtime::MultiSignature
+     **/
     SpRuntimeMultiSignature: {
         _enum: {
             Ed25519: string;
@@ -1896,11 +2511,23 @@ declare const _default: {
             Ecdsa: string;
         };
     };
+    /**
+     * Lookup342: sp_core::ecdsa::Signature
+     **/
     SpCoreEcdsaSignature: string;
+    /**
+     * Lookup344: frame_support::PalletId
+     **/
     FrameSupportPalletId: string;
+    /**
+     * Lookup345: polkadot_runtime_common::crowdloan::pallet::Error<T>
+     **/
     PolkadotRuntimeCommonCrowdloanPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup349: polkadot_runtime_common::slots::pallet::Call<T>
+     **/
     PolkadotRuntimeCommonSlotsPalletCall: {
         _enum: {
             force_lease: {
@@ -1918,9 +2545,15 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup350: polkadot_runtime_common::slots::pallet::Error<T>
+     **/
     PolkadotRuntimeCommonSlotsPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup351: polkadot_runtime_common::paras_sudo_wrapper::pallet::Call<T>
+     **/
     PolkadotRuntimeCommonParasSudoWrapperPalletCall: {
         _enum: {
             sudo_schedule_para_initialize: {
@@ -1948,6 +2581,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup352: xcm::VersionedXcm<Call>
+     **/
     XcmVersionedXcm: {
         _enum: {
             V0: string;
@@ -1955,6 +2591,9 @@ declare const _default: {
             V2: string;
         };
     };
+    /**
+     * Lookup353: xcm::v0::Xcm<Call>
+     **/
     XcmV0Xcm: {
         _enum: {
             WithdrawAsset: {
@@ -2006,6 +2645,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup355: xcm::v0::order::Order<Call>
+     **/
     XcmV0Order: {
         _enum: {
             Null: string;
@@ -2046,11 +2688,17 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup357: xcm::v0::Response
+     **/
     XcmV0Response: {
         _enum: {
             Assets: string;
         };
     };
+    /**
+     * Lookup358: xcm::v1::Xcm<Call>
+     **/
     XcmV1Xcm: {
         _enum: {
             WithdrawAsset: {
@@ -2107,6 +2755,9 @@ declare const _default: {
             UnsubscribeVersion: string;
         };
     };
+    /**
+     * Lookup360: xcm::v1::order::Order<Call>
+     **/
     XcmV1Order: {
         _enum: {
             Noop: string;
@@ -2149,15 +2800,24 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup362: xcm::v1::Response
+     **/
     XcmV1Response: {
         _enum: {
             Assets: string;
             Version: string;
         };
     };
+    /**
+     * Lookup363: polkadot_runtime_common::paras_sudo_wrapper::pallet::Error<T>
+     **/
     PolkadotRuntimeCommonParasSudoWrapperPalletError: {
         _enum: string[];
     };
+    /**
+     * Lookup364: pallet_sudo::pallet::Call<T>
+     **/
     PalletSudoCall: {
         _enum: {
             sudo: {
@@ -2179,6 +2839,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup366: rococo_runtime::validator_manager::Call<T>
+     **/
     RococoRuntimeValidatorManagerCall: {
         _enum: {
             register_validators: {
@@ -2189,6 +2852,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup367: pallet_collective::pallet::Call<T, I>
+     **/
     PalletCollectiveCall: {
         _enum: {
             set_members: {
@@ -2221,6 +2887,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup368: pallet_membership::pallet::Call<T, I>
+     **/
     PalletMembershipCall: {
         _enum: {
             add_member: {
@@ -2248,6 +2917,9 @@ declare const _default: {
             clear_prime: string;
         };
     };
+    /**
+     * Lookup369: pallet_utility::pallet::Call<T>
+     **/
     PalletUtilityCall: {
         _enum: {
             batch: {
@@ -2266,6 +2938,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup371: rococo_runtime::OriginCaller
+     **/
     RococoRuntimeOriginCaller: {
         _enum: {
             system: string;
@@ -2370,6 +3045,9 @@ declare const _default: {
             XcmPallet: string;
         };
     };
+    /**
+     * Lookup372: frame_system::RawOrigin<sp_core::crypto::AccountId32>
+     **/
     FrameSystemRawOrigin: {
         _enum: {
             Root: string;
@@ -2377,11 +3055,17 @@ declare const _default: {
             None: string;
         };
     };
+    /**
+     * Lookup373: polkadot_runtime_parachains::origin::pallet::Origin
+     **/
     PolkadotRuntimeParachainsOriginPalletOrigin: {
         _enum: {
             Parachain: string;
         };
     };
+    /**
+     * Lookup374: pallet_collective::RawOrigin<sp_core::crypto::AccountId32, I>
+     **/
     PalletCollectiveRawOrigin: {
         _enum: {
             Members: string;
@@ -2389,13 +3073,22 @@ declare const _default: {
             _Phantom: string;
         };
     };
+    /**
+     * Lookup375: pallet_xcm::pallet::Origin
+     **/
     PalletXcmOrigin: {
         _enum: {
             Xcm: string;
             Response: string;
         };
     };
+    /**
+     * Lookup376: sp_core::Void
+     **/
     SpCoreVoid: string;
+    /**
+     * Lookup377: pallet_proxy::pallet::Call<T>
+     **/
     PalletProxyCall: {
         _enum: {
             proxy: {
@@ -2446,6 +3139,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup379: pallet_multisig::pallet::Call<T>
+     **/
     PalletMultisigCall: {
         _enum: {
             as_multi_threshold_1: {
@@ -2475,6 +3171,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup382: pallet_xcm::pallet::Call<T>
+     **/
     PalletXcmCall: {
         _enum: {
             send: {
@@ -2526,15 +3225,27 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup396: pallet_sudo::pallet::Error<T>
+     **/
     PalletSudoError: {
         _enum: string[];
     };
+    /**
+     * Lookup398: beefy_primitives::mmr::BeefyNextAuthoritySet<primitive_types::H256>
+     **/
     BeefyPrimitivesMmrBeefyNextAuthoritySet: {
         id: string;
         len: string;
         root: string;
     };
+    /**
+     * Lookup399: rococo_runtime::validator_manager::Error<T>
+     **/
     RococoRuntimeValidatorManagerError: string;
+    /**
+     * Lookup401: pallet_collective::Votes<sp_core::crypto::AccountId32, BlockNumber>
+     **/
     PalletCollectiveVotes: {
         index: string;
         threshold: string;
@@ -2542,37 +3253,64 @@ declare const _default: {
         nays: string;
         end: string;
     };
+    /**
+     * Lookup402: pallet_collective::pallet::Error<T, I>
+     **/
     PalletCollectiveError: {
         _enum: string[];
     };
+    /**
+     * Lookup403: pallet_membership::pallet::Error<T, I>
+     **/
     PalletMembershipError: {
         _enum: string[];
     };
+    /**
+     * Lookup404: pallet_utility::pallet::Error<T>
+     **/
     PalletUtilityError: {
         _enum: string[];
     };
+    /**
+     * Lookup407: pallet_proxy::ProxyDefinition<sp_core::crypto::AccountId32, rococo_runtime::ProxyType, BlockNumber>
+     **/
     PalletProxyProxyDefinition: {
         delegate: string;
         proxyType: string;
         delay: string;
     };
+    /**
+     * Lookup411: pallet_proxy::Announcement<sp_core::crypto::AccountId32, primitive_types::H256, BlockNumber>
+     **/
     PalletProxyAnnouncement: {
         real: string;
         callHash: string;
         height: string;
     };
+    /**
+     * Lookup413: pallet_proxy::pallet::Error<T>
+     **/
     PalletProxyError: {
         _enum: string[];
     };
+    /**
+     * Lookup415: pallet_multisig::Multisig<BlockNumber, Balance, sp_core::crypto::AccountId32>
+     **/
     PalletMultisigMultisig: {
         when: string;
         deposit: string;
         depositor: string;
         approvals: string;
     };
+    /**
+     * Lookup417: pallet_multisig::pallet::Error<T>
+     **/
     PalletMultisigError: {
         _enum: string[];
     };
+    /**
+     * Lookup418: pallet_xcm::pallet::QueryStatus<BlockNumber>
+     **/
     PalletXcmQueryStatus: {
         _enum: {
             Pending: {
@@ -2590,6 +3328,9 @@ declare const _default: {
             };
         };
     };
+    /**
+     * Lookup421: xcm::VersionedResponse
+     **/
     XcmVersionedResponse: {
         _enum: {
             V0: string;
@@ -2597,6 +3338,9 @@ declare const _default: {
             V2: string;
         };
     };
+    /**
+     * Lookup427: pallet_xcm::pallet::VersionMigrationStage
+     **/
     PalletXcmVersionMigrationStage: {
         _enum: {
             MigrateSupportedVersion: string;
@@ -2605,15 +3349,39 @@ declare const _default: {
             MigrateAndNotifyOldTargets: string;
         };
     };
+    /**
+     * Lookup429: pallet_xcm::pallet::Error<T>
+     **/
     PalletXcmError: {
         _enum: string[];
     };
+    /**
+     * Lookup432: frame_system::extensions::check_spec_version::CheckSpecVersion<T>
+     **/
     FrameSystemExtensionsCheckSpecVersion: string;
+    /**
+     * Lookup433: frame_system::extensions::check_tx_version::CheckTxVersion<T>
+     **/
     FrameSystemExtensionsCheckTxVersion: string;
+    /**
+     * Lookup434: frame_system::extensions::check_genesis::CheckGenesis<T>
+     **/
     FrameSystemExtensionsCheckGenesis: string;
+    /**
+     * Lookup437: frame_system::extensions::check_nonce::CheckNonce<T>
+     **/
     FrameSystemExtensionsCheckNonce: string;
+    /**
+     * Lookup438: frame_system::extensions::check_weight::CheckWeight<T>
+     **/
     FrameSystemExtensionsCheckWeight: string;
+    /**
+     * Lookup439: pallet_transaction_payment::ChargeTransactionPayment<T>
+     **/
     PalletTransactionPaymentChargeTransactionPayment: string;
+    /**
+     * Lookup440: rococo_runtime::Runtime
+     **/
     RococoRuntimeRuntime: string;
 };
 export default _default;

@@ -1,69 +1,10 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    types: {
-        ComposableTraitsAssetsXcmAssetLocation: "Null",
-        PalletCrowdloanRewardsModelsRemoteAccount: {
-            _enum: {
-                RelayChain: 'AccountId32',
-                Ethereum: 'EthereumAccountId'
-            }
-        },
-        ComposableTraitsCallFilterCallFilterEntry: "Null",
-        PalletAssetsRegistryCandidateStatus: "Null",
-        SpConsensusAuraSr25519AppSr25519Public: "Null",
-        ComposableTraitsBondedFinanceBondOffer: "Null",
-        PalletCollatorSelectionCandidateInfo: "Null",
-        PalletCrowdloanRewardsReward: "Null",
-        PalletDemocracyVoteThreshold: "Null",
-        PalletDemocracyPreimageStatus: "Null",
-        PalletDemocracyReferendumInfo: "Null",
-        PalletDemocracyReleases: "Null",
-        PalletDemocracyVoteVoting: "Null",
-        CumulusPalletDmpQueueConfigData: "Null",
-        PalletDutchAuctionSellOrder: "Null",
-        ComposableTraitsVestingVestingSchedule: "Null",
-        CumulusPalletDmpQueuePageIndexData: "Null",
-        PalletDutchAuctionTakeOrder: "Null",
-        ComposableTraitsGovernanceSignedRawOrigin: "Null",
-        PalletIdentityRegistration: "Null",
-        PalletIdentityRegistrarInfo: "Null",
-        PalletOracleAssetInfo: "Null",
-        PalletOracleWithdraw: "Null",
-        PalletOraclePrePrice: "Null",
-        PalletOraclePrice: "Null",
-        PolkadotPrimitivesV1AbridgedHostConfiguration: "Null",
-        CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot: "Null",
-        PolkadotPrimitivesV1PersistedValidationData: "PersistedValidationData",
-        PalletSchedulerScheduledV2: "Null",
-        PalletSchedulerReleases: "Null",
-        DaliRuntimeOpaqueSessionKeys: "Null",
-        OrmlTokensAccountData: "Null",
-        OrmlTokensBalanceLock: "Null",
-        PalletTreasuryProposal: "Null",
-        PalletVaultModelsStrategyOverview: "Null",
-        PalletVaultModelsVaultInfo: "Null",
-        CumulusPalletXcmpQueueInboundStatus: "Null",
-        PolkadotParachainPrimitivesXcmpMessageFormat: "Null",
-        CumulusPalletXcmpQueueOutboundStatus: "Null",
-        CumulusPalletXcmpQueueQueueConfigData: "Null",
-        PalletCrowdloanRewardsModelsProof: {
-            _enum: {
-                RelayChain: '(AccountId32, MultiSignature)',
-                Ethereum: 'EcdsaSignature'
-            }
-        },
-        PalletDemocracyConviction: "Null",
-        PalletDemocracyVoteAccountVote: "Null",
-        ComposableTraitsDefiSell: "Null",
-        ComposableTraitsAuctionAuctionStepFunction: "Null",
-        ComposableTraitsDefiTake: "Null",
-        PalletIdentityJudgement: "Null",
-        PalletIdentityBitFlags: "Null",
-        PalletIdentityIdentityInfo: "Null",
-        CumulusPrimitivesParachainInherentParachainInherentData: 'ParachainInherentData',
-        DaliRuntimeOriginCaller: "Null",
-        ComposableTraitsVaultVaultConfig: "Null",
-        XcmVersionedMultiAsset: "Null",
-    }
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.assets = exports.crowdloanRewards = void 0;
+var definitions_1 = require("./crowdloanRewards/definitions");
+Object.defineProperty(exports, "crowdloanRewards", { enumerable: true, get: function () { return __importDefault(definitions_1).default; } });
+var definitions_2 = require("./assets/definitions");
+Object.defineProperty(exports, "assets", { enumerable: true, get: function () { return __importDefault(definitions_2).default; } });

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@polkadot/api": "^7.5.1",
+    "@polkadot/api": "latest",
     "@polkadot/util": "^8.3.2",
     "@polkadot/keyring": "^8.3.1",
     "@polkadot/util-crypto": "^8.3.2",

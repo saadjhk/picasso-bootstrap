@@ -3,9 +3,9 @@ import { IKeyringPair } from "@polkadot/types/types";
 import Web3 from "web3";
 const web3 = new Web3(process.env.GANACHE_URL || "");
 
-export const buildApi = async (substrateNodeUrl: string, types: any): Promise<ApiPromise> => {
+export const buildApi = async (substrateNodeUrl: string, types: any, rpc: any): Promise<ApiPromise> => {
     const wsProvider = new WsProvider(substrateNodeUrl, 1000);
-    const api = await ApiPromise.create({ provider: wsProvider, types });
+    const api = await ApiPromise.create({ provider: wsProvider, types, rpc });
 
     return await api.isReady;
 };

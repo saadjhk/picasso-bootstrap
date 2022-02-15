@@ -5,7 +5,7 @@ export const amountToClaim = async (
   api: ApiPromise,
   rewardAccount: KeyringPair
 ) => {
-  const availableClaim = await (api.rpc.crowdloanRewards.amountAvailableToClaimFor(
+  const availableClaim = await ((api.rpc as any).crowdloanRewards.amountAvailableToClaimFor(
     rewardAccount.publicKey
   ));
 
