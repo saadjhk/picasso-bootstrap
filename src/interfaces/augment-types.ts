@@ -1,10 +1,10 @@
 // Auto-generated via `yarn polkadot-types-from-defs`, do not edit
 /* eslint-disable */
 
-import type { ComposableTraitsAssetsXcmAssetLocation, ComposableTraitsAuctionAuctionStepFunction, ComposableTraitsBondedFinanceBondOffer, ComposableTraitsCallFilterCallFilterEntry, ComposableTraitsDefiSell, ComposableTraitsDefiTake, ComposableTraitsGovernanceSignedRawOrigin, ComposableTraitsTimeTimeReleaseFunction, ComposableTraitsVaultVaultConfig, ComposableTraitsVestingVestingSchedule, CumulusPalletDmpQueueConfigData, CumulusPalletDmpQueuePageIndexData, CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot, CumulusPalletXcmpQueueInboundStatus, CumulusPalletXcmpQueueOutboundStatus, CumulusPalletXcmpQueueQueueConfigData, CumulusPrimitivesParachainInherentParachainInherentData, DaliRuntimeOpaqueSessionKeys, DaliRuntimeOriginCaller, OrmlTokensAccountData, OrmlTokensBalanceLock, PalletAssetsRegistryCandidateStatus, PalletCollatorSelectionCandidateInfo, PalletCrowdloanRewardsModelsProof, PalletCrowdloanRewardsModelsRemoteAccount, PalletCrowdloanRewardsReward, PalletDemocracyConviction, PalletDemocracyPreimageStatus, PalletDemocracyReferendumInfo, PalletDemocracyReleases, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletDemocracyVoteVoting, PalletDutchAuctionSellOrder, PalletDutchAuctionTakeOrder, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletIdentityRegistrarInfo, PalletIdentityRegistration, PalletOracleAssetInfo, PalletOraclePrePrice, PalletOraclePrice, PalletOracleWithdraw, PalletSchedulerReleases, PalletSchedulerScheduledV2, PalletTreasuryProposal, PalletVaultModelsStrategyOverview, PalletVaultModelsVaultInfo, PolkadotParachainPrimitivesXcmpMessageFormat, PolkadotPrimitivesV1AbridgedHostConfiguration, PolkadotPrimitivesV1PersistedValidationData, SpConsensusAuraSr25519AppSr25519Public, XcmVersionedMultiAsset } from '@composable/types/interfaces/default';
+import type { AssetsBalance, CurrencyId } from '@composable/types/interfaces/assets';
+import type { ComposableTraitsAssetsXcmAssetLocation, ComposableTraitsAuctionAuctionStepFunction, ComposableTraitsBondedFinanceBondOffer, ComposableTraitsCallFilterCallFilterEntry, ComposableTraitsDefiSell, ComposableTraitsDefiTake, ComposableTraitsGovernanceSignedRawOrigin, ComposableTraitsTimeTimeReleaseFunction, ComposableTraitsVaultVaultConfig, ComposableTraitsVestingVestingSchedule, CumulusPalletDmpQueueConfigData, CumulusPalletDmpQueuePageIndexData, CumulusPalletParachainSystemRelayStateSnapshotMessagingStateSnapshot, CumulusPalletXcmpQueueInboundStatus, CumulusPalletXcmpQueueOutboundStatus, CumulusPalletXcmpQueueQueueConfigData, CumulusPrimitivesParachainInherentParachainInherentData, DaliRuntimeOpaqueSessionKeys, DaliRuntimeOriginCaller, OrmlTokensAccountData, OrmlTokensBalanceLock, PalletAssetsRegistryCandidateStatus, PalletAssetsRegistryForeignMetadata, PalletCollatorSelectionCandidateInfo, PalletCrowdloanRewardsModelsProof, PalletCrowdloanRewardsModelsRemoteAccount, PalletCrowdloanRewardsReward, PalletDemocracyConviction, PalletDemocracyPreimageStatus, PalletDemocracyReferendumInfo, PalletDemocracyReleases, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletDemocracyVoteVoting, PalletDutchAuctionSellOrder, PalletDutchAuctionTakeOrder, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletIdentityRegistrarInfo, PalletIdentityRegistration, PalletOracleAssetInfo, PalletOraclePrePrice, PalletOraclePrice, PalletOracleWithdraw, PalletSchedulerReleases, PalletSchedulerScheduledV2, PalletTreasuryProposal, PalletVaultModelsStrategyOverview, PalletVaultModelsVaultInfo, PolkadotParachainPrimitivesXcmpMessageFormat, PolkadotPrimitivesV1AbridgedHostConfiguration, PolkadotPrimitivesV1PersistedValidationData, SpConsensusAuraSr25519AppSr25519Public, XcmVersionedMultiAsset } from '@composable/types/interfaces/crowdloanRewards';
 import type { Data, StorageKey } from '@polkadot/types';
 import type { BitVec, Bool, Bytes, I128, I16, I256, I32, I64, I8, Json, Null, Raw, Text, Type, U128, U16, U256, U32, U64, U8, USize, bool, i128, i16, i256, i32, i64, i8, u128, u16, u256, u32, u64, u8, usize } from '@polkadot/types-codec';
-import type { AssetApproval, AssetApprovalKey, AssetBalance, AssetDestroyWitness, AssetDetails, AssetMetadata, TAssetBalance, TAssetDepositBalance } from '@polkadot/types/interfaces/assets';
 import type { BlockAttestations, IncludedBlocks, MoreAttestations } from '@polkadot/types/interfaces/attestations';
 import type { RawAuraPreDigest } from '@polkadot/types/interfaces/aura';
 import type { ExtrinsicOrHash, ExtrinsicStatus } from '@polkadot/types/interfaces/author';
@@ -97,18 +97,13 @@ declare module '@polkadot/types/types/registry' {
     ApprovalFlag: ApprovalFlag;
     Approvals: Approvals;
     ArithmeticError: ArithmeticError;
-    AssetApproval: AssetApproval;
-    AssetApprovalKey: AssetApprovalKey;
-    AssetBalance: AssetBalance;
-    AssetDestroyWitness: AssetDestroyWitness;
-    AssetDetails: AssetDetails;
     AssetId: AssetId;
     AssetInstance: AssetInstance;
     AssetInstanceV0: AssetInstanceV0;
     AssetInstanceV1: AssetInstanceV1;
     AssetInstanceV2: AssetInstanceV2;
-    AssetMetadata: AssetMetadata;
     AssetOptions: AssetOptions;
+    AssetsBalance: AssetsBalance;
     AssignmentId: AssignmentId;
     AssignmentKind: AssignmentKind;
     AttestedCandidate: AttestedCandidate;
@@ -294,6 +289,7 @@ declare module '@polkadot/types/types/registry' {
     CumulusPalletXcmpQueueOutboundStatus: CumulusPalletXcmpQueueOutboundStatus;
     CumulusPalletXcmpQueueQueueConfigData: CumulusPalletXcmpQueueQueueConfigData;
     CumulusPrimitivesParachainInherentParachainInherentData: CumulusPrimitivesParachainInherentParachainInherentData;
+    CurrencyId: CurrencyId;
     DaliRuntimeOpaqueSessionKeys: DaliRuntimeOpaqueSessionKeys;
     DaliRuntimeOriginCaller: DaliRuntimeOriginCaller;
     Data: Data;
@@ -679,6 +675,7 @@ declare module '@polkadot/types/types/registry' {
     PageCounter: PageCounter;
     PageIndexData: PageIndexData;
     PalletAssetsRegistryCandidateStatus: PalletAssetsRegistryCandidateStatus;
+    PalletAssetsRegistryForeignMetadata: PalletAssetsRegistryForeignMetadata;
     PalletCallMetadataLatest: PalletCallMetadataLatest;
     PalletCallMetadataV14: PalletCallMetadataV14;
     PalletCollatorSelectionCandidateInfo: PalletCollatorSelectionCandidateInfo;
@@ -1018,8 +1015,6 @@ declare module '@polkadot/types/types/registry' {
     SystemOrigin: SystemOrigin;
     Tally: Tally;
     TaskAddress: TaskAddress;
-    TAssetBalance: TAssetBalance;
-    TAssetDepositBalance: TAssetDepositBalance;
     Text: Text;
     Timepoint: Timepoint;
     TokenError: TokenError;

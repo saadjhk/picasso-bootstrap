@@ -1,8 +1,8 @@
 {
   "dependencies": {
     "@polkadot/api": "^7.5.1",
-    "@polkadot/keyring": "^8.3.1",
     "@polkadot/util": "^8.3.2",
+    "@polkadot/keyring": "^8.3.1",
     "@polkadot/util-crypto": "^8.3.2",
     "@types/ramda": "^0.27.63",
     "convert-array-to-csv": "^2.0.0",

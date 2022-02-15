@@ -1,16 +1,9 @@
 require("dotenv").config();
 import Keyring from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { crowdloanRewardsPopulateTest, initialize } from "./pallets";
+import { crowdloanRewardsPopulateTest, initialize, amountToClaim } from "./pallets";
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
-import {
-  claimTo,
-  setBudget,
-  setNetwork,
-  setRelayer,
-  timeLockedMint,
-} from "./pallets/mosaic/extrinsics";
 import { ethers } from "ethers";
 
 const main = async () => {
@@ -36,13 +29,13 @@ const main = async () => {
 
   // const walletBob = kr.addFromUri("//Bob");
 
-  const crPopRes = await crowdloanRewardsPopulateTest(
-    api,
-    walletSudo,
-    [myDot1, myDot2],
-    [myEth1.address, myEth2.address]
-  );
-  const initRes = await initialize(api, walletSudo);
+  // const crPopRes = await crowdloanRewardsPopulateTest(
+  //   api,
+  //   walletSudo,
+  //   [myDot1, myDot2],
+  //   [myEth1.address, myEth2.address]
+  // );
+  // const initRes = await initialize(api, walletSudo);
   // const sRelRes = await setRelayer(api, walletSudo, walletSudo);
   // const sNetRes = await setNetwork(api, walletSudo);
   // const sBudgetRes = await setBudget(1, api, walletSudo);
@@ -66,15 +59,21 @@ const main = async () => {
   // );
 
   // console.log(`Mosaic Transfer Mint: `, {mosaicTransferId});
-  console.log(crPopRes.data.toHuman());
-  console.log(initRes.data.toHuman());
+  // console.log(crPopRes.data.toHuman());
+  // console.log(initRes.data.toHuman());
   // console.log(sRelRes.data.toHuman());
   // console.log(sNetRes.data.toHuman());
   // console.log(sBudgetRes.data.toHuman());
   // console.log(timelockedMintRes.data.toHuman());
 
   // console.log(claimToRes.data.toHuman());
-  process.exit(0);
+
+  setTimeout(() => {
+    amountToClaim(api, myDot1).then((val) => {
+      console.log(val);
+      process.exit(0);
+    })
+  }, 10000);
 };
 
 cryptoWaitReady().then(() => {

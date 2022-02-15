@@ -4,7 +4,7 @@ import { KeyringPair } from "@polkadot/keyring/types";
 import { ethers } from "ethers";
 import * as R from "ramda";
 import { sendAndWaitForSuccess } from "polkadot-utils";
-import { PalletCrowdloanRewardsModelsRemoteAccount } from "interfaces";
+import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../interfaces";
 import { toHexString, ethAccount } from "../../utils";
 
 export const associateKSM = async (
@@ -91,8 +91,8 @@ export const crowdloanRewardsPopulateTest = async (
         }),
         reward,
         vesting48weeks,
-      ])
-    })
+      ]);
+    });
   }
 
   const eth_accounts = R.unfold<
@@ -117,16 +117,14 @@ export const crowdloanRewardsPopulateTest = async (
 
   if (myEthWallets.length) {
     myEthWallets.forEach((wallet) => [
-      eth_accounts.push(
-        [
-          api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
-            Ethereum: wallet,
-          }),
-          reward,
-          vesting48weeks,
-        ]
-      )
-    ])
+      eth_accounts.push([
+        api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+          Ethereum: wallet,
+        }),
+        reward,
+        vesting48weeks,
+      ]),
+    ]);
   }
 
   const accounts = relay_accounts.concat(eth_accounts);

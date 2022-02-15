@@ -252,6 +252,12 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
+    currencyFactory: {
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
     democracy: {
       /**
        * Cannot cancel the same proposal twice
@@ -397,12 +403,6 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
-    factory: {
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
     governanceRegistry: {
       /**
        * Not found
@@ -504,6 +504,13 @@ declare module '@polkadot/api-base/types/errors' {
        * The index is permanent and may not be freed/changed.
        **/
       Permanent: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    liquidations: {
+      NoLiquidationEngineFound: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -642,6 +649,8 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       InvalidMinAnswers: AugmentedError<ApiType>;
       MaxAnswersLessThanMinAnswers: AugmentedError<ApiType>;
+      MaxHistory: AugmentedError<ApiType>;
+      MaxPrePrices: AugmentedError<ApiType>;
       /**
        * Max prices already reached
        **/
@@ -737,6 +746,36 @@ declare module '@polkadot/api-base/types/errors' {
        * The inherent which supplies the validation data did not run this block
        **/
       ValidationDataNotAvailable: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    preimage: {
+      /**
+       * Preimage has already been noted on-chain.
+       **/
+      AlreadyNoted: AugmentedError<ApiType>;
+      /**
+       * The user is not authorized to perform this action.
+       **/
+      NotAuthorized: AugmentedError<ApiType>;
+      /**
+       * The preimage cannot be removed since it has not yet been noted.
+       **/
+      NotNoted: AugmentedError<ApiType>;
+      /**
+       * The preimage request cannot be removed since no outstanding requests exist.
+       **/
+      NotRequested: AugmentedError<ApiType>;
+      /**
+       * A preimage may not be removed when there are outstanding requests.
+       **/
+      Requested: AugmentedError<ApiType>;
+      /**
+       * Preimage is too large to store on-chain.
+       **/
+      TooLarge: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -1110,6 +1149,10 @@ declare module '@polkadot/api-base/types/errors' {
     };
     xcmpQueue: {
       /**
+       * Bad overweight index.
+       **/
+      BadOverweightIndex: AugmentedError<ApiType>;
+      /**
        * Bad XCM data.
        **/
       BadXcm: AugmentedError<ApiType>;
@@ -1122,6 +1165,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       FailedToSend: AugmentedError<ApiType>;
       /**
+       * Provided weight is possibly not enough to execute the message.
+       **/
+      WeightOverLimit: AugmentedError<ApiType>;
+      /**
        * Generic error
        **/
       [key: string]: AugmentedError<ApiType>;
@@ -1131,6 +1178,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Asset has no reserve location.
        **/
       AssetHasNoReserve: AugmentedError<ApiType>;
+      /**
+       * The specified index does not exist in a MultiAssets struct
+       **/
+      AssetIndexNonExistent: AugmentedError<ApiType>;
       /**
        * The version of the `Versioned` value used is not able to be
        * interpreted.
@@ -1146,9 +1197,10 @@ declare module '@polkadot/api-base/types/errors' {
        **/
       DestinationNotInvertible: AugmentedError<ApiType>;
       /**
-       * The fee MultiAsset is of different type than the asset to transfer.
+       * We tried sending distinct asset and fee but they have different
+       * reserve chains
        **/
-      DistincAssetAndFeeId: AugmentedError<ApiType>;
+      DistinctReserveForAssetAndFee: AugmentedError<ApiType>;
       /**
        * The fee amount was zero when the fee specification extrinsic is
        * being used.
@@ -1174,6 +1226,10 @@ declare module '@polkadot/api-base/types/errors' {
        * Not fungible asset.
        **/
       NotFungible: AugmentedError<ApiType>;
+      /**
+       * The number of assets to be sent is over the maximum
+       **/
+      TooManyAssetsBeingSent: AugmentedError<ApiType>;
       /**
        * The message's weight could not be determined.
        **/
