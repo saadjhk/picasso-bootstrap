@@ -1,11 +1,12 @@
 import { ApiPromise } from "@polkadot/api";
 import { u128, u32 } from "@polkadot/types-codec";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { ethers } from "ethers";
+import { ethers, Wallet } from "ethers";
 import * as R from "ramda";
 import { sendAndWaitForSuccess } from "polkadot-utils";
 import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../interfaces";
 import { toHexString, ethAccount } from "../../utils";
+import { base58 } from "micro-base";
 
 export const associateKSM = async (
   api: ApiPromise,
@@ -85,13 +86,20 @@ export const crowdloanRewardsPopulateTest = async (
 
   if (myDotWallets.length) {
     myDotWallets.forEach((wallet) => {
+      typeof wallet === "object" ?
       relay_accounts.push([
         api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
           RelayChain: wallet.publicKey,
         }),
         reward,
         vesting48weeks,
-      ]);
+      ]) : typeof wallet === "string" ? relay_accounts.push([
+        api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+          RelayChain: base58.decode(wallet).subarray(1, 33),
+        }),
+        reward,
+        vesting48weeks,
+      ]) : console.log('dont add');
     });
   }
 

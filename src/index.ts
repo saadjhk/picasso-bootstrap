@@ -1,10 +1,15 @@
 require("dotenv").config();
 import Keyring from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { crowdloanRewardsPopulateTest, initialize, amountToClaim } from "./pallets";
+import {
+  crowdloanRewardsPopulateTest,
+  initialize,
+  amountToClaim,
+} from "./pallets";
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
 import { ethers } from "ethers";
+// import { base58 } from "micro-base";
 
 const main = async () => {
   await cryptoWaitReady();
@@ -18,11 +23,28 @@ const main = async () => {
   );
   const walletSudo = kr.addFromUri("//Alice"); // alice
 
-  const myEth1 = new ethers.Wallet(process.env.ETH_PK ? process.env.ETH_PK : "")
-  const myEth2 = new ethers.Wallet(process.env.ETH_PK ? process.env.ETH_PK : "")
+  // const decoded = base58.decode("15SP8c4vwuUFgGUpfXuqFC3WsdPytBw5uPdgM2qbLeavem5V")
+  // console.log('mb', decoded.subarray(1, 33));
+  // console.log('kr', myDot1.publicKey);
 
-  const rpc = Object.keys(definitions).reduce((accumulator, key) => ({ ...accumulator, [key]: (definitions as any)[key].rpc }), {});
-  const types = Object.values(definitions).reduce((accumulator, { types }) => ({ ...accumulator, ...types }), {});
+  const myEth1 = new ethers.Wallet(
+    process.env.ETH_PK ? process.env.ETH_PK : ""
+  );
+  const myEth2 = new ethers.Wallet(
+    process.env.ETH_PK ? process.env.ETH_PK : ""
+  );
+
+  const rpc = Object.keys(definitions).reduce(
+    (accumulator, key) => ({
+      ...accumulator,
+      [key]: (definitions as any)[key].rpc,
+    }),
+    {}
+  );
+  const types = Object.values(definitions).reduce(
+    (accumulator, { types }) => ({ ...accumulator, ...types }),
+    {}
+  );
   const api = await buildApi(process.env.PICASSO_RPC_URL || "", types, rpc);
 
   // const walletBob = kr.addFromUri("//Bob");
@@ -30,8 +52,24 @@ const main = async () => {
   const crPopRes = await crowdloanRewardsPopulateTest(
     api,
     walletSudo,
-    [myDot1, myDot2],
-    [myEth1.address, myEth2.address]
+    [
+      myDot1,
+      myDot2,
+      // peter dot wallets
+      "5uymjr2xLL14upmg4nezH5LZMNgenGn7MrbQ2WnJ7dhcDb4C",
+      "5z6opGwNemAtYG7o7KehBn2KdKbGPw64E23ZpwxcXoGiwufL",
+      "E4syq7LfkjrZuqofYRg5dX2zzd8DR54p82F2BHuFLqHHGm6",
+      "GRxsfLzj5wthacZ6bYSdL9FNosAMFBkVhcwWWxGtMsCSx8G",
+      "FhJDi6usuBii4kbHEiUbYcd2a1yXk5CJCJEkxr2BT3wqHmc",
+    ] as any[],
+    [
+      myEth1.address,
+      myEth2.address,
+      // peter eth wallets
+      "0x33Cd07B1ae8485a6090091ee55389237eCB0Aed4",
+      "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22",
+      "0x38650E1FD89E6bBEfDD2f150190C70da02454b93",
+    ]
   );
   const initRes = await initialize(api, walletSudo);
   // const sRelRes = await setRelayer(api, walletSudo, walletSudo);
@@ -70,7 +108,7 @@ const main = async () => {
     amountToClaim(api, myDot1).then((val) => {
       console.log(val);
       process.exit(0);
-    })
+    });
   }, 10000);
 };
 
