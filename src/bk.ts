@@ -19,6 +19,11 @@ const createBlock = async (apiPromise: ApiPromise, count: number) => {
   if (count > 0) createBlock(apiPromise, count-1);
 }
 
+function sleep(delay: number) {
+  var start = new Date().getTime();
+  while (new Date().getTime() < start + delay);
+}
+
 const main = async () => {
   await cryptoWaitReady();
 
@@ -83,10 +88,69 @@ const main = async () => {
   );
   const initRes = await initialize(api, walletSudo);
   
-  // createBlock(api, 100_000_000);
-  console.log(crPopRes.data.toHuman());
-  console.log(initRes.data.toHuman());
+  // const sRelRes = await setRelayer(api, walletSudo, walletSudo);
+  // const sNetRes = await setNetwork(api, walletSudo);
+  // const sBudgetRes = await setBudget(1, api, walletSudo);
 
+  // const blockNum = await api.rpc.chain.getBlock();
+  // const {
+  //   block: {
+  //     header: { number },
+  //   },
+  // }: any = blockNum.toHuman();
+
+  // const mosaicTransferId = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("TimeLockedMint"));
+  // const timelockedMintRes = await timeLockedMint(
+  //   api,
+  //   1,
+  //   walletBob,
+  //   100_000_00,
+  //   5,
+  //   mosaicTransferId,
+  //   walletSudo
+  // );
+
+  // let blocksToMine = 1000;
+  // const b1 = await api.rpc.engine.createBlock(true, true);
+  // const b2 = await api.rpc.engine.createBlock(true, true);
+
+  // let response = await Promise.all(blockPromises);
+  // response = response.map((i) => i.toHuman())
+  // console.log(response[0])
+  // console.log(response[1])
+  // for (let i = 0 ; i < blocksToMine ; i++) {
+  //   console.log('Waiting');
+  //   sleep(10000);
+  //   console.log('Create block RPC');
+  //   api.rpc.engine.createBlock(true, true).then((created) => {
+  //     console.log(created);
+  //   })
+  // }
+
+  // console.log(`Mosaic Transfer Mint: `, {mosaicTransferId});
+  // console.log(crPopRes.data.toHuman());
+  // console.log(initRes.data.toHuman());
+  // console.log(sRelRes.data.toHuman());
+  // console.log(sNetRes.data.toHuman());
+  // console.log(sBudgetRes.data.toHuman());
+  // console.log(timelockedMintRes.data.toHuman());
+  // console.log(claimToRes.data.toHuman());
+
+  createBlock(api, 1000);
+
+  // setTimeout(() => {
+    amountToClaim(api, myDot1).then((val) => {
+      console.log(val);
+      // process.exit(0);
+    });
+  // }, 10000);
+
+  // setTimeout(() => {
+    amountToClaim(api, myDot2).then((val) => {
+      console.log(val);
+      // process.exit(0);
+    });
+  // }, 10000);
 };
 
 cryptoWaitReady().then(() => {
