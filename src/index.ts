@@ -9,7 +9,15 @@ import {
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
 import { ethers } from "ethers";
+import { ApiPromise } from "@polkadot/api";
 // import { base58 } from "micro-base";
+
+const createBlock = async (apiPromise: ApiPromise, count: number) => {
+  if (count <= 0) return;
+  const blockToMine = await apiPromise.rpc.engine.createBlock(true, true);
+  console.log(blockToMine.toHuman());
+  if (count > 0) createBlock(apiPromise, count-1);
+}
 
 function sleep(delay: number) {
   var start = new Date().getTime();
@@ -102,16 +110,22 @@ const main = async () => {
   //   walletSudo
   // );
 
-  let blocksToMine = 1000;
+  // let blocksToMine = 1000;
+  // const b1 = await api.rpc.engine.createBlock(true, true);
+  // const b2 = await api.rpc.engine.createBlock(true, true);
 
-  for (let i = 0 ; i < blocksToMine ; i++) {
-    console.log('Waiting');
-    sleep(10000);
-    console.log('Create block RPC');
-    api.rpc.engine.createBlock(true, true).then((created) => {
-      console.log(created);
-    })
-  }
+  // let response = await Promise.all(blockPromises);
+  // response = response.map((i) => i.toHuman())
+  // console.log(response[0])
+  // console.log(response[1])
+  // for (let i = 0 ; i < blocksToMine ; i++) {
+  //   console.log('Waiting');
+  //   sleep(10000);
+  //   console.log('Create block RPC');
+  //   api.rpc.engine.createBlock(true, true).then((created) => {
+  //     console.log(created);
+  //   })
+  // }
 
   // console.log(`Mosaic Transfer Mint: `, {mosaicTransferId});
   // console.log(crPopRes.data.toHuman());
@@ -121,6 +135,8 @@ const main = async () => {
   // console.log(sBudgetRes.data.toHuman());
   // console.log(timelockedMintRes.data.toHuman());
   // console.log(claimToRes.data.toHuman());
+
+  createBlock(api, 1000);
 
   setTimeout(() => {
     amountToClaim(api, myDot1).then((val) => {
@@ -133,6 +149,6 @@ const main = async () => {
 cryptoWaitReady().then(() => {
   main().catch((err) => {
     console.error(err.message);
-    process.exit(0);
+    // process.exit(0);
   });
 });
