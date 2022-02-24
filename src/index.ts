@@ -11,6 +11,11 @@ import { buildApi } from "./utils";
 import { ethers } from "ethers";
 // import { base58 } from "micro-base";
 
+function sleep(delay: number) {
+  var start = new Date().getTime();
+  while (new Date().getTime() < start + delay);
+}
+
 const main = async () => {
   await cryptoWaitReady();
 
@@ -49,31 +54,32 @@ const main = async () => {
 
   // const walletBob = kr.addFromUri("//Bob");
 
-  const crPopRes = await crowdloanRewardsPopulateTest(
-    api,
-    walletSudo,
-    [
-      myDot1,
-      myDot2,
-      // peter dot wallets
-      "5uymjr2xLL14upmg4nezH5LZMNgenGn7MrbQ2WnJ7dhcDb4C",
-      "5z6opGwNemAtYG7o7KehBn2KdKbGPw64E23ZpwxcXoGiwufL",
-      "E4syq7LfkjrZuqofYRg5dX2zzd8DR54p82F2BHuFLqHHGm6",
-      "GRxsfLzj5wthacZ6bYSdL9FNosAMFBkVhcwWWxGtMsCSx8G",
-      "FhJDi6usuBii4kbHEiUbYcd2a1yXk5CJCJEkxr2BT3wqHmc",
-      "5GgjZECB6XsH3iao7rg6dDbMG9urjsWVjinDBF2ngqWFxyoC",
-      "F53d3jeyFvb2eYsgAERhjC8mogao4Kg4GsdezrqiT8aj55v" // liviu
-    ] as any[],
-    [
-      myEth1.address,
-      myEth2.address,
-      // peter eth wallets
-      "0x33Cd07B1ae8485a6090091ee55389237eCB0Aed4",
-      "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22",
-      "0x38650E1FD89E6bBEfDD2f150190C70da02454b93",
-    ]
-  );
-  const initRes = await initialize(api, walletSudo);
+  // const crPopRes = await crowdloanRewardsPopulateTest(
+  //   api,
+  //   walletSudo,
+  //   [
+  //     myDot1,
+  //     myDot2,
+  //     // peter dot wallets
+  //     "5uymjr2xLL14upmg4nezH5LZMNgenGn7MrbQ2WnJ7dhcDb4C",
+  //     "5z6opGwNemAtYG7o7KehBn2KdKbGPw64E23ZpwxcXoGiwufL",
+  //     "E4syq7LfkjrZuqofYRg5dX2zzd8DR54p82F2BHuFLqHHGm6",
+  //     "GRxsfLzj5wthacZ6bYSdL9FNosAMFBkVhcwWWxGtMsCSx8G",
+  //     "FhJDi6usuBii4kbHEiUbYcd2a1yXk5CJCJEkxr2BT3wqHmc",
+  //     "5GgjZECB6XsH3iao7rg6dDbMG9urjsWVjinDBF2ngqWFxyoC",
+  //     "F53d3jeyFvb2eYsgAERhjC8mogao4Kg4GsdezrqiT8aj55v" // liviu
+  //   ] as any[],
+  //   [
+  //     myEth1.address,
+  //     myEth2.address,
+  //     // peter eth wallets
+  //     "0x33Cd07B1ae8485a6090091ee55389237eCB0Aed4",
+  //     "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22",
+  //     "0x38650E1FD89E6bBEfDD2f150190C70da02454b93",
+  //   ]
+  // );
+  // const initRes = await initialize(api, walletSudo);
+  
   // const sRelRes = await setRelayer(api, walletSudo, walletSudo);
   // const sNetRes = await setNetwork(api, walletSudo);
   // const sBudgetRes = await setBudget(1, api, walletSudo);
@@ -96,20 +102,30 @@ const main = async () => {
   //   walletSudo
   // );
 
+  let blocksToMine = 1000;
+
+  for (let i = 0 ; i < blocksToMine ; i++) {
+    console.log('Waiting');
+    sleep(10000);
+    console.log('Create block RPC');
+    api.rpc.engine.createBlock(true, true).then((created) => {
+      console.log(created);
+    })
+  }
+
   // console.log(`Mosaic Transfer Mint: `, {mosaicTransferId});
-  console.log(crPopRes.data.toHuman());
-  console.log(initRes.data.toHuman());
+  // console.log(crPopRes.data.toHuman());
+  // console.log(initRes.data.toHuman());
   // console.log(sRelRes.data.toHuman());
   // console.log(sNetRes.data.toHuman());
   // console.log(sBudgetRes.data.toHuman());
   // console.log(timelockedMintRes.data.toHuman());
-
   // console.log(claimToRes.data.toHuman());
 
   setTimeout(() => {
     amountToClaim(api, myDot1).then((val) => {
       console.log(val);
-      process.exit(0);
+      // process.exit(0);
     });
   }, 10000);
 };
