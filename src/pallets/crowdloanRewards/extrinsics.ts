@@ -61,14 +61,14 @@ export const crowdloanRewardsPopulateTest = async (
 ) => {
   const sudoKey = walletAlice;
   const vesting48weeks = api.createType("u32", 100800);
-  const reward = api.createType("u128", 1_000_000_000_000);
+  const reward = api.createType("u128", 1_000_000_000_000_000);
 
   const relay_accounts = R.unfold<
     number,
     [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]
   >(
     (n) =>
-      n > 50
+      n > 10
         ? false
         : [
             [
@@ -108,7 +108,7 @@ export const crowdloanRewardsPopulateTest = async (
     [PalletCrowdloanRewardsModelsRemoteAccount, u128, u32]
   >(
     (n) =>
-      n > 50
+      n > 10
         ? false
         : [
             [
@@ -134,7 +134,6 @@ export const crowdloanRewardsPopulateTest = async (
       ]),
     ]);
   }
-
   const accounts = relay_accounts.concat(eth_accounts);
   return await sendAndWaitForSuccess(
     api,

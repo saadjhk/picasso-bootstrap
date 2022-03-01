@@ -4,7 +4,6 @@ import { cryptoWaitReady } from "@polkadot/util-crypto";
 import {
   crowdloanRewardsPopulateTest,
   initialize,
-  amountToClaim,
 } from "./pallets";
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
