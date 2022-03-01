@@ -1,12 +1,13 @@
 import { ApiPromise } from "@polkadot/api";
 import { u128, u32 } from "@polkadot/types-codec";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { ethers, Wallet } from "ethers";
+import { ethers } from "ethers";
 import * as R from "ramda";
 import { sendAndWaitForSuccess } from "polkadot-utils";
 import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../interfaces";
 import { toHexString, ethAccount } from "../../utils";
 import { base58 } from "micro-base";
+import BigNumber from "bignumber.js";
 
 export const associateKSM = async (
   api: ApiPromise,
@@ -86,20 +87,23 @@ export const crowdloanRewardsPopulateTest = async (
 
   if (myDotWallets.length) {
     myDotWallets.forEach((wallet) => {
-      typeof wallet === "object" ?
-      relay_accounts.push([
-        api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
-          RelayChain: wallet.publicKey,
-        }),
-        reward,
-        vesting48weeks,
-      ]) : typeof wallet === "string" ? relay_accounts.push([
-        api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
-          RelayChain: base58.decode(wallet).subarray(1, 33),
-        }),
-        reward,
-        vesting48weeks,
-      ]) : console.log('dont add');
+      typeof wallet === "object"
+        ? relay_accounts.push([
+            api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+              RelayChain: wallet.publicKey,
+            }),
+            reward,
+            vesting48weeks,
+          ])
+        : typeof wallet === "string"
+        ? relay_accounts.push([
+            api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+              RelayChain: base58.decode(wallet).subarray(1, 33),
+            }),
+            reward,
+            vesting48weeks,
+          ])
+        : console.log("dont add");
     });
   }
 
@@ -140,5 +144,51 @@ export const crowdloanRewardsPopulateTest = async (
     sudoKey,
     api.events.sudo.Sudid.is,
     api.tx.sudo.sudo(api.tx.crowdloanRewards.populate(accounts))
+  );
+};
+
+export const crowdloanRewardsPopulateJSON = async (
+  api: ApiPromise,
+  walletAlice: KeyringPair,
+  dotWallets: { address: string; rewards: string }[],
+  ethWallets: { address: string; rewards: string }[]
+) => {
+  const sudoKey = walletAlice;
+  const vesting48weeks = api.createType("u32", 100800);
+
+  const decimals = new BigNumber(10).pow(12);
+
+  const relay = dotWallets.map((contributor, ind) => {
+    const reward = new BigNumber(contributor.rewards).times(decimals).toString()
+    console.log('KSM ', contributor.address, reward)
+
+    return [
+      api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+        RelayChain: base58.decode(contributor.address).subarray(1, 33),
+      }),
+      api.createType("u128", reward),
+      vesting48weeks
+    ]
+  })
+
+  const eth = dotWallets.map((contributor, ind) => {
+    const reward = new BigNumber(contributor.rewards).times(decimals).toString()
+    console.log('ETH ', contributor.address, reward)
+
+    return [
+      api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
+        Ethereum: contributor.address,
+      }),
+      api.createType("u128", reward),
+      vesting48weeks,
+    ]
+  })
+
+  const accounts = relay.concat(eth);
+  return await sendAndWaitForSuccess(
+    api,
+    sudoKey,
+    api.events.sudo.Sudid.is,
+    api.tx.sudo.sudo(api.tx.crowdloanRewards.populate(accounts as any))
   );
 };
