@@ -110,14 +110,14 @@ const main = async () => {
     rewards: "1223.231"
   })
 
-  console.log(ksm.length)
-  console.log(eth.length)
-  const crPopRes = await crowdloanRewardsPopulateJSON(api, walletSudo, ksm.slice(0, 500), eth.slice(0,500));
-  const initRes = await initialize(api, walletSudo);
+  console.log(ksm.length)// 10 363
+  console.log(eth.length)// 388
+  // const crPopRes = await crowdloanRewardsPopulateJSON(api, walletSudo, ksm.slice(0, 1500), eth.slice(0,500));
+  // const initRes = await initialize(api, walletSudo);
   
   // createBlock(api, 100_000_000);
-  console.log(crPopRes.data.toHuman());
-  console.log(initRes.data.toHuman());
+  // console.log(crPopRes.data.toHuman());
+  // console.log(initRes.data.toHuman());
 
 };
 
