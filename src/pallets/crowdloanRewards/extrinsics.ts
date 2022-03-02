@@ -160,7 +160,7 @@ export const crowdloanRewardsPopulateJSON = async (
 
   const relay = dotWallets.map((contributor, ind) => {
     const reward = new BigNumber(contributor.rewards).times(decimals).toString()
-    console.log('KSM ', contributor.address, reward)
+    // console.log('KSM ', contributor.address, reward)
 
     return [
       api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
@@ -171,9 +171,9 @@ export const crowdloanRewardsPopulateJSON = async (
     ]
   })
 
-  const eth = dotWallets.map((contributor, ind) => {
+  const eth = ethWallets.map((contributor, ind) => {
     const reward = new BigNumber(contributor.rewards).times(decimals).toString()
-    console.log('ETH ', contributor.address, reward)
+    // console.log('ETH ', contributor.address, reward)
 
     return [
       api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
@@ -184,7 +184,7 @@ export const crowdloanRewardsPopulateJSON = async (
     ]
   })
 
-  const accounts = relay.concat(eth);
+  const accounts = ethWallets.length ? relay.concat(eth) : relay;
   return await sendAndWaitForSuccess(
     api,
     sudoKey,
