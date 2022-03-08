@@ -6,6 +6,7 @@ import {
   // crowdloanRewardsPopulateTest,
   initialize,
 } from "./pallets";
+import {SignedExtrinsicExecutor} from "polkadot-utils";
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
 import { ethers } from "ethers";
@@ -143,48 +144,61 @@ const main = async () => {
   // });
   // const crPopRes = await crowdloanRewardsPopulateJSON(api, walletSudo, ksm.slice(0, 1500), eth.slice(0,500));
 
-  const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
-  const txM = await api.tx.sudo
-    .sudo(
-      api.tx.assets.mintInto(
-        1,
-        walletSudo.publicKey,
-        api.createType("u128", (1400 * 1e12).toString())
-      )
-    )
-    .signAndSend(walletSudo, async (result) => {
-      console.log(`[MINT] Current status is ${result.status}`);
-      if (result.status.isInBlock) {
-        console.log(
-          `[MINT] Transaction included at blockHash ${result.status.asInBlock}`
-        );
-      } else if (result.status.isFinalized) {
-        console.log(
-          `[MINT] Transaction finalized at blockHash ${result.status.asFinalized}`
-        );
+  // const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
+  // const txM = await api.tx.sudo
+  //   .sudo(
+  //     api.tx.assets.mintInto(
+  //       1,
+  //       walletSudo.publicKey,
+  //       api.createType("u128", (1400 * 1e12).toString())
+  //     )
+  //   )
+  //   .signAndSend(walletSudo, async (result) => {
+  //     console.log(`[MINT] Current status is ${result.status}`);
+  //     if (result.status.isInBlock) {
+  //       console.log(
+  //         `[MINT] Transaction included at blockHash ${result.status.asInBlock}`
+  //       );
+  //     } else if (result.status.isFinalized) {
+  //       console.log(
+  //         `[MINT] Transaction finalized at blockHash ${result.status.asFinalized}`
+  //       );
 
-        const tx = await api.tx.assets
-          .transfer(
-            1,
-            palletId,
-            api.createType("u128", (1400 * 1e12).toString()),
-            true
-          )
-          .signAndSend(walletSudo, async (result1) => {
-            console.log(`[TRANSFER] Current status is ${result1.status}`);
-            if (result1.status.isInBlock) {
-              console.log(
-                `[TRANSFER] Transaction included at blockHash ${result1.status.asInBlock}`
-              );
-            } else if (result1.status.isFinalized) {
-              console.log(
-                `[TRANSFER] Transaction finalized at blockHash ${result1.status.asFinalized}`
-              );
-            }
-          });
-      }
-    });
+  //       const tx = await api.tx.assets
+  //         .transfer(
+  //           1,
+  //           palletId,
+  //           api.createType("u128", (1400 * 1e12).toString()),
+  //           true
+  //         )
+  //         .signAndSend(walletSudo, async (result1) => {
+  //           console.log(`[TRANSFER] Current status is ${result1.status}`);
+  //           if (result1.status.isInBlock) {
+  //             console.log(
+  //               `[TRANSFER] Transaction included at blockHash ${result1.status.asInBlock}`
+  //             );
+  //           } else if (result1.status.isFinalized) {
+  //             console.log(
+  //               `[TRANSFER] Transaction finalized at blockHash ${result1.status.asFinalized}`
+  //             );
+  //           }
+  //         });
+  //     }
+  //   });
+  let toTransfer = new BN(0.001).mul(new BN(10).pow(new BN(12)))
+  const executor = new SignedExtrinsicExecutor(
+    api,
+    api.tx.balances.transfer(
+      '5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S',
+      toTransfer.toString(),
+    ),
+    walletSudo,
+    (finalizationHash: string) => {
+      console.log('onFinalization', finalizationHash)
+    },
+  )
 
+  executor.executeTransaction();
   // const crPopRes = await crowdloanRewardsPopulateJSON(
   //   api,
   //   walletSudo,
