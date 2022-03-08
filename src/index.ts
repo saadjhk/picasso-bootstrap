@@ -148,7 +148,7 @@ const main = async () => {
   //     api.tx.assets.mintInto(
   //       1,
   //       walletSudo.publicKey,
-  //       api.createType("u128", (140000 * 1e12).toString())
+  //       api.createType("u128", (160000 * 1e12).toString())
   //     )
   //   )
   //   .signAndSend(walletSudo, async (result) => {
@@ -166,7 +166,7 @@ const main = async () => {
   //         .transfer(
   //           1,
   //           palletId,
-  //           api.createType("u128", (140000 * 1e12).toString()),
+  //           api.createType("u128", (160000 * 1e12).toString()),
   //           true
   //         )
   //         .signAndSend(walletSudo, async (result1) => {
@@ -207,6 +207,8 @@ const main = async () => {
   //     { address: "0x33Cd07B1ae8485a6090091ee55389237eCB0Aed4", rewards: "10000"},
   //     { address: "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22", rewards: "10000"},
   //     { address: "0x38650E1FD89E6bBEfDD2f150190C70da02454b93", rewards: "10000"},
+  //     { address: "0x8D520d016246F31FE7A676648f1FD5E55ec5562D", rewards: "10000"},
+  //     { address: "0xD96Dc025C835f155534a33A15D24482B257C7652", rewards: "10000"}
   //   ]
   // );
   // console.log(crPopRes.data.toHuman());
