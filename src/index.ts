@@ -5,16 +5,16 @@ import {
   crowdloanRewardsPopulateJSON,
   // crowdloanRewardsPopulateTest,
   initialize,
-} from './pallets'
-import * as definitions from './interfaces/definitions'
-import { buildApi } from './utils'
-import { BigNumber, ethers } from 'ethers'
-import { ApiPromise } from '@polkadot/api'
-// import { base58 } from "micro-base";
-// import rewards from "./constants/rewards.json";
-import { SignedExtrinsicExecutor } from 'polkadot-utils'
+} from "./pallets";
+import {SignedExtrinsicExecutor} from "polkadot-utils";
+import * as definitions from "./interfaces/definitions";
+import { buildApi } from "./utils";
+import { ethers } from "ethers";
+import { ApiPromise } from "@polkadot/api";
 import BN from 'bn.js'
 import { KeyringPair } from '@polkadot/keyring/types'
+// import { base58 } from "micro-base";
+// import rewards from "./constants/rewards.json";=
 
 function sleep(delay: number) {
   var start = new Date().getTime()
@@ -183,8 +183,20 @@ const main = async () => {
   //         });
   //     }
   //   });
-  // const bnBal = await api.rpc.assets.balanceOf("1", "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u")
-  // console.log(bnBal.toHuman())
+  let toTransfer = new BN(0.001).mul(new BN(10).pow(new BN(12)))
+  const executor = new SignedExtrinsicExecutor(
+    api,
+    api.tx.balances.transfer(
+      '5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S',
+      toTransfer.toString(),
+    ),
+    walletSudo,
+    (finalizationHash: string) => {
+      console.log('onFinalization', finalizationHash)
+    },
+  )
+
+  executor.executeTransaction();
   // const crPopRes = await crowdloanRewardsPopulateJSON(
   //   api,
   //   walletSudo,
@@ -212,20 +224,6 @@ const main = async () => {
   //   ]
   // );
   // console.log(crPopRes.data.toHuman());
-  let toTransfer = new BN(0.001).mul(new BN(10).pow(new BN(12)))
-  const executor = new SignedExtrinsicExecutor(
-    api,
-    api.tx.balances.transfer(
-      '5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S',
-      toTransfer.toString(),
-    ),
-    walletSudo,
-    (finalizationHash: string) => {
-      console.log('onFinalization', finalizationHash)
-    },
-  )
-
-  await executor.executeTransaction();
   // const initRes = await initialize(api, walletSudo);
   // console.log(initRes.data.toHuman());
 }

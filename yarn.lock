@@ -2573,7 +2573,7 @@ performance-now@^2.1.0:
 
 "polkadot-utils@git+https://github.com/saadjhk/polkadot-utils.git":
   version "0.1.0"
-  resolved "git+https://github.com/saadjhk/polkadot-utils.git#4987b34e702217a518be9226e27fd973d8b97b75"
+  resolved "git+https://github.com/saadjhk/polkadot-utils.git#76637630f6dda0d066f2031bfb334441aec1070c"
 
 prepend-http@^1.0.1:
   version "1.0.4"
