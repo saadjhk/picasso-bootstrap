@@ -6,7 +6,6 @@ import {
   // crowdloanRewardsPopulateTest,
   initialize,
 } from "./pallets";
-import {SignedExtrinsicExecutor} from "polkadot-utils";
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
 import { ethers } from "ethers";
