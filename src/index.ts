@@ -13,6 +13,8 @@ import { ethers } from "ethers";
 import { ApiPromise } from "@polkadot/api";
 import BN from 'bn.js'
 import { KeyringPair } from '@polkadot/keyring/types'
+import rewardsDev from './constants/rewards-dev.json'
+import BigNumber from 'bignumber.js';
 // import { base58 } from "micro-base";
 // import rewards from "./constants/rewards.json";=
 
@@ -142,13 +144,22 @@ const main = async () => {
   // });
   // const crPopRes = await crowdloanRewardsPopulateJSON(api, walletSudo, ksm.slice(0, 1500), eth.slice(0,500));
 
+  let netRewards = Object.values(rewardsDev).reduce((acc, c) => {
+    let bnAcc = new BigNumber(acc);
+    bnAcc = bnAcc.plus(new BigNumber(c));
+    return bnAcc.toString();
+  }, "0");
+
+  let decimals = new BigNumber(10).pow(12);
+  let base = new BigNumber(netRewards).times(decimals);
+
   const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
   const txM = await api.tx.sudo
     .sudo(
       api.tx.assets.mintInto(
         1,
         walletSudo.publicKey,
-        api.createType("u128", (140000 * 1e12).toString())
+        api.createType("u128", base.toString())
       )
     )
     .signAndSend(walletSudo, async (result) => {
@@ -166,7 +177,7 @@ const main = async () => {
           .transfer(
             1,
             palletId,
-            api.createType("u128", (140000 * 1e12).toString()),
+            api.createType("u128", base.toString()),
             true
           )
           .signAndSend(walletSudo, async (result1) => {
@@ -183,26 +194,18 @@ const main = async () => {
               const crPopRes = await crowdloanRewardsPopulateJSON(
                 api,
                 walletSudo,
-                [
-                  { address: "5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S", rewards: "10000"},
-                  { address: "5y1hoDbgnAKsL9JZ3d1zkM5LYQQPaAnb9Un7VXMM2YipSeUE", rewards: "10000"},
-                  // peter dot wallets
-                  { address: "5uymjr2xLL14upmg4nezH5LZMNgenGn7MrbQ2WnJ7dhcDb4C", rewards: "10000"},
-                  { address: "5z6opGwNemAtYG7o7KehBn2KdKbGPw64E23ZpwxcXoGiwufL", rewards: "10000"},
-                  { address: "E4syq7LfkjrZuqofYRg5dX2zzd8DR54p82F2BHuFLqHHGm6", rewards: "10000"},
-                  { address: "GRxsfLzj5wthacZ6bYSdL9FNosAMFBkVhcwWWxGtMsCSx8G", rewards: "10000"},
-                  { address: "FhJDi6usuBii4kbHEiUbYcd2a1yXk5CJCJEkxr2BT3wqHmc", rewards: "10000"},
-                  { address: "5GgjZECB6XsH3iao7rg6dDbMG9urjsWVjinDBF2ngqWFxyoC", rewards: "10000"},
-                  { address: "F53d3jeyFvb2eYsgAERhjC8mogao4Kg4GsdezrqiT8aj55v", rewards: "10000"}, // liviu
-                ],
-                [
-                  { address: myEth1.address, rewards: "10000"},
-                  { address: myEth2.address, rewards: "10000"},
-                  // peter eth wallets
-                  { address: "0x33Cd07B1ae8485a6090091ee55389237eCB0Aed4", rewards: "10000"},
-                  { address: "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22", rewards: "10000"},
-                  { address: "0x38650E1FD89E6bBEfDD2f150190C70da02454b93", rewards: "10000"},
-                ]
+                Object.keys(rewardsDev).filter(addr => !addr.startsWith("0x")).map((rewardAccount: string) => {
+                  return {
+                    address: rewardAccount,
+                    rewards: (rewardsDev as any)[rewardAccount]
+                  }
+                }),
+                Object.keys(rewardsDev).filter(addr => addr.startsWith("0x")).map((rewardAccount: string) => {
+                  return {
+                    address: rewardAccount,
+                    rewards: (rewardsDev as any)[rewardAccount]
+                  }
+                })
               );
               console.log(crPopRes.data.toHuman());
               const initRes = await initialize(api, walletSudo);
