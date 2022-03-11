@@ -142,68 +142,78 @@ const main = async () => {
   // });
   // const crPopRes = await crowdloanRewardsPopulateJSON(api, walletSudo, ksm.slice(0, 1500), eth.slice(0,500));
 
-  // const decimals = new BN(10).pow(new BN(12));
-  // const amount = new BN(0.001).mul(decimals);
-  // const dest = "5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S";
-  // console.log(`Sending ${dest} to ${amount.toString()}`)
-  // const call = api.tx.balances.transfer(dest, api.createType("u128", amount.toString()));
-  // const json: any = call.toHuman()
-  // console.log(json.method)
+  const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
+  const txM = await api.tx.sudo
+    .sudo(
+      api.tx.assets.mintInto(
+        1,
+        walletSudo.publicKey,
+        api.createType("u128", (140000 * 1e12).toString())
+      )
+    )
+    .signAndSend(walletSudo, async (result) => {
+      console.log(`[MINT] Current status is ${result.status}`);
+      if (result.status.isInBlock) {
+        console.log(
+          `[MINT] Transaction included at blockHash ${result.status.asInBlock}`
+        );
+      } else if (result.status.isFinalized) {
+        console.log(
+          `[MINT] Transaction finalized at blockHash ${result.status.asFinalized}`
+        );
 
-  // call.signAndSend(walletSudo, (res) => {
-  //   console.log(res.status.isReady)
-  //   if (!res.isInBlock && !res.isError && !res.isFinalized && !res.isCompleted && !res.isWarning) {
-  //     console.log(res.txHash.toString())
-  //   }
-  //   if (res.isFinalized) {
-  //     process.exit(0);
-  //   }
-  // })
+        const tx = await api.tx.assets
+          .transfer(
+            1,
+            palletId,
+            api.createType("u128", (140000 * 1e12).toString()),
+            true
+          )
+          .signAndSend(walletSudo, async (result1) => {
+            console.log(`[TRANSFER] Current status is ${result1.status}`);
+            if (result1.status.isInBlock) {
+              console.log(
+                `[TRANSFER] Transaction included at blockHash ${result1.status.asInBlock}`
+              );
+            } else if (result1.status.isFinalized) {
+              console.log(
+                `[TRANSFER] Transaction finalized at blockHash ${result1.status.asFinalized}`
+              );
 
-  // const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
-  // const txM = await api.tx.sudo
-  //   .sudo(
-  //     api.tx.assets.mintInto(
-  //       1,
-  //       walletSudo.publicKey,
-  //       api.createType("u128", (170000 * 1e12).toString())
-  //     )
-  //   )
-  //   .signAndSend(walletSudo, async (result) => {
-  //     console.log(`[MINT] Current status is ${result.status}`);
-  //     if (result.status.isInBlock) {
-  //       console.log(
-  //         `[MINT] Transaction included at blockHash ${result.status.asInBlock}`
-  //       );
-  //     } else if (result.status.isFinalized) {
-  //       console.log(
-  //         `[MINT] Transaction finalized at blockHash ${result.status.asFinalized}`
-  //       );
+              const crPopRes = await crowdloanRewardsPopulateJSON(
+                api,
+                walletSudo,
+                [
+                  { address: "5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S", rewards: "10000"},
+                  { address: "5y1hoDbgnAKsL9JZ3d1zkM5LYQQPaAnb9Un7VXMM2YipSeUE", rewards: "10000"},
+                  // peter dot wallets
+                  { address: "5uymjr2xLL14upmg4nezH5LZMNgenGn7MrbQ2WnJ7dhcDb4C", rewards: "10000"},
+                  { address: "5z6opGwNemAtYG7o7KehBn2KdKbGPw64E23ZpwxcXoGiwufL", rewards: "10000"},
+                  { address: "E4syq7LfkjrZuqofYRg5dX2zzd8DR54p82F2BHuFLqHHGm6", rewards: "10000"},
+                  { address: "GRxsfLzj5wthacZ6bYSdL9FNosAMFBkVhcwWWxGtMsCSx8G", rewards: "10000"},
+                  { address: "FhJDi6usuBii4kbHEiUbYcd2a1yXk5CJCJEkxr2BT3wqHmc", rewards: "10000"},
+                  { address: "5GgjZECB6XsH3iao7rg6dDbMG9urjsWVjinDBF2ngqWFxyoC", rewards: "10000"},
+                  { address: "F53d3jeyFvb2eYsgAERhjC8mogao4Kg4GsdezrqiT8aj55v", rewards: "10000"}, // liviu
+                ],
+                [
+                  { address: myEth1.address, rewards: "10000"},
+                  { address: myEth2.address, rewards: "10000"},
+                  // peter eth wallets
+                  { address: "0x33Cd07B1ae8485a6090091ee55389237eCB0Aed4", rewards: "10000"},
+                  { address: "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22", rewards: "10000"},
+                  { address: "0x38650E1FD89E6bBEfDD2f150190C70da02454b93", rewards: "10000"},
+                ]
+              );
+              console.log(crPopRes.data.toHuman());
+              const initRes = await initialize(api, walletSudo);
+              console.log(initRes.data.toHuman());
 
-  //       const tx = await api.tx.assets
-  //         .transfer(
-  //           1,
-  //           palletId,
-  //           api.createType("u128", (170000 * 1e12).toString()),
-  //           true
-  //         )
-  //         .signAndSend(walletSudo, async (result1) => {
-  //           console.log(`[TRANSFER] Current status is ${result1.status}`);
-  //           if (result1.status.isInBlock) {
-  //             console.log(
-  //               `[TRANSFER] Transaction included at blockHash ${result1.status.asInBlock}`
-  //             );
-  //           } else if (result1.status.isFinalized) {
-  //             console.log(
-  //               `[TRANSFER] Transaction finalized at blockHash ${result1.status.asFinalized}`
-  //             );
-  //           }
-  //         });
-  //     }
-  //   });
-
-  // let toTransfer = new BN(1).mul(new BN(10).pow(new BN(12)))
-  // console.log(toTransfer.toString())
+              process.exit(0);
+            }
+          });
+      }
+    });
+  // let toTransfer = new BN(0.001).mul(new BN(10).pow(new BN(12)))
   // const executor = new SignedExtrinsicExecutor(
   //   api,
   //   api.tx.balances.transfer(
@@ -215,38 +225,11 @@ const main = async () => {
   //     console.log('onFinalization', finalizationHash)
   //   },
   // )
-  // executor.executeTransaction();
 
-  const crPopRes = await crowdloanRewardsPopulateJSON(
-    api,
-    walletSudo,
-    [
-      { address: "5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S", rewards: "10000"},
-      { address: "5y1hoDbgnAKsL9JZ3d1zkM5LYQQPaAnb9Un7VXMM2YipSeUE", rewards: "10000"},
-      // peter dot wallets
-      { address: "5uymjr2xLL14upmg4nezH5LZMNgenGn7MrbQ2WnJ7dhcDb4C", rewards: "10000"},
-      { address: "5z6opGwNemAtYG7o7KehBn2KdKbGPw64E23ZpwxcXoGiwufL", rewards: "10000"},
-      { address: "E4syq7LfkjrZuqofYRg5dX2zzd8DR54p82F2BHuFLqHHGm6", rewards: "10000"},
-      { address: "GRxsfLzj5wthacZ6bYSdL9FNosAMFBkVhcwWWxGtMsCSx8G", rewards: "10000"},
-      { address: "FhJDi6usuBii4kbHEiUbYcd2a1yXk5CJCJEkxr2BT3wqHmc", rewards: "10000"},
-      { address: "5GgjZECB6XsH3iao7rg6dDbMG9urjsWVjinDBF2ngqWFxyoC", rewards: "10000"},
-      { address: "F53d3jeyFvb2eYsgAERhjC8mogao4Kg4GsdezrqiT8aj55v", rewards: "10000"}, // liviu
-    ],
-    [
-      { address: myEth1.address, rewards: "10000"},
-      { address: myEth2.address, rewards: "10000"},
-      // peter eth wallets
-      { address: "0x33Cd07B1ae8485a6090091ee55389237eCB0Aed4", rewards: "10000"},
-      { address: "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22", rewards: "10000"},
-      { address: "0x38650E1FD89E6bBEfDD2f150190C70da02454b93", rewards: "10000"},
-      { address: "0x8D520d016246F31FE7A676648f1FD5E55ec5562D", rewards: "10000"},
-      { address: "0xD96Dc025C835f155534a33A15D24482B257C7652", rewards: "10000"},
-      { address: "0x1aF36325e7745CB77AfaD9f40c831b26D9F0324A", rewards: "10000"},
-    ]
-  );
-  console.log(crPopRes.data.toHuman());
-  const initRes = await initialize(api, walletSudo);
-  console.log(initRes.data.toHuman());
+  // executor.executeTransaction();
+  // const tx = api.tx.balances.transfer("5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S", 1);
+  // console.log(tx.method.toHuman())
+
 }
 
 cryptoWaitReady().then(() => {
