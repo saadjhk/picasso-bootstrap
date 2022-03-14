@@ -154,7 +154,7 @@ export const crowdloanRewardsPopulateJSON = async (
   ethWallets: { address: string; rewards: string }[]
 ) => {
   const sudoKey = walletAlice;
-  const vesting48weeks = api.createType("u32", 100800);
+  const vesting48weeks = api.createType("u32", (7*24*60*60*1000));
 
   const decimals = new BigNumber(10).pow(12);
 
