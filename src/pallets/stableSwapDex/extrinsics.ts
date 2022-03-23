@@ -1,17 +1,11 @@
-import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { sendAndWaitForSuccess } from "polkadot-utils";
+import { ApiPromise } from "@polkadot/api";
+import { base58 } from "micro-base";
+import BigNumber from "bignumber.js";
 
-// copy pasta from mosaic
-export const setRelayer = async (
+export const createLiquidityPool = async (
   api: ApiPromise,
-  relayerAccount: KeyringPair,
-  sudoAccount: KeyringPair
+  walletAlice: KeyringPair,
 ) => {
-  return sendAndWaitForSuccess(
-    api,
-    sudoAccount,
-    api.events.sudo.Sudid.is,
-    api.tx.sudo.sudo(api.tx.mosaic.setRelayer(relayerAccount.publicKey))
-  );
 };
