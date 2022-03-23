@@ -1,14 +1,15 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { ApiTypes } from '@polkadot/api/types';
-import type { Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types';
+import type { CommonMosaicRemoteAssetId, ComposableTraitsCallFilterCallFilterEntry, ComposableTraitsDefiCurrencyPair, ComposableTraitsLendingUpdateInput, ComposableTraitsVestingVestingSchedule, FrameSupportScheduleLookupError, PalletCrowdloanRewardsModelsRemoteAccount, PalletCurrencyFactoryRangesRange, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletDutchAuctionSellOrder, PalletMosaicDecayBudgetPenaltyDecayer, PalletMosaicNetworkInfo } from '@composable/types/interfaces/crowdloanRewards';
+import type { ApiTypes } from '@polkadot/api-base/types';
+import type { Bytes, Null, Option, Result, U8aFixed, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types-codec';
+import type { ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, H256, Percent } from '@polkadot/types/interfaces/runtime';
-import type { FrameSupportTokensMiscBalanceStatus, FrameSupportWeightsDispatchInfo, PalletDemocracyVoteAccountVote, PalletDemocracyVoteThreshold, PalletMultisigTimepoint, SpRuntimeDispatchError, XcmV1MultiAsset, XcmV1MultiLocation, XcmV1MultiassetMultiAssets, XcmV2Response, XcmV2TraitsError, XcmV2TraitsOutcome, XcmV2Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation } from '@polkadot/types/lookup';
-import type { ITuple } from '@polkadot/types/types';
+import type { FrameSupportTokensMiscBalanceStatus, FrameSupportWeightsDispatchInfo, PalletMultisigTimepoint, SpRuntimeDispatchError, XcmV1MultiAsset, XcmV1MultiLocation, XcmV1MultiassetMultiAssets, XcmV2Response, XcmV2TraitsError, XcmV2TraitsOutcome, XcmV2Xcm, XcmVersionedMultiAssets, XcmVersionedMultiLocation } from '@polkadot/types/lookup';
 
-declare module '@polkadot/api/types/events' {
-  export interface AugmentedEvents<ApiType> {
+declare module '@polkadot/api-base/types/events' {
+  export interface AugmentedEvents<ApiType extends ApiTypes> {
     assetsRegistry: {
       AssetMetadataUpdated: AugmentedEvent<ApiType, [u128]>;
       AssetsMappingCandidateUpdated: AugmentedEvent<ApiType, [u128, u128]>;
@@ -1103,9 +1104,5 @@ declare module '@polkadot/api/types/events' {
        **/
       [key: string]: AugmentedEvent<ApiType>;
     };
-  }
-
-  export interface DecoratedEvents<ApiType extends ApiTypes> extends AugmentedEvents<ApiType> {
-    [key: string]: ModuleEvents<ApiType>;
-  }
-}
+  } // AugmentedEvents
+} // declare module

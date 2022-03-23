@@ -1,14 +1,14 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { ApiTypes } from '@polkadot/api/types';
-import type { Bytes, Option, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types';
+import type { ApiTypes } from '@polkadot/api-base/types';
+import type { Bytes, Option, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { Codec } from '@polkadot/types-codec/types';
 import type { AccountId32, Perbill, Permill } from '@polkadot/types/interfaces/runtime';
 import type { FrameSupportPalletId, FrameSupportWeightsRuntimeDbWeight, FrameSupportWeightsWeightToFeeCoefficient, FrameSystemLimitsBlockLength, FrameSystemLimitsBlockWeights, SpVersionRuntimeVersion, XcmV1MultiLocation } from '@polkadot/types/lookup';
-import type { Codec } from '@polkadot/types/types';
 
-declare module '@polkadot/api/types/consts' {
-  export interface AugmentedConsts<ApiType> {
+declare module '@polkadot/api-base/types/consts' {
+  export interface AugmentedConsts<ApiType extends ApiTypes> {
     assets: {
       nativeAssetId: u128 & AugmentedConst<ApiType>;
       /**
@@ -286,7 +286,7 @@ declare module '@polkadot/api/types/consts' {
       /**
        * The minimum time to live before a relayer account rotation.
        **/
-      minimumTtl: u32 & AugmentedConst<ApiType>;
+      minimumTTL: u32 & AugmentedConst<ApiType>;
       timelockPeriod: u32 & AugmentedConst<ApiType>;
       /**
        * Generic const
@@ -552,9 +552,5 @@ declare module '@polkadot/api/types/consts' {
        **/
       [key: string]: Codec;
     };
-  }
-
-  export interface QueryableConsts<ApiType extends ApiTypes> extends AugmentedConsts<ApiType> {
-    [key: string]: QueryableModuleConsts;
-  }
-}
+  } // AugmentedConsts
+} // declare module

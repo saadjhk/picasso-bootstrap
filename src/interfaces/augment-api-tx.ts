@@ -1,15 +1,16 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { ApiTypes, SubmittableExtrinsic } from '@polkadot/api/types';
-import type { Bytes, Compact, Data, Option, U8aFixed, Vec, bool, u128, u16, u32, u64, u8 } from '@polkadot/types';
-import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
+import type { CommonMosaicRemoteAssetId, ComposableTraitsAssetsXcmAssetLocation, ComposableTraitsBondedFinanceBondOffer, ComposableTraitsCallFilterCallFilterEntry, ComposableTraitsDefiCurrencyPair, ComposableTraitsDefiSell, ComposableTraitsDefiTake, ComposableTraitsLendingCreateInput, ComposableTraitsLendingUpdateInput, ComposableTraitsTimeTimeReleaseFunction, ComposableTraitsVaultVaultConfig, ComposableTraitsVestingVestingSchedule, CumulusPrimitivesParachainInherentParachainInherentData, DaliRuntimeOpaqueSessionKeys, DaliRuntimeOriginCaller, FrameSupportScheduleMaybeHashed, PalletAssetsRegistryForeignMetadata, PalletCrowdloanRewardsModelsProof, PalletCrowdloanRewardsModelsRemoteAccount, PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletLiquidationsLiquidationStrategyConfiguration, PalletLiquidityBootstrappingPool, PalletMosaicDecayBudgetPenaltyDecayer, PalletMosaicNetworkInfo, XcmVersionedMultiAsset } from '@composable/types/interfaces/crowdloanRewards';
+import type { ApiTypes } from '@polkadot/api-base/types';
+import type { Data } from '@polkadot/types';
+import type { Bytes, Compact, Option, U8aFixed, Vec, WrapperKeepOpaque, bool, u128, u16, u32, u64, u8 } from '@polkadot/types-codec';
+import type { AnyNumber, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Perbill, Percent, Permill } from '@polkadot/types/interfaces/runtime';
-import type { PalletDemocracyConviction, PalletDemocracyVoteAccountVote, PalletIdentityBitFlags, PalletIdentityIdentityInfo, PalletIdentityJudgement, PalletMultisigTimepoint, SpRuntimeHeader, XcmV1MultiLocation, XcmV2WeightLimit, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm } from '@polkadot/types/lookup';
-import type { AnyNumber, ITuple } from '@polkadot/types/types';
+import type { PalletMultisigTimepoint, SpRuntimeHeader, XcmV1MultiLocation, XcmV2WeightLimit, XcmVersionedMultiAssets, XcmVersionedMultiLocation, XcmVersionedXcm } from '@polkadot/types/lookup';
 
-declare module '@polkadot/api/types/submittable' {
-  export interface AugmentedSubmittables<ApiType> {
+declare module '@polkadot/api-base/types/submittable' {
+  export interface AugmentedSubmittables<ApiType extends ApiTypes> {
     assets: {
       /**
        * Mints `amount` of `asset_id` into the `dest` account.
@@ -1672,7 +1673,7 @@ declare module '@polkadot/api/types/submittable' {
        * - Plus Call Weight
        * # </weight>
        **/
-      asMulti: AugmentedSubmittable<(threshold: u16 | AnyNumber | Uint8Array, otherSignatories: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], maybeTimepoint: Option<PalletMultisigTimepoint> | null | object | string | Uint8Array, call: Bytes | string | Uint8Array, storeCall: bool | boolean | Uint8Array, maxWeight: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u16, Vec<AccountId32>, Option<PalletMultisigTimepoint>, Bytes, bool, u64]>;
+      asMulti: AugmentedSubmittable<(threshold: u16 | AnyNumber | Uint8Array, otherSignatories: Vec<AccountId32> | (AccountId32 | string | Uint8Array)[], maybeTimepoint: Option<PalletMultisigTimepoint> | null | object | string | Uint8Array, call: WrapperKeepOpaque<Call> | object | string | Uint8Array, storeCall: bool | boolean | Uint8Array, maxWeight: u64 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [u16, Vec<AccountId32>, Option<PalletMultisigTimepoint>, WrapperKeepOpaque<Call>, bool, u64]>;
       /**
        * Immediately dispatch a multi-signature call using a single approval from the caller.
        * 
@@ -2735,10 +2736,5 @@ declare module '@polkadot/api/types/submittable' {
        **/
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
-  }
-
-  export interface SubmittableExtrinsics<ApiType extends ApiTypes> extends AugmentedSubmittables<ApiType> {
-    (extrinsic: Call | Extrinsic | Uint8Array | string): SubmittableExtrinsic<ApiType>;
-    [key: string]: SubmittableModuleExtrinsics<ApiType>;
-  }
-}
+  } // AugmentedSubmittables
+} // declare module
