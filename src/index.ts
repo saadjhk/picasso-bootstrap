@@ -152,6 +152,19 @@ const main = async () => {
   let decimals = new BigNumber(10).pow(12);
   let base = new BigNumber(netRewards).times(decimals);
 
+  // api.query.crowdloanRewards.rewards({
+  //   RelayChain: myDot1.address
+  // }).then((fuckMe) => {
+  //   console.log(fuckMe.toJSON());
+  //   console.log(fuckMe.toHuman());
+  // })
+
+  // api.query.crowdloanRewards.rewards({
+  //   Ethereum: myEth1.address
+  // }).then((fuckMe) => {
+  //   console.log(fuckMe.toHuman())
+  // })
+
   const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
   const txM = await api.tx.sudo
     .sudo(

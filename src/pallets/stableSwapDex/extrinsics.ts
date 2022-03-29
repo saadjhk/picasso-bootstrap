@@ -5,4 +5,5 @@ export const createLiquidityPool = async (
   api: ApiPromise,
   walletAlice: KeyringPair,
 ) => {
+  // api.tx.stableSwapDex.create()
 };
