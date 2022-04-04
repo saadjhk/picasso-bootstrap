@@ -13,6 +13,7 @@ import { KeyringPair } from '@polkadot/keyring/types'
 import rewardsDev from './constants/rewards-dev.json'
 import BigNumber from 'bignumber.js';
 import { createPool } from './pallets/liquidityBootstrapping/extrinsics';
+import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils';
 
 function sleep(delay: number) {
   var start = new Date().getTime()
@@ -81,7 +82,6 @@ const main = async () => {
   const api = await buildApi(process.env.PICASSO_RPC_URL || '', types, rpc)
 
   // const walletBob = kr.addFromUri("//Bob");
-
   // const crPopRes = await crowdloanRewardsPopulateTest(
   //   api,
   //   walletSudo,
@@ -106,7 +106,6 @@ const main = async () => {
   //     "0x38650E1FD89E6bBEfDD2f150190C70da02454b93",
   //   ]
   // );
-
   // const ksm = Object.keys(rewards)
   //   .filter((addr: string) => {
   //     return !addr.startsWith("0x");
@@ -117,7 +116,6 @@ const main = async () => {
   //       rewards: (rewards as any)[addr],
   //     };
   //   });
-
   // const eth = Object.keys(rewards)
   //   .filter((addr: string) => {
   //     return addr.startsWith("0x");
@@ -128,12 +126,10 @@ const main = async () => {
   //       rewards: (rewards as any)[addr],
   //     };
   //   });
-
   // ksm.push({
   //   address: "5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S",
   //   rewards: "1223.231",
   // });
-
   // eth.push({
   //   address: myEth1.address.toLowerCase(),
   //   rewards: "1223.231",
@@ -149,103 +145,48 @@ const main = async () => {
   let decimals = new BigNumber(10).pow(12);
   let base = new BigNumber(netRewards).times(decimals);
 
-  // api.query.crowdloanRewards.rewards({
-  //   RelayChain: myDot1.address
-  // }).then((fuckMe) => {
-  //   console.log(fuckMe.toJSON());
-  //   console.log(fuckMe.toHuman());
-  // })
-
-  // api.query.crowdloanRewards.rewards({
-  //   Ethereum: myEth1.address
-  // }).then((fuckMe) => {
-  //   console.log(fuckMe.toHuman())
-  // })
-
   const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
-  const txM = await api.tx.sudo
-    .sudo(
-      api.tx.assets.mintInto(
-        1,
-        walletSudo.publicKey,
-        api.createType("u128", base.toString())
-      )
+  let mintResponse = await sendAndWaitForSuccess(
+    api,
+    walletSudo,
+    api.events.sudo.Sudid.is,
+    api.tx.sudo.sudo(api.tx.assets.mintInto(1, walletSudo.publicKey, api.createType("u128", base.toString())))
+  );
+  console.log(mintResponse.data.toHuman())
+  let transferResponse = await sendAndWaitFor(
+    api,
+    walletSudo,
+    api.events.balances.Transfer.is,
+    api.tx.assets.transfer(
+      1,
+      palletId,
+      api.createType("u128", base.toString()),
+      true
     )
-    .signAndSend(walletSudo, async (result) => {
-      console.log(`[MINT] Current status is ${result.status}`);
-      if (result.status.isInBlock) {
-        console.log(
-          `[MINT] Transaction included at blockHash ${result.status.asInBlock}`
-        );
-      } else if (result.status.isFinalized) {
-        console.log(
-          `[MINT] Transaction finalized at blockHash ${result.status.asFinalized}`
-        );
-
-        const tx = await api.tx.assets
-          .transfer(
-            1,
-            palletId,
-            api.createType("u128", base.toString()),
-            true
-          )
-          .signAndSend(walletSudo, async (result1) => {
-            console.log(`[TRANSFER] Current status is ${result1.status}`);
-            if (result1.status.isInBlock) {
-              console.log(
-                `[TRANSFER] Transaction included at blockHash ${result1.status.asInBlock}`
-              );
-            } else if (result1.status.isFinalized) {
-              console.log(
-                `[TRANSFER] Transaction finalized at blockHash ${result1.status.asFinalized}`
-              );
-
-              const crPopRes = await crowdloanRewardsPopulateJSON(
-                api,
-                walletSudo,
-                Object.keys(rewardsDev).filter(addr => !addr.startsWith("0x")).map((rewardAccount: string) => {
-                  return {
-                    address: rewardAccount,
-                    rewards: (rewardsDev as any)[rewardAccount]
-                  }
-                }),
-                Object.keys(rewardsDev).filter(addr => addr.startsWith("0x")).map((rewardAccount: string) => {
-                  return {
-                    address: rewardAccount,
-                    rewards: (rewardsDev as any)[rewardAccount]
-                  }
-                })
-              );
-              console.log(crPopRes.data.toHuman());
-              const initRes = await initialize(api, walletSudo);
-              console.log(initRes.data.toHuman());
-
-              process.exit(0);
-            }
-          });
+  )
+  console.log(transferResponse.data.toHuman())
+  const crPopRes = await crowdloanRewardsPopulateJSON(
+    api,
+    walletSudo,
+    Object.keys(rewardsDev).filter(addr => !addr.startsWith("0x")).map((rewardAccount: string) => {
+      return {
+        address: rewardAccount,
+        rewards: (rewardsDev as any)[rewardAccount]
       }
-    });
+    }),
+    Object.keys(rewardsDev).filter(addr => addr.startsWith("0x")).map((rewardAccount: string) => {
+      return {
+        address: rewardAccount,
+        rewards: (rewardsDev as any)[rewardAccount]
+      }
+    })
+  );
+  console.log(crPopRes.data.toHuman());
+  const initRes = await initialize(api, walletSudo);
+  console.log(initRes.data.toHuman());
 
-  // const lpResponse = await createLiquidityPool(api, walletSudo);
-  // console.log(lpResponse);
-  // let toTransfer = new BN(0.001).mul(new BN(10).pow(new BN(12)))
-  // const executor = new SignedExtrinsicExecutor(
-  //   api,
-  //   api.tx.balances.transfer(
-  //     '5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S',
-  //     toTransfer.toString(),
-  //   ),
-  //   walletSudo,
-  //   (finalizationHash: string) => {
-  //     console.log('onFinalization', finalizationHash)
-  //   },
-  // )
 
-  // executor.executeTransaction();
-  // const tx = api.tx.balances.transfer("5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S", 1);
-  // console.log(tx.method.toHuman())
-  // const createKSMkUSDTPool = await createPool(api, walletSudo, 4, 129, 10000, api.createType('u32', api.consts.liquidityBootstrapping.maxSaleDuration))
-  // console.log(createKSMkUSDTPool)
+
 }
 
 cryptoWaitReady().then(() => {
