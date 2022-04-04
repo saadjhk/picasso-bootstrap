@@ -2,20 +2,17 @@ require('dotenv').config()
 import Keyring from '@polkadot/keyring'
 import { cryptoWaitReady } from '@polkadot/util-crypto'
 import {
-  crowdloanRewardsPopulateJSON,
-  // crowdloanRewardsPopulateTest,
-  initialize,
+  crowdloanRewardsPopulateJSON, initialize,
 } from "./pallets";
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
 import { ethers } from "ethers";
 import { ApiPromise } from "@polkadot/api";
-import BN from 'bn.js'
 import { KeyringPair } from '@polkadot/keyring/types'
+// import BN from 'bn.js'
 import rewardsDev from './constants/rewards-dev.json'
 import BigNumber from 'bignumber.js';
-// import { base58 } from "micro-base";
-// import rewards from "./constants/rewards.json";=
+import { createPool } from './pallets/liquidityBootstrapping/extrinsics';
 
 function sleep(delay: number) {
   var start = new Date().getTime()
@@ -228,6 +225,9 @@ const main = async () => {
           });
       }
     });
+
+  // const lpResponse = await createLiquidityPool(api, walletSudo);
+  // console.log(lpResponse);
   // let toTransfer = new BN(0.001).mul(new BN(10).pow(new BN(12)))
   // const executor = new SignedExtrinsicExecutor(
   //   api,
@@ -244,7 +244,8 @@ const main = async () => {
   // executor.executeTransaction();
   // const tx = api.tx.balances.transfer("5tfaf3MPRwzECcLhnzv75zvML1DHGJcvPYamoSNLoeAgGQ4S", 1);
   // console.log(tx.method.toHuman())
-
+  // const createKSMkUSDTPool = await createPool(api, walletSudo, 4, 129, 10000, api.createType('u32', api.consts.liquidityBootstrapping.maxSaleDuration))
+  // console.log(createKSMkUSDTPool)
 }
 
 cryptoWaitReady().then(() => {
