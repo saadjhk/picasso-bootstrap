@@ -1,5 +1,6 @@
 import { ApiPromise } from '@polkadot/api'
 import { KeyringPair } from '@polkadot/keyring/types'
+import BigNumber from 'bignumber.js';
 import { sendAndWaitForSuccess } from 'polkadot-utils'
 
 export async function createPool(
@@ -11,6 +12,8 @@ export async function createPool(
   end: any,
   startDelay = 5,
 ) {
+  const start = await api.query.system.number();
+
   const pool = api.createType('PalletLiquidityBootstrappingPool', {
     owner: api.createType('AccountId32', sudoKey.publicKey),
     pair: api.createType('ComposableTraitsDefiCurrencyPair', {
@@ -20,7 +23,7 @@ export async function createPool(
     sale: api.createType('PalletLiquidityBootstrappingSale', {
       start: api.createType(
         'u32',
-        (await api.query.system.number()).toNumber() + startDelay,
+        new BigNumber(start.toString()).plus(startDelay).toString(),
       ),
       end: end,
       initialWeight: api.consts.liquidityBootstrapping.maxInitialWeight,

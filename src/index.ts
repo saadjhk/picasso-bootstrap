@@ -14,6 +14,7 @@ import rewardsDev from './constants/rewards-dev.json'
 import BigNumber from 'bignumber.js';
 import { createPool } from './pallets/liquidityBootstrapping/extrinsics';
 import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils';
+import { mintAssetsToWallet } from './pallets/assets/extrinsics';
 
 function sleep(delay: number) {
   var start = new Date().getTime()
@@ -49,7 +50,6 @@ const populateChunk = async (
 
 const main = async () => {
   await cryptoWaitReady()
-
   const kr = new Keyring({ type: 'sr25519' })
   const myDot1 = kr.addFromMnemonic(
     process.env.DOT_MNEMONIC ? process.env.DOT_MNEMONIC : '',
@@ -58,11 +58,6 @@ const main = async () => {
     process.env.DOT_MNEMONIC1 ? process.env.DOT_MNEMONIC1 : '',
   )
   const walletSudo = kr.addFromUri('//Alice') // alice
-
-  // const decoded = base58.decode("15SP8c4vwuUFgGUpfXuqFC3WsdPytBw5uPdgM2qbLeavem5V")
-  // console.log('mb', decoded.subarray(1, 33));
-  // console.log('kr', myDot1.publicKey);
-
   const myEth1 = new ethers.Wallet(process.env.ETH_PK ? process.env.ETH_PK : '')
   const myEth2 = new ethers.Wallet(
     process.env.ETH_PK1 ? process.env.ETH_PK1 : '',
@@ -81,6 +76,7 @@ const main = async () => {
   )
   const api = await buildApi(process.env.PICASSO_RPC_URL || '', types, rpc)
 
+  // crowdloan rewards
   // const walletBob = kr.addFromUri("//Bob");
   // const crPopRes = await crowdloanRewardsPopulateTest(
   //   api,
@@ -135,58 +131,75 @@ const main = async () => {
   //   rewards: "1223.231",
   // });
   // const crPopRes = await crowdloanRewardsPopulateJSON(api, walletSudo, ksm.slice(0, 1500), eth.slice(0,500));
+  // let netRewards = Object.values(rewardsDev).reduce((acc, c) => {
+  //   let bnAcc = new BigNumber(acc);
+  //   bnAcc = bnAcc.plus(new BigNumber(c));
+  //   return bnAcc.toString();
+  // }, "0");
 
-  let netRewards = Object.values(rewardsDev).reduce((acc, c) => {
-    let bnAcc = new BigNumber(acc);
-    bnAcc = bnAcc.plus(new BigNumber(c));
-    return bnAcc.toString();
-  }, "0");
+  // let decimals = new BigNumber(10).pow(12);
+  // let base = new BigNumber(netRewards).times(decimals);
 
-  let decimals = new BigNumber(10).pow(12);
-  let base = new BigNumber(netRewards).times(decimals);
+  // const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
+  // let mintResponse = await sendAndWaitForSuccess(
+  //   api,
+  //   walletSudo,
+  //   api.events.sudo.Sudid.is,
+  //   api.tx.sudo.sudo(api.tx.assets.mintInto(1, walletSudo.publicKey, api.createType("u128", base.toString())))
+  // );
+  // console.log(mintResponse.data.toHuman())
+  // let transferResponse = await sendAndWaitFor(
+  //   api,
+  //   walletSudo,
+  //   api.events.balances.Transfer.is,
+  //   api.tx.assets.transfer(
+  //     1,
+  //     palletId,
+  //     api.createType("u128", base.toString()),
+  //     true
+  //   )
+  // )
+  // console.log(transferResponse.data.toHuman())
+  // const crPopRes = await crowdloanRewardsPopulateJSON(
+  //   api,
+  //   walletSudo,
+  //   Object.keys(rewardsDev).filter(addr => !addr.startsWith("0x")).map((rewardAccount: string) => {
+  //     return {
+  //       address: rewardAccount,
+  //       rewards: (rewardsDev as any)[rewardAccount]
+  //     }
+  //   }),
+  //   Object.keys(rewardsDev).filter(addr => addr.startsWith("0x")).map((rewardAccount: string) => {
+  //     return {
+  //       address: rewardAccount,
+  //       rewards: (rewardsDev as any)[rewardAccount]
+  //     }
+  //   })
+  // );
+  // console.log(crPopRes.data.toHuman());
+  // const initRes = await initialize(api, walletSudo);
+  // console.log(initRes.data.toHuman());
 
-  const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
-  let mintResponse = await sendAndWaitForSuccess(
+  const baseAmount = 250000000000;
+  const quoteAmount = 250000000000;
+  const baseAssetId = 4; // KUSAMA
+  const quoteAssetId = 129; // kUSD
+  const ownerFee = 10000;
+
+  await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
+  const end = api.createType('u32', api.consts.liquidityBootstrapping.maxSaleDuration);
+
+  const {data: [result],} = 
+  await createPool(
     api,
     walletSudo,
-    api.events.sudo.Sudid.is,
-    api.tx.sudo.sudo(api.tx.assets.mintInto(1, walletSudo.publicKey, api.createType("u128", base.toString())))
+    baseAssetId,
+    quoteAssetId,
+    ownerFee,
+    end
   );
-  console.log(mintResponse.data.toHuman())
-  let transferResponse = await sendAndWaitFor(
-    api,
-    walletSudo,
-    api.events.balances.Transfer.is,
-    api.tx.assets.transfer(
-      1,
-      palletId,
-      api.createType("u128", base.toString()),
-      true
-    )
-  )
-  console.log(transferResponse.data.toHuman())
-  const crPopRes = await crowdloanRewardsPopulateJSON(
-    api,
-    walletSudo,
-    Object.keys(rewardsDev).filter(addr => !addr.startsWith("0x")).map((rewardAccount: string) => {
-      return {
-        address: rewardAccount,
-        rewards: (rewardsDev as any)[rewardAccount]
-      }
-    }),
-    Object.keys(rewardsDev).filter(addr => addr.startsWith("0x")).map((rewardAccount: string) => {
-      return {
-        address: rewardAccount,
-        rewards: (rewardsDev as any)[rewardAccount]
-      }
-    })
-  );
-  console.log(crPopRes.data.toHuman());
-  const initRes = await initialize(api, walletSudo);
-  console.log(initRes.data.toHuman());
 
-
-
+  console.log(result)
 }
 
 cryptoWaitReady().then(() => {

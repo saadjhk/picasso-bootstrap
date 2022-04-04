@@ -13,7 +13,7 @@ import { sendAndWaitForSuccess } from "polkadot-utils";
  * @param assetIDs All assets to be minted to wallet.
  * @param amount Mint amount.
  */
-export async function mintAssetsToWallet(api: ApiPromise, wallet: KeyringPair, sudoKey: KeyringPair, assetIDs:number[], amount=999999999999999) {
+export async function mintAssetsToWallet(api: ApiPromise, wallet: KeyringPair, sudoKey: KeyringPair, assetIDs:number[], amount = 999999999999999) {
   for (const asset of assetIDs) {
     const {data: [result]} = await sendAndWaitForSuccess(
       api,
@@ -24,6 +24,6 @@ export async function mintAssetsToWallet(api: ApiPromise, wallet: KeyringPair, s
       )
     )
 
-    console.log(result.isOk)
+    console.log(result)
   }
 }
