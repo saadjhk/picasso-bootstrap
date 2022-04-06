@@ -12,7 +12,7 @@ import { KeyringPair } from '@polkadot/keyring/types'
 // import BN from 'bn.js'
 import rewardsDev from './constants/rewards-dev.json'
 import BigNumber from 'bignumber.js';
-import { createPool } from './pallets/liquidityBootstrapping/extrinsics';
+import { addFundstoThePool, createPool } from './pallets/liquidityBootstrapping/extrinsics';
 import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils';
 import { mintAssetsToWallet } from './pallets/assets/extrinsics';
 
@@ -189,8 +189,7 @@ const main = async () => {
   await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
   const end = api.createType('u32', api.consts.liquidityBootstrapping.maxSaleDuration);
 
-  const {data: [result],} = 
-  await createPool(
+  const { data: [result] } = await createPool(
     api,
     walletSudo,
     baseAssetId,
@@ -200,6 +199,8 @@ const main = async () => {
   );
 
   console.log(result)
+  const liq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
+  console.log(liq)
 }
 
 cryptoWaitReady().then(() => {

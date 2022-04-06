@@ -79,7 +79,7 @@ export async function buyFromPool(
     api.tx.liquidityBootstrapping.buy(
       poolIdParam,
       assetIdParam,
-      amountParam,
+      amountParam, // convert amount to buy from price
       keepAlive,
     ),
   )
