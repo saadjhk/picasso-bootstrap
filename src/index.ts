@@ -63,13 +63,7 @@ const main = async () => {
     process.env.ETH_PK1 ? process.env.ETH_PK1 : '',
   )
 
-  const rpc = Object.keys(definitions).reduce(
-    (accumulator, key) => ({
-      ...accumulator,
-      [key]: (definitions as any)[key].rpc,
-    }),
-    {},
-  )
+  const rpc = Object.keys(definitions).reduce((accumulator, key) => ({ ...accumulator, [key]: (definitions as any)[key].rpc }), {});
   const types = Object.values(definitions).reduce(
     (accumulator, { types }) => ({ ...accumulator, ...types }),
     {},
@@ -135,7 +129,12 @@ const main = async () => {
   console.log(crPopRes.data.toHuman());
   const initRes = await initialize(api, walletSudo);
   console.log(initRes.data.toHuman());
-  process.exit(0);
+
+  // @ts-ignore
+  // const PICABalance = await api.rpc.assets.balanceOf("1000000", myDot1.address);
+  // const KSMBalance = await api.rpc.assets.balanceOf("4", myDot1.address);
+  // console.log('PICA Balance: ', PICABalance.toHuman())
+  // console.log('KSM Balance: ', KSMBalance.toHuman())
   // const baseAmount = 250000000000;
   // const quoteAmount = 250000000000;
   // const baseAssetId = 4; // KUSAMA
