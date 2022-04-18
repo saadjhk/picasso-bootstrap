@@ -14,28 +14,30 @@ export async function createPool(
 ) {
   const start = await api.query.system.number();
 
-  const pool = api.createType('PalletLiquidityBootstrappingPool', {
-    owner: api.createType('AccountId32', sudoKey.publicKey),
-    pair: api.createType('ComposableTraitsDefiCurrencyPair', {
-      base: api.createType('u128', baseAssetId),
-      quote: api.createType('u128', quoteAssetId),
-    }),
-    sale: api.createType('PalletLiquidityBootstrappingSale', {
-      start: api.createType(
-        'u32',
-        new BigNumber(start.toString()).plus(startDelay).toString(),
-      ),
-      end: end,
-      initialWeight: api.consts.liquidityBootstrapping.maxInitialWeight,
-      finalWeight: api.consts.liquidityBootstrapping.minFinalWeight,
-    }),
-    fee: api.createType('Permill', fee),
-  })
+  const pool = api.createType('PalletPabloPoolInitConfiguration', {
+    LiquidityBootstrapping: {
+      owner: api.createType('AccountId32', sudoKey.publicKey),
+      pair: api.createType('ComposableTraitsDefiCurrencyPairCurrencyId', {
+        base: api.createType('u128', baseAssetId),
+        quote: api.createType('u128', quoteAssetId),
+      }),
+      sale: api.createType('ComposableTraitsDexSale', {
+        start: api.createType(
+          'u32',
+          new BigNumber(start.toString()).plus(startDelay).toString(),
+        ),
+        end: end,
+        initialWeight: api.consts.liquidityBootstrapping.maxInitialWeight,
+        finalWeight: api.consts.liquidityBootstrapping.minFinalWeight,
+      }),
+      fee: api.createType('Permill', fee)
+    }
+  });
   return await sendAndWaitForSuccess(
     api,
     sudoKey,
-    api.events.sudo.Sudid.is,
-    api.tx.sudo.sudo(api.tx.liquidityBootstrapping.create(pool)),
+    api.events.pablo.PoolCreated.is,
+    api.tx.pablo.create(pool),
   )
 }
 export async function addFundstoThePool(
