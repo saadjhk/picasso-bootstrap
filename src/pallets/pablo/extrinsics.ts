@@ -3,7 +3,7 @@ import { KeyringPair } from '@polkadot/keyring/types'
 import BigNumber from 'bignumber.js';
 import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils'
 
-export async function createPool(
+export async function createLiquidityBootstrappingPool(
   api: ApiPromise,
   sudoKey: KeyringPair,
   baseAssetId: number,
@@ -126,33 +126,33 @@ export async function removeLiquidityFromPool(
   )
 }
 
-// export async function swapTokenPairs(
-//   api: ApiPromise,
-//   wallet: KeyringPair,
-//   poolId: number,
-//   baseAssetId: number,
-//   quoteAssetId: number,
-//   quoteAmount: number,
-//   minReceiveAmount = 0,
-// ) {
-//   const poolIdParam = api.createType('u128', poolId)
-//   const currencyPair = api.createType('ComposableTraitsDefiCurrencyPair', {
-//     base: api.createType('u128', baseAssetId),
-//     quote: api.createType('u128', quoteAssetId),
-//   })
-//   const quoteAmountParam = api.createType('u128', quoteAmount)
-//   const minReceiveParam = api.createType('u128', minReceiveAmount)
-//   const keepAliveParam = api.createType('bool', true)
-//   return await sendAndWaitForSuccess(
-//     api,
-//     wallet,
-//     api.events.liquidityBootstrapping.Swapped.is,
-//     api.tx.liquidityBootstrapping.swap(
-//       poolIdParam,
-//       currencyPair,
-//       quoteAmountParam,
-//       minReceiveParam,
-//       keepAliveParam,
-//     ),
-//   )
-// }
+export async function swapTokenPairs(
+  api: ApiPromise,
+  wallet: KeyringPair,
+  poolId: number,
+  baseAssetId: number,
+  quoteAssetId: number,
+  quoteAmount: number,
+  minReceiveAmount = 0,
+) {
+  const poolIdParam = api.createType('u128', poolId)
+  const currencyPair = api.createType('ComposableTraitsDefiCurrencyPair', {
+    base: api.createType('u128', baseAssetId),
+    quote: api.createType('u128', quoteAssetId),
+  })
+  const quoteAmountParam = api.createType('u128', quoteAmount)
+  const minReceiveParam = api.createType('u128', minReceiveAmount)
+  const keepAliveParam = api.createType('bool', true)
+  return await sendAndWaitForSuccess(
+    api,
+    wallet,
+    api.events.liquidityBootstrapping.Swapped.is,
+    api.tx.pablo.swap(
+      poolIdParam,
+      currencyPair as any,
+      quoteAmountParam,
+      minReceiveParam,
+      keepAliveParam
+    )
+  )
+}

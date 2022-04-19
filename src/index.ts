@@ -11,7 +11,7 @@ import { KeyringPair } from '@polkadot/keyring/types'
 // import BN from 'bn.js'
 import rewardsDev from './constants/rewards-dev.json'
 import BigNumber from 'bignumber.js';
-import { addFundstoThePool, createPool } from './pallets/liquidityBootstrapping/extrinsics';
+import { addFundstoThePool, createLiquidityBootstrappingPool } from './pallets/pablo/extrinsics';
 import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils';
 import { mintAssetsToWallet } from './pallets/assets/extrinsics';
 import { SafeRpcWrapper } from './interfaces';
