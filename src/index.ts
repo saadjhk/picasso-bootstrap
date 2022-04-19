@@ -155,8 +155,8 @@ const main = async () => {
   );
 
   console.log(result.toHuman())
-  // const liq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
-  // console.log(liq)
+  const liq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
+  console.log(liq)
 }
 
 cryptoWaitReady().then(() => {
