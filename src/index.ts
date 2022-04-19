@@ -7,7 +7,7 @@ import {
 import * as definitions from "./interfaces/definitions";
 import { buildApi } from "./utils";
 import { ethers } from "ethers";
-import { ApiPromise } from "@polkadot/api";
+import { ApiPromise, WsProvider } from "@polkadot/api";
 import { KeyringPair } from '@polkadot/keyring/types'
 // import BN from 'bn.js'
 import rewardsDev from './constants/rewards-dev.json'
@@ -68,8 +68,11 @@ const main = async () => {
     (accumulator, { types }) => ({ ...accumulator, ...types }),
     {},
   )
-  const api = await buildApi(process.env.PICASSO_RPC_URL || '', types, rpc)
 
+  const provider = new WsProvider(process.env.PICASSO_RPC_URL || '', 1000);
+  const api = await ApiPromise.create({ provider, types, rpc });
+
+  await api.isReady
   //     // peter dot wallets
   //     "5uymjr2xLL14upmg4nezH5LZMNgenGn7MrbQ2WnJ7dhcDb4C",
   //     "5z6opGwNemAtYG7o7KehBn2KdKbGPw64E23ZpwxcXoGiwufL",
@@ -83,77 +86,75 @@ const main = async () => {
   //     "0xfe302f2D69cAf32d71812587ECcd4fcDF8287E22",
   //     "0x38650E1FD89E6bBEfDD2f150190C70da02454b93",
 
-  let netRewards = Object.values(rewardsDev).reduce((acc, c) => {
-    let bnAcc = new BigNumber(acc);
-    bnAcc = bnAcc.plus(new BigNumber(c));
-    return bnAcc.toString();
-  }, "0");
-  let decimals = new BigNumber(10).pow(12);
-  let base = new BigNumber(netRewards).times(decimals);
-  const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
-  let mintResponse = await sendAndWaitForSuccess(
-    api,
-    walletSudo,
-    api.events.sudo.Sudid.is,
-    api.tx.sudo.sudo(api.tx.assets.mintInto(1, walletSudo.publicKey, api.createType("u128", base.toString())))
-  );
-  console.log(mintResponse.data.toHuman())
-  let transferResponse = await sendAndWaitFor(
-    api,
-    walletSudo,
-    api.events.balances.Transfer.is,
-    api.tx.assets.transfer(
-      1,
-      palletId,
-      api.createType("u128", base.toString()),
-      true
-    )
-  )
-  console.log(transferResponse.data.toHuman())
-  const crPopRes = await crowdloanRewardsPopulateJSON(
-    api,
-    walletSudo,
-    Object.keys(rewardsDev).filter(addr => !addr.startsWith("0x")).map((rewardAccount: string) => {
-      return {
-        address: rewardAccount,
-        rewards: (rewardsDev as any)[rewardAccount]
-      }
-    }),
-    Object.keys(rewardsDev).filter(addr => addr.startsWith("0x")).map((rewardAccount: string) => {
-      return {
-        address: rewardAccount,
-        rewards: (rewardsDev as any)[rewardAccount]
-      }
-    })
-  );
-  console.log(crPopRes.data.toHuman());
-  const initRes = await initialize(api, walletSudo);
-  console.log(initRes.data.toHuman());
-
-  // @ts-ignore
-  // const PICABalance = await api.rpc.assets.balanceOf("1000000", myDot1.address);
-  // const KSMBalance = await api.rpc.assets.balanceOf("4", myDot1.address);
-  // console.log('PICA Balance: ', PICABalance.toHuman())
-  // console.log('KSM Balance: ', KSMBalance.toHuman())
-  // const baseAmount = 250000000000;
-  // const quoteAmount = 250000000000;
-  // const baseAssetId = 4; // KUSAMA
-  // const quoteAssetId = 129; // kUSD
-  // const ownerFee = 10000;
-
-  // await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
-  // const end = api.createType('u32', api.consts.liquidityBootstrapping.maxSaleDuration);
-
-  // const { data: [result] } = await createPool(
+  // let netRewards = Object.values(rewardsDev).reduce((acc, c) => {
+  //   let bnAcc = new BigNumber(acc);
+  //   bnAcc = bnAcc.plus(new BigNumber(c));
+  //   return bnAcc.toString();
+  // }, "0");
+  // let decimals = new BigNumber(10).pow(12);
+  // let base = new BigNumber(netRewards).times(decimals);
+  // const palletId = "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u";
+  // let mintResponse = await sendAndWaitForSuccess(
   //   api,
   //   walletSudo,
-  //   baseAssetId,
-  //   quoteAssetId,
-  //   ownerFee,
-  //   end
+  //   api.events.sudo.Sudid.is,
+  //   api.tx.sudo.sudo(api.tx.assets.mintInto(1, walletSudo.publicKey, api.createType("u128", base.toString())))
   // );
+  // console.log(mintResponse.data.toHuman())
+  // let transferResponse = await sendAndWaitFor(
+  //   api,
+  //   walletSudo,
+  //   api.events.balances.Transfer.is,
+  //   api.tx.assets.transfer(
+  //     1,
+  //     palletId,
+  //     api.createType("u128", base.toString()),
+  //     true
+  //   )
+  // )
+  // console.log(transferResponse.data.toHuman())
+  // const crPopRes = await crowdloanRewardsPopulateJSON(
+  //   api,
+  //   walletSudo,
+  //   Object.keys(rewardsDev).filter(addr => !addr.startsWith("0x")).map((rewardAccount: string) => {
+  //     return {
+  //       address: rewardAccount,
+  //       rewards: (rewardsDev as any)[rewardAccount]
+  //     }
+  //   }),
+  //   Object.keys(rewardsDev).filter(addr => addr.startsWith("0x")).map((rewardAccount: string) => {
+  //     return {
+  //       address: rewardAccount,
+  //       rewards: (rewardsDev as any)[rewardAccount]
+  //     }
+  //   })
+  // );
+  // console.log(crPopRes.data.toHuman());
+  // const initRes = await initialize(api, walletSudo);
+  // console.log(initRes.data.toHuman());
 
-  // console.log(result)
+  // const KSMBalance = await api.query.tokens.accounts(myDot1.address, "4");
+  // console.log('KSM Balance: ', KSMBalance.toHuman())
+
+  const baseAmount = 250000000000;
+  const quoteAmount = 250000000000;
+  const baseAssetId = 4; // KUSAMA
+  const quoteAssetId = 129; // kUSD
+  const ownerFee = 10000;
+
+  // await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
+  const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
+
+  const { data: [result] } = await createPool(
+    api,
+    walletSudo,
+    baseAssetId,
+    quoteAssetId,
+    ownerFee,
+    end
+  );
+
+  console.log(result.toHuman())
   // const liq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
   // console.log(liq)
 }
