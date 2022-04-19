@@ -1,7 +1,7 @@
 import { ApiPromise } from '@polkadot/api'
 import { KeyringPair } from '@polkadot/keyring/types'
 import BigNumber from 'bignumber.js';
-import { sendAndWaitForSuccess } from 'polkadot-utils'
+import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils'
 
 export async function createPool(
   api: ApiPromise,
@@ -50,14 +50,15 @@ export async function addFundstoThePool(
   const baseAmountParam = api.createType('u128', baseAmount)
   const quoteAmountParam = api.createType('u128', quoteAmount)
   const keepAliveParam = api.createType('bool', true)
-  return await sendAndWaitForSuccess(
+  return await sendAndWaitFor(
     api,
     walletId,
-    api.events.liquidityBootstrapping.LiquidityAdded.is,
-    api.tx.liquidityBootstrapping.addLiquidity(
+    api.events.pablo.LiquidityAdded.is,
+    api.tx.pablo.addLiquidity(
       poolId,
       baseAmountParam,
       quoteAmountParam,
+      0, // min mint amount
       keepAliveParam,
     ),
   )
@@ -125,33 +126,33 @@ export async function removeLiquidityFromPool(
   )
 }
 
-export async function swapTokenPairs(
-  api: ApiPromise,
-  wallet: KeyringPair,
-  poolId: number,
-  baseAssetId: number,
-  quoteAssetId: number,
-  quoteAmount: number,
-  minReceiveAmount = 0,
-) {
-  const poolIdParam = api.createType('u128', poolId)
-  const currencyPair = api.createType('ComposableTraitsDefiCurrencyPair', {
-    base: api.createType('u128', baseAssetId),
-    quote: api.createType('u128', quoteAssetId),
-  })
-  const quoteAmountParam = api.createType('u128', quoteAmount)
-  const minReceiveParam = api.createType('u128', minReceiveAmount)
-  const keepAliveParam = api.createType('bool', true)
-  return await sendAndWaitForSuccess(
-    api,
-    wallet,
-    api.events.liquidityBootstrapping.Swapped.is,
-    api.tx.liquidityBootstrapping.swap(
-      poolIdParam,
-      currencyPair,
-      quoteAmountParam,
-      minReceiveParam,
-      keepAliveParam,
-    ),
-  )
-}
+// export async function swapTokenPairs(
+//   api: ApiPromise,
+//   wallet: KeyringPair,
+//   poolId: number,
+//   baseAssetId: number,
+//   quoteAssetId: number,
+//   quoteAmount: number,
+//   minReceiveAmount = 0,
+// ) {
+//   const poolIdParam = api.createType('u128', poolId)
+//   const currencyPair = api.createType('ComposableTraitsDefiCurrencyPair', {
+//     base: api.createType('u128', baseAssetId),
+//     quote: api.createType('u128', quoteAssetId),
+//   })
+//   const quoteAmountParam = api.createType('u128', quoteAmount)
+//   const minReceiveParam = api.createType('u128', minReceiveAmount)
+//   const keepAliveParam = api.createType('bool', true)
+//   return await sendAndWaitForSuccess(
+//     api,
+//     wallet,
+//     api.events.liquidityBootstrapping.Swapped.is,
+//     api.tx.liquidityBootstrapping.swap(
+//       poolIdParam,
+//       currencyPair,
+//       quoteAmountParam,
+//       minReceiveParam,
+//       keepAliveParam,
+//     ),
+//   )
+// }

@@ -5,7 +5,6 @@ import {
   crowdloanRewardsPopulateJSON, initialize,
 } from "./pallets";
 import * as definitions from "./interfaces/definitions";
-import { buildApi } from "./utils";
 import { ethers } from "ethers";
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import { KeyringPair } from '@polkadot/keyring/types'
@@ -15,6 +14,7 @@ import BigNumber from 'bignumber.js';
 import { addFundstoThePool, createPool } from './pallets/liquidityBootstrapping/extrinsics';
 import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils';
 import { mintAssetsToWallet } from './pallets/assets/extrinsics';
+import { SafeRpcWrapper } from './interfaces';
 
 function sleep(delay: number) {
   var start = new Date().getTime()
@@ -63,11 +63,10 @@ const main = async () => {
     process.env.ETH_PK1 ? process.env.ETH_PK1 : '',
   )
 
-  const rpc = Object.keys(definitions).reduce((accumulator, key) => ({ ...accumulator, [key]: (definitions as any)[key].rpc }), {});
-  const types = Object.values(definitions).reduce(
-    (accumulator, { types }) => ({ ...accumulator, ...types }),
-    {},
-  )
+  const rpc = Object.keys(definitions)
+      .filter(k => Object.keys((definitions as any)[k].rpc).length > 0)
+      .reduce((accumulator, key) => ({ ...accumulator, [key]: (definitions as any)[key].rpc }), {});
+    const types = Object.values(definitions).reduce((accumulator, { types }) => ({ ...accumulator, ...types }), {});
 
   const provider = new WsProvider(process.env.PICASSO_RPC_URL || '', 1000);
   const api = await ApiPromise.create({ provider, types, rpc });
@@ -136,27 +135,38 @@ const main = async () => {
   // const KSMBalance = await api.query.tokens.accounts(myDot1.address, "4");
   // console.log('KSM Balance: ', KSMBalance.toHuman())
 
-  const baseAmount = 250000000000;
-  const quoteAmount = 250000000000;
-  const baseAssetId = 4; // KUSAMA
-  const quoteAssetId = 129; // kUSD
-  const ownerFee = 10000;
+  // const baseAmount = 250000000000;
+  // const quoteAmount = 250000000000;
+  // const baseAssetId = 4; // KUSAMA
+  // const quoteAssetId = 129; // kUSD
+  // const ownerFee = 10000;
 
   // await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
-  const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
+  // const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
 
-  const { data: [result] } = await createPool(
-    api,
-    walletSudo,
-    baseAssetId,
-    quoteAssetId,
-    ownerFee,
-    end
-  );
+  // const { data: [result] } = await createPool(
+  //   api,
+  //   walletSudo,
+  //   baseAssetId,
+  //   quoteAssetId,
+  //   ownerFee,
+  //   end
+  // );
 
-  console.log(result.toHuman())
-  const liq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
-  console.log(liq)
+  // console.log(result.toHuman())
+  // const liq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
+  // console.log(liq)
+
+  let KSM = api.createType('Text', 4);
+  // @ts-ignore
+  let KSMBalance = await api.rpc.assets.balanceOf(KSM as SafeRpcWrapper, walletSudo.address);
+  console.log('KSM Balance: ', KSMBalance.toHuman())
+
+  let KUSD = api.createType('Safe', 129);
+  // @ts-ignore
+  let KUSDBalance = await api.rpc.assets.balanceOf(KUSD as SafeRpcWrapper, walletSudo.address);
+  console.log('KUSD Balance: ', KUSDBalance.toHuman())
+
 }
 
 cryptoWaitReady().then(() => {
