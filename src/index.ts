@@ -1,25 +1,11 @@
 require('dotenv').config()
 import Keyring from '@polkadot/keyring'
 import { cryptoWaitReady } from '@polkadot/util-crypto'
-import {
-  crowdloanRewardsPopulateJSON, initialize,
-} from "./pallets";
-import * as definitions from "./interfaces/definitions";
 import { ethers } from "ethers";
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { KeyringPair } from '@polkadot/keyring/types'
-// import BN from 'bn.js'
-import rewardsDev from './constants/rewards-dev.json'
-import BigNumber from 'bignumber.js';
-import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool } from './pallets/pablo/extrinsics';
-import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils';
+import { addFundstoThePool, createConstantProductPool } from './pallets/pablo/extrinsics';
 import { mintAssetsToWallet } from './pallets/assets/extrinsics';
-import { SafeRpcWrapper } from './interfaces';
-
-function sleep(delay: number) {
-  var start = new Date().getTime()
-  while (new Date().getTime() < start + delay);
-}
+import * as definitions from "./interfaces/definitions";
 
 const createBlock = async (apiPromise: ApiPromise, count: number) => {
   if (count <= 0) return
@@ -28,25 +14,6 @@ const createBlock = async (apiPromise: ApiPromise, count: number) => {
   if (count > 0) createBlock(apiPromise, count - 1)
 }
 
-const populateChunk = async (
-  api: ApiPromise,
-  walletSudo: KeyringPair,
-  ksm: { address: string; rewards: string }[],
-  eth: { address: string; rewards: string }[],
-  startingIndex: number,
-) => {
-  const response = await crowdloanRewardsPopulateJSON(
-    api,
-    walletSudo,
-    ksm.slice(startingIndex * 1000, (startingIndex + 1) * 1000),
-    (startingIndex + 1) * 1000 > ksm.length ? eth : [],
-  )
-
-  console.log(response.data.toHuman())
-  if ((startingIndex + 1) * 1000 < ksm.length) {
-    populateChunk(api, walletSudo, ksm, eth, startingIndex + 1)
-  }
-}
 
 const main = async () => {
   await cryptoWaitReady()
@@ -73,14 +40,10 @@ const main = async () => {
 
   await api.isReady
 
-  const baseAmount = 250000000000;
-  const quoteAmount = 250000000000;
   const baseAssetId = 4; // KUSAMA
   const quoteAssetId = 129; // kUSD
-  const ownerFee = 10000;
-  
   await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
-
+    
   // LBP
   // const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
   // const { data: [result] } = await createLiquidityBootstrappingPool(
@@ -91,19 +54,24 @@ const main = async () => {
   //   ownerFee,
   //   end
   // );
+  
+  const ownerFee = 10000;
+  // const createPool = await createConstantProductPool(
+  //   api,
+  //   walletSudo,
+  //   baseAssetId,
+  //   quoteAssetId,
+  //   ownerFee,
+  //   ownerFee
+  //   );
+ 
+  const baseAmount = 25000;
+  const quoteAmount = 2500;
 
-  const { data: [result] } = await createConstantProductPool(
-    api,
-    walletSudo,
-    baseAssetId,
-    quoteAssetId,
-    ownerFee,
-    ownerFee
-  );
-
-  console.log(result.toHuman());
-
-
+  const addLiq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
+    
+  // console.log(createPool.data.toHuman());
+  console.log(addLiq.data.toHuman());
   process.exit(0);
 }
 

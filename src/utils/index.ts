@@ -27,3 +27,7 @@ export const ethAccount = (seed: number) =>
   web3.eth.accounts.privateKeyToAccount(
     "0x" + seed.toString(16).padStart(64, "0")
   );
+export function sleep(delay: number) {
+  var start = new Date().getTime()
+  while (new Date().getTime() < start + delay);
+}

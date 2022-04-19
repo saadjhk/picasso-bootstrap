@@ -57,3 +57,25 @@
   // console.log(crPopRes.data.toHuman());
   // const initRes = await initialize(api, walletSudo);
   // console.log(initRes.data.toHuman());
+
+
+  
+// const populateChunk = async (
+//     api: ApiPromise,
+//     walletSudo: KeyringPair,
+//     ksm: { address: string; rewards: string }[],
+//     eth: { address: string; rewards: string }[],
+//     startingIndex: number,
+//   ) => {
+//     const response = await crowdloanRewardsPopulateJSON(
+//       api,
+//       walletSudo,
+//       ksm.slice(startingIndex * 1000, (startingIndex + 1) * 1000),
+//       (startingIndex + 1) * 1000 > ksm.length ? eth : [],
+//     )
+  
+//     console.log(response.data.toHuman())
+//     if ((startingIndex + 1) * 1000 < ksm.length) {
+//       populateChunk(api, walletSudo, ksm, eth, startingIndex + 1)
+//     }
+//   }

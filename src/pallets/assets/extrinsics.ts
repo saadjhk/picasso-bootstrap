@@ -24,6 +24,6 @@ export async function mintAssetsToWallet(api: ApiPromise, wallet: KeyringPair, s
       )
     )
 
-    console.log(result)
+    console.log(result.toHuman())
   }
 }
