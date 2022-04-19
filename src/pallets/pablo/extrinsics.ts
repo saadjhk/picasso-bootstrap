@@ -40,6 +40,34 @@ export async function createLiquidityBootstrappingPool(
     api.tx.pablo.create(pool),
   )
 }
+
+export async function createConstantProductPool(
+  api: ApiPromise,
+  sudoKey: KeyringPair,
+  baseAssetId: number,
+  quoteAssetId: number,
+  fee: number,
+  ownerFee: number
+) {
+  const pool = api.createType('PalletPabloPoolInitConfiguration', {
+    ConstantProduct: {
+      owner: api.createType('AccountId32', sudoKey.publicKey),
+      pair: api.createType('ComposableTraitsDefiCurrencyPairCurrencyId', {
+        base: api.createType('u128', baseAssetId),
+        quote: api.createType('u128', quoteAssetId),
+      }),
+      fee: api.createType('Permill', fee),
+      ownerFee: api.createType('Permill', ownerFee)
+    }
+  });
+  return await sendAndWaitForSuccess(
+    api,
+    sudoKey,
+    api.events.pablo.PoolCreated.is,
+    api.tx.pablo.create(pool),
+  )
+}
+
 export async function addFundstoThePool(
   api: ApiPromise,
   walletId: KeyringPair,
