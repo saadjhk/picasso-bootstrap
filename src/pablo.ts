@@ -8,8 +8,8 @@ export const setupPablo = async (
     walletSudo: KeyringPair,
     _walletUser: KeyringPair
 ) => {
-    const baseAssetId = 4; // KUSAMA
-    const quoteAssetId = 129; // kUSD
+    let baseAssetId = 4; // KUSAMA
+    let quoteAssetId = 129; // kUSD
     const ownerFee = 10000;
     await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
     
@@ -23,7 +23,8 @@ export const setupPablo = async (
       ownerFee,
       end
     );
-    
+
+    quoteAssetId = 1;
     const createConstantProduct = await createConstantProductPool(
       api,
       walletSudo,
@@ -33,8 +34,8 @@ export const setupPablo = async (
       ownerFee
     );
    
-    const baseAmount = 2500;
-    const quoteAmount = 2500;
+    // const baseAmount = 2500;
+    // const quoteAmount = 2500;
   
     // const lbpLiquidity = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount);
     // const constantProductLiquidity = await addFundstoThePool(api, walletSudo, 1, baseAmount, quoteAmount);
