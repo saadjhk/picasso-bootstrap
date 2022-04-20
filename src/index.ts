@@ -3,9 +3,10 @@ import Keyring from '@polkadot/keyring'
 import { cryptoWaitReady } from '@polkadot/util-crypto'
 import { ethers } from "ethers";
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { addFundstoThePool, createConstantProductPool } from './pallets/pablo/extrinsics';
+import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool } from './pallets/pablo/extrinsics';
 import { mintAssetsToWallet } from './pallets/assets/extrinsics';
 import * as definitions from "./interfaces/definitions";
+import { setupPablo } from './pablo';
 
 const createBlock = async (apiPromise: ApiPromise, count: number) => {
   if (count <= 0) return
@@ -40,38 +41,7 @@ const main = async () => {
 
   await api.isReady
 
-  const baseAssetId = 4; // KUSAMA
-  const quoteAssetId = 129; // kUSD
-  await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
-    
-  // LBP
-  // const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
-  // const { data: [result] } = await createLiquidityBootstrappingPool(
-  //   api,
-  //   walletSudo,
-  //   baseAssetId,
-  //   quoteAssetId,
-  //   ownerFee,
-  //   end
-  // );
-  
-  const ownerFee = 10000;
-  // const createPool = await createConstantProductPool(
-  //   api,
-  //   walletSudo,
-  //   baseAssetId,
-  //   quoteAssetId,
-  //   ownerFee,
-  //   ownerFee
-  //   );
- 
-  const baseAmount = 25000;
-  const quoteAmount = 2500;
-
-  const addLiq = await addFundstoThePool(api, walletSudo, 0, baseAmount, quoteAmount)
-    
-  // console.log(createPool.data.toHuman());
-  console.log(addLiq.data.toHuman());
+  await setupPablo(api, walletSudo, myDot1);
   process.exit(0);
 }
 
