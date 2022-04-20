@@ -44,6 +44,5 @@ export const setupPablo = async (
     // console.log('LBP Liquidity: ', lbpLiquidity.data.toHuman());
   
     console.log('Uniswap Create: ', createConstantProduct.data.toHuman());
-    // console.log('Uniswap Liquidity: ', constantProductLiquidity.data.toHuman());
-  
+    // console.log('Uniswap Liquidity: ', constantProductLiquidity.data.toHuman());  
 }
