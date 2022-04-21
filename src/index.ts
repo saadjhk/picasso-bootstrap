@@ -15,7 +15,6 @@ const createBlock = async (apiPromise: ApiPromise, count: number) => {
   if (count > 0) createBlock(apiPromise, count - 1)
 }
 
-
 const main = async () => {
   await cryptoWaitReady()
   const kr = new Keyring({ type: 'sr25519' })
