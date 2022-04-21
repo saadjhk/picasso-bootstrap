@@ -1,8 +1,8 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { sendAndWaitForSuccess } from "polkadot-utils";
 import { mintAssetsToWallet } from "./pallets/assets/extrinsics";
 import { createConstantProductPool } from "./pallets/pablo/extrinsics";
+import { ISubmittableResult } from '@polkadot/types/types';
 
 export const setupPablo = async (
     api: ApiPromise,
@@ -53,5 +53,14 @@ export const setupPablo = async (
     const call = api.tx.dexRouter.updateRoute(dexRoute, [api.createType("u128", 0)])
 
     const unsub = await call.signAndSend(walletSudo, (res: ISubmittableResult) => {
-    })
+      if (res.dispatchError) {
+        console.log(res.dispatchError.toHuman());
+      }
+
+      if (res.isFinalized) {
+        console.log('Finalized');
+      }
+    });
+
+    unsub();
 }
