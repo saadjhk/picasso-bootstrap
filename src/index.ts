@@ -31,13 +31,19 @@ const main = async () => {
   )
 
   const rpc = Object.keys(definitions)
-      .filter(k => Object.keys((definitions as any)[k].rpc).length > 0)
+      .filter(k => {console.log(k);
+        if (!(definitions as any)[k].rpc) {
+          return false;
+        } else {
+          return Object.keys((definitions as any)[k].rpc).length > 0
+        }
+      })
       .reduce((accumulator, key) => ({ ...accumulator, [key]: (definitions as any)[key].rpc }), {});
-    const types = Object.values(definitions).reduce((accumulator, { types }) => ({ ...accumulator, ...types }), {});
+  const types = Object.keys(definitions).filter((key) => Object.keys((definitions as any)[key].types).length > 0).reduce((accumulator, key) => ({ ...accumulator, ...(definitions as any)[key].types }), {});
 
   const provider = new WsProvider(process.env.PICASSO_RPC_URL || '', 1000);
-  const api = await ApiPromise.create({ provider, types, rpc });
 
+  const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady
 
   await setupPablo(api, walletSudo, myDot1);
