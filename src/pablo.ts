@@ -44,23 +44,23 @@ export const setupPablo = async (
   
 
     let dexRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
-      assetPair: {
         base: api.createType('u128', baseAssetId),
         quote: api.createType('u128', quoteAssetId)
-      }
-    });
+      });
 
-    const call = api.tx.dexRouter.updateRoute(dexRoute, [api.createType("u128", 0)])
+    const call = api.tx.dexRouter.updateRoute(dexRoute, [0])
 
     const unsub = await call.signAndSend(walletSudo, (res: ISubmittableResult) => {
+      console.log(res.toHuman())
       if (res.dispatchError) {
         console.log(res.dispatchError.toHuman());
+        unsub();
       }
 
       if (res.isFinalized) {
         console.log('Finalized');
+        unsub();
       }
     });
 
-    unsub();
 }
