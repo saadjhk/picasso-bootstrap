@@ -1,8 +1,7 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { mintAssetsToWallet } from "./pallets/assets/extrinsics";
-import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool, createStableSwapPool } from "./pallets/pablo/extrinsics";
-import { ISubmittableResult } from '@polkadot/types/types';
+import { createConstantProductPool, createLiquidityBootstrappingPool, createStableSwapPool } from "./pallets/pablo/extrinsics";
 import { sendWait } from "./utils/polkadot";
 
 export const setupPablo = async (
