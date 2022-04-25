@@ -68,6 +68,36 @@ export async function createConstantProductPool(
   )
 }
 
+export async function createStableSwapPool(
+  api: ApiPromise,
+  sudoKey: KeyringPair,
+  baseAssetId: number,
+  quoteAssetId: number,
+  amplificationCoefficient: number,
+  fee: number,
+  ownerFee: number
+) {
+  const pool = api.createType('PalletPabloPoolInitConfiguration', {
+    StableSwap: {
+      owner: api.createType('AccountId32', sudoKey.publicKey),
+      pair: api.createType('ComposableTraitsDefiCurrencyPairCurrencyId', {
+        base: api.createType('u128', baseAssetId),
+        quote: api.createType('u128', quoteAssetId),
+      }),
+      amplificationCoefficient: api.createType('u16', amplificationCoefficient),
+      fee: api.createType('Permill', fee),
+      ownerFee: api.createType('Permill', ownerFee)
+    }
+  });
+  return await sendAndWaitForSuccess(
+    api,
+    sudoKey,
+    api.events.pablo.PoolCreated.is,
+    api.tx.pablo.create(pool),
+  )
+}
+
+
 export async function addFundstoThePool(
   api: ApiPromise,
   walletId: KeyringPair,
