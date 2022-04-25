@@ -57,6 +57,7 @@ export const setupPablo = async (
     // console.log('LBP Liquidity: ', lbpLiquidity.data.toHuman());
   
 
+    baseAssetId = 4;
     let ksmkusdRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
         base: api.createType('u128', baseAssetId),
         quote: api.createType('u128', quoteAssetId)
@@ -70,6 +71,7 @@ export const setupPablo = async (
 
     console.log('KSM KUSD Route: ', ksmkusdRouteRes.toHuman())
 
+    baseAssetId = 1;
     let kusdPicaRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
       base: api.createType('u128', baseAssetId),
       quote: api.createType('u128', quoteAssetId)

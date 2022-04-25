@@ -3,8 +3,6 @@ import Keyring from '@polkadot/keyring'
 import { cryptoWaitReady } from '@polkadot/util-crypto'
 import { ethers } from "ethers";
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool } from './pallets/pablo/extrinsics';
-import { mintAssetsToWallet } from './pallets/assets/extrinsics';
 import * as definitions from "./interfaces/definitions";
 import { setupPablo } from './pablo';
 
@@ -31,7 +29,7 @@ const main = async () => {
   )
 
   const rpc = Object.keys(definitions)
-      .filter(k => {console.log(k);
+      .filter(k => {
         if (!(definitions as any)[k].rpc) {
           return false;
         } else {
