@@ -1,7 +1,6 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { BigNumber } from "bignumber.js";
-import { sendAndWaitForSuccess } from "polkadot-utils";
 import { DECIMALS, mintAssetsToWallet } from "./pallets/assets/extrinsics";
 import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool, createStableSwapPool } from "./pallets/pablo/extrinsics";
 import { sendWait } from "./utils/polkadot";
