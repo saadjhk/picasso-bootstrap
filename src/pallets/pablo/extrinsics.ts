@@ -10,7 +10,7 @@ export async function createLiquidityBootstrappingPool(
   quoteAssetId: number,
   fee: number,
   end: any,
-  startDelay = 5,
+  startDelay = 250,
 ) {
   const start = await api.query.system.number();
 

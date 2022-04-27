@@ -1,7 +1,7 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { mintAssetsToWallet } from "./pallets/assets/extrinsics";
-import { createConstantProductPool, createLiquidityBootstrappingPool, createStableSwapPool } from "./pallets/pablo/extrinsics";
+import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool, createStableSwapPool } from "./pallets/pablo/extrinsics";
 import { sendWait } from "./utils/polkadot";
 
 export const setupPablo = async (
@@ -9,33 +9,33 @@ export const setupPablo = async (
     walletSudo: KeyringPair,
     _walletUser: KeyringPair
 ) => {
-    let baseAssetId = 4; // KUSAMA
-    let quoteAssetId = 129; // kUSD
+    let baseAssetId = 1; // PICASSO
+    let quoteAssetId = 4; // KUSAMA
     const ownerFee = 10000;
-    await mintAssetsToWallet(api, walletSudo, walletSudo, [1, quoteAssetId, baseAssetId])
+    await mintAssetsToWallet(api, walletSudo, walletSudo, [quoteAssetId, baseAssetId])
 
-    const createConstantProduct = await createConstantProductPool(
-      api,
-      walletSudo,
-      baseAssetId,
-      quoteAssetId,
-      ownerFee,
-      ownerFee
-    );
-    console.log('Uniswap Pool Created: ', createConstantProduct.data.toHuman());
+    // const createConstantProduct = await createConstantProductPool(
+    //   api,
+    //   walletSudo,
+    //   baseAssetId,
+    //   quoteAssetId,
+    //   ownerFee,
+    //   ownerFee
+    // );
+    // console.log('Uniswap Pool Created: ', createConstantProduct.data.toHuman());
 
-    baseAssetId = 1;
-    quoteAssetId = 129;
-    const createStableSwap = await createStableSwapPool(
-      api,
-      walletSudo,
-      baseAssetId,
-      quoteAssetId,
-      100,
-      ownerFee,
-      ownerFee
-    )
-    console.log('Curve Pool Created: ', createStableSwap.data.toHuman());
+    // baseAssetId = 1;
+    // quoteAssetId = 129;
+    // const createStableSwap = await createStableSwapPool(
+    //   api,
+    //   walletSudo,
+    //   baseAssetId,
+    //   quoteAssetId,
+    //   100,
+    //   ownerFee,
+    //   ownerFee
+    // )
+    // console.log('Curve Pool Created: ', createStableSwap.data.toHuman());
     
     // LBP
     const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
@@ -55,34 +55,32 @@ export const setupPablo = async (
     // const constantProductLiquidity = await addFundstoThePool(api, walletSudo, 1, baseAmount, quoteAmount);
     // console.log('LBP Liquidity: ', lbpLiquidity.data.toHuman());
   
-
-    baseAssetId = 4;
-    let ksmkusdRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
+    let ksmPicaRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
         base: api.createType('u128', baseAssetId),
         quote: api.createType('u128', quoteAssetId)
       });
 
-    const ksmkusdRouteRes = await sendWait(
+    const ksmkpicaRouteRes = await sendWait(
         api,
-        api.tx.dexRouter.updateRoute(ksmkusdRoute, [0]),
+        api.tx.dexRouter.updateRoute(ksmPicaRoute, [0]),
         walletSudo
     )
 
-    console.log('KSM KUSD Route: ', ksmkusdRouteRes.toHuman())
+    console.log('KSM PICA Route: ', ksmkpicaRouteRes.toHuman())
 
-    baseAssetId = 1;
-    let kusdPicaRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
-      base: api.createType('u128', baseAssetId),
-      quote: api.createType('u128', quoteAssetId)
-    });
+    // baseAssetId = 1;
+    // let kusdPicaRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
+    //   base: api.createType('u128', baseAssetId),
+    //   quote: api.createType('u128', quoteAssetId)
+    // });
 
-    const kusdPicaRouteRes = await sendWait(
-        api,
-        api.tx.dexRouter.updateRoute(kusdPicaRoute, [1]),
-        walletSudo
-    )
+    // const kusdPicaRouteRes = await sendWait(
+    //     api,
+    //     api.tx.dexRouter.updateRoute(kusdPicaRoute, [1]),
+    //     walletSudo
+    // )
 
-    console.log('PICA KUSD Route: ', kusdPicaRouteRes.toHuman())
+    // console.log('PICA KUSD Route: ', kusdPicaRouteRes.toHuman())
 
     return;
 }
