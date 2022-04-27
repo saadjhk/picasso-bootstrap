@@ -102,8 +102,8 @@ export async function addFundstoThePool(
   api: ApiPromise,
   walletId: KeyringPair,
   poolId: number,
-  baseAmount: number,
-  quoteAmount: number,
+  baseAmount: string,
+  quoteAmount: string,
 ) {
   const baseAmountParam = api.createType('u128', baseAmount)
   const quoteAmountParam = api.createType('u128', quoteAmount)

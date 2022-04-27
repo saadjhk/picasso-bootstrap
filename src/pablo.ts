@@ -1,18 +1,62 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { mintAssetsToWallet } from "./pallets/assets/extrinsics";
+import { BigNumber } from "bignumber.js";
+import { sendAndWaitForSuccess } from "polkadot-utils";
+import { DECIMALS, mintAssetsToWallet } from "./pallets/assets/extrinsics";
 import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool, createStableSwapPool } from "./pallets/pablo/extrinsics";
 import { sendWait } from "./utils/polkadot";
+
+export const setupLBP = async (
+  api: ApiPromise,
+  walletSudo: KeyringPair
+) => {
+  // Base Asset is PICA and Quote Asset is KUSD
+  let baseAssetId = 1;
+  let quoteAssetId = 129;
+  
+  // Mint 999999 PICA and KUSD
+  await mintAssetsToWallet(api, walletSudo, walletSudo, [quoteAssetId, baseAssetId])
+
+  // 1.00 % owner fee for the pool
+  const ownerFee = 10000;
+
+  // Create LBP with Max Sale Duration
+  const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
+  const createLBP = await createLiquidityBootstrappingPool(
+    api,
+    walletSudo,
+    baseAssetId,
+    quoteAssetId,
+    ownerFee,
+    end
+  );    
+  console.log('LBP Pool Created: ', createLBP.data.toJSON());
+
+  // Enable weighted pricing
+  const enableTwapRes = await sendAndWaitForSuccess(
+    api,
+    walletSudo,
+    api.events.sudo.Sudid.is,
+    api.tx.sudo.sudo(api.tx.pablo.enableTwap(0))
+  )
+  console.log('LBP Enabled TWAP: ', enableTwapRes.data.toJSON());
+
+  const baseAssetAmount = new BigNumber('100000').times(DECIMALS);
+  const quoteAssetAmount = new BigNumber('950000').times(DECIMALS);
+  const addLiqRes = await addFundstoThePool(api, walletSudo, 0, baseAssetAmount.toString(), quoteAssetAmount.toString());
+  console.log('LBP Liquidity Added: ', addLiqRes.data.toHuman());
+}
+
 
 export const setupPablo = async (
     api: ApiPromise,
     walletSudo: KeyringPair,
     _walletUser: KeyringPair
 ) => {
-    let baseAssetId = 1; // PICASSO
-    let quoteAssetId = 4; // KUSAMA
-    const ownerFee = 10000;
-    await mintAssetsToWallet(api, walletSudo, walletSudo, [quoteAssetId, baseAssetId])
+    // let baseAssetId = 1; // PICASSO
+    // let quoteAssetId = 4; // KUSAMA
+    // const ownerFee = 10000;
+    // await mintAssetsToWallet(api, walletSudo, walletSudo, [quoteAssetId, baseAssetId])
 
     // const createConstantProduct = await createConstantProductPool(
     //   api,
@@ -36,18 +80,6 @@ export const setupPablo = async (
     //   ownerFee
     // )
     // console.log('Curve Pool Created: ', createStableSwap.data.toHuman());
-    
-    // LBP
-    const end = api.createType('u32', api.consts.pablo.lbpMaxSaleDuration);
-    const createLBP = await createLiquidityBootstrappingPool(
-      api,
-      walletSudo,
-      baseAssetId,
-      quoteAssetId,
-      ownerFee,
-      end
-    );    
-    console.log('LBP Pool Created: ', createLBP.data.toHuman());
 
     // const baseAmount = 2500;
     // const quoteAmount = 2500;
@@ -55,18 +87,18 @@ export const setupPablo = async (
     // const constantProductLiquidity = await addFundstoThePool(api, walletSudo, 1, baseAmount, quoteAmount);
     // console.log('LBP Liquidity: ', lbpLiquidity.data.toHuman());
   
-    let ksmPicaRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
-        base: api.createType('u128', baseAssetId),
-        quote: api.createType('u128', quoteAssetId)
-      });
+    // let ksmPicaRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
+    //     base: api.createType('u128', baseAssetId),
+    //     quote: api.createType('u128', quoteAssetId)
+    //   });
 
-    const ksmkpicaRouteRes = await sendWait(
-        api,
-        api.tx.dexRouter.updateRoute(ksmPicaRoute, [0]),
-        walletSudo
-    )
+    // const ksmkpicaRouteRes = await sendWait(
+    //     api,
+    //     api.tx.dexRouter.updateRoute(ksmPicaRoute, [0]),
+    //     walletSudo
+    // )
 
-    console.log('KSM PICA Route: ', ksmkpicaRouteRes.toHuman())
+    // console.log('KSM PICA Route: ', ksmkpicaRouteRes.toHuman())
 
     // baseAssetId = 1;
     // let kusdPicaRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
@@ -81,6 +113,6 @@ export const setupPablo = async (
     // )
 
     // console.log('PICA KUSD Route: ', kusdPicaRouteRes.toHuman())
-
+    await setupLBP(api, walletSudo)
     return;
 }

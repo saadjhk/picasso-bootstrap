@@ -1,6 +1,10 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
+import BigNumber from "bignumber.js";
 import { sendAndWaitForSuccess } from "polkadot-utils";
+
+export const DECIMALS = new BigNumber(10).pow(12); // default decimals
+export const MaxMint = new BigNumber('999999').times(DECIMALS);
 
 /***
  * This mints all specified assets to a specified wallet.
@@ -13,14 +17,14 @@ import { sendAndWaitForSuccess } from "polkadot-utils";
  * @param assetIDs All assets to be minted to wallet.
  * @param amount Mint amount.
  */
-export async function mintAssetsToWallet(api: ApiPromise, wallet: KeyringPair, sudoKey: KeyringPair, assetIDs:number[], amount = 999999999999999) {
+export async function mintAssetsToWallet(api: ApiPromise, wallet: KeyringPair, sudoKey: KeyringPair, assetIDs:number[]) {
   for (const asset of assetIDs) {
     const {data: [result]} = await sendAndWaitForSuccess(
       api,
       sudoKey,
       api.events.sudo.Sudid.is,
       api.tx.sudo.sudo(
-        api.tx.assets.mintInto(asset, wallet.publicKey, amount)
+        api.tx.assets.mintInto(asset, wallet.publicKey, MaxMint.toString())
       )
     )
 
