@@ -29,22 +29,28 @@ export const setupLBP = async (
     quoteAssetId,
     ownerFee,
     end
-  );    
+  );
   console.log('LBP Pool Created: ', createLBP.data.toJSON());
 
-  // Enable weighted pricing
-  const enableTwapRes = await sendAndWaitForSuccess(
-    api,
-    walletSudo,
-    api.events.sudo.Sudid.is,
-    api.tx.sudo.sudo(api.tx.pablo.enableTwap(0))
-  )
-  console.log('LBP Enabled TWAP: ', enableTwapRes.data.toJSON());
-
+  // Add Liquidity to the Pool
   const baseAssetAmount = new BigNumber('100000').times(DECIMALS);
   const quoteAssetAmount = new BigNumber('950000').times(DECIMALS);
   const addLiqRes = await addFundstoThePool(api, walletSudo, 0, baseAssetAmount.toString(), quoteAssetAmount.toString());
   console.log('LBP Liquidity Added: ', addLiqRes.data.toHuman());
+
+  // Register in DEX Router
+  let picaKusdRoute = api.createType("ComposableTraitsDefiCurrencyPairCurrencyId", {
+    base: api.createType('u128', baseAssetId),
+    quote: api.createType('u128', quoteAssetId)
+  });
+
+  const kusdPicaRouteRes = await sendWait(
+      api,
+      api.tx.dexRouter.updateRoute(picaKusdRoute, [0]),
+      walletSudo
+  );
+
+  console.log(kusdPicaRouteRes.toHuman());
 }
 
 
