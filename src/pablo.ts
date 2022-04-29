@@ -2,12 +2,13 @@ import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { BigNumber } from "bignumber.js";
 import { DECIMALS, mintAssetsToWallet } from "./pallets/assets/extrinsics";
-import { addFundstoThePool, createConstantProductPool, createLiquidityBootstrappingPool, createStableSwapPool } from "./pallets/pablo/extrinsics";
+import { addFundstoThePool, createLiquidityBootstrappingPool } from "./pallets/pablo/extrinsics";
 import { sendWait } from "./utils/polkadot";
 
 export const setupLBP = async (
   api: ApiPromise,
-  walletSudo: KeyringPair
+  walletSudo: KeyringPair,
+  walletMe: KeyringPair
 ) => {
   // Base Asset is PICA and Quote Asset is KUSD
   let baseAssetId = 1;
@@ -15,6 +16,7 @@ export const setupLBP = async (
   
   // Mint 999999 PICA and KUSD
   await mintAssetsToWallet(api, walletSudo, walletSudo, [quoteAssetId, baseAssetId])
+  await mintAssetsToWallet(api, walletMe, walletSudo, [quoteAssetId])
 
   // 1.00 % owner fee for the pool
   const ownerFee = 10000;
@@ -118,6 +120,6 @@ export const setupPablo = async (
     // )
 
     // console.log('PICA KUSD Route: ', kusdPicaRouteRes.toHuman())
-    await setupLBP(api, walletSudo)
+    await setupLBP(api, walletSudo, _walletUser)
     return;
 }
