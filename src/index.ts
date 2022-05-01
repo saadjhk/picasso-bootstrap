@@ -45,7 +45,7 @@ const main = async () => {
   await api.isReady
 
   await setupPablo(api, walletSudo, myDot1);
-  // process.exit(0);
+  process.exit(0);
 }
 
 cryptoWaitReady().then(() => {
