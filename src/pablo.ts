@@ -35,7 +35,7 @@ export const setupLBP = async (
 
   // Add Liquidity to the Pool
   const baseAssetAmount = new BigNumber('100000').times(DECIMALS);
-  const quoteAssetAmount = new BigNumber('100000').times(DECIMALS);
+  const quoteAssetAmount = new BigNumber('950000').times(DECIMALS);
   const addLiqRes = await addFundstoThePool(api, walletSudo, 0, baseAssetAmount.toString(), quoteAssetAmount.toString());
   console.log('LBP Liquidity Added: ', addLiqRes.data.toHuman());
 

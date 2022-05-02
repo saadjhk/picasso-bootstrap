@@ -27,7 +27,7 @@ export async function createLiquidityBootstrappingPool(
           new BigNumber(start.toString()).plus(startDelay).toString(),
         ),
         end: end,
-        initialWeight: api.createType("Permill", 50 * 10000), // api.consts.liquidityBootstrapping.maxInitialWeight 
+        initialWeight: api.createType("Permill", 65 * 10000), // api.consts.liquidityBootstrapping.maxInitialWeight 
         finalWeight: api.consts.liquidityBootstrapping.minFinalWeight,
       }),
       fee: api.createType('Permill', fee)
