@@ -28,7 +28,7 @@ export async function createLiquidityBootstrappingPool(
         ),
         end: end,
         initialWeight: api.createType("Permill", 50 * 10000), // api.consts.liquidityBootstrapping.maxInitialWeight 
-        finalWeight: api.consts.liquidityBootstrapping.minFinalWeight,
+        finalWeight: api.consts.pablo.lbpMinFinalWeight,
       }),
       fee: api.createType('Permill', fee)
     }
