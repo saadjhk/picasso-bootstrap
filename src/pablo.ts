@@ -95,7 +95,7 @@ export const setupCpp = async (
 
   const kusdPicaRouteRes = await sendWait(
       api,
-      api.tx.dexRouter.updateRoute(KsmKusdRoute, [0]),
+      api.tx.dexRouter.updateRoute(KsmKusdRoute, [1]),
       walletSudo
   );
 
