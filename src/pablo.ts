@@ -65,7 +65,7 @@ export const setupCpp = async (
 
   // Mint 999999 PICA and KSM
   await mintAssetsToWallet(api, walletSudo, walletSudo, [quoteAssetId, baseAssetId])
-  await mintAssetsToWallet(api, walletMe, walletMe, [quoteAssetId, baseAssetId])
+  await mintAssetsToWallet(api, walletMe, walletSudo, [quoteAssetId, baseAssetId])
 
   // 1.00 % owner fee for the pool
   const ownerFee = 10000;
