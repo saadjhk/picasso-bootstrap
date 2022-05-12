@@ -1,3 +1,5 @@
+cd ~/Desktop/composable/subsquid
+
 ```bash
 # 1. Install dependencies
 npm ci
