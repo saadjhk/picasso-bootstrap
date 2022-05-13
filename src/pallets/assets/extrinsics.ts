@@ -17,17 +17,21 @@ export const MaxMint = new BigNumber('999999').times(DECIMALS);
  * @param assetIDs All assets to be minted to wallet.
  * @param amount Mint amount.
  */
-export async function mintAssetsToWallet(api: ApiPromise, wallet: KeyringPair, sudoKey: KeyringPair, assetIDs:number[]) {
+export async function mintAssetsToWallets(api: ApiPromise, wallets: KeyringPair[], sudoKey: KeyringPair, assetIDs:number[]) {
   for (const asset of assetIDs) {
-    const {data: [result]} = await sendAndWaitForSuccess(
-      api,
-      sudoKey,
-      api.events.sudo.Sudid.is,
-      api.tx.sudo.sudo(
-        api.tx.assets.mintInto(asset, wallet.publicKey, MaxMint.toString())
+    
+    for (const wallet of wallets) {
+      const {data: [result]} = await sendAndWaitForSuccess(
+        api,
+        sudoKey,
+        api.events.sudo.Sudid.is,
+        api.tx.sudo.sudo(
+          api.tx.assets.mintInto(asset, wallet.publicKey, MaxMint.toString())
+        )
       )
-    )
+  
+      console.log(result.toHuman())
 
-    console.log(result.toHuman())
+    }
   }
 }
