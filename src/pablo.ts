@@ -96,7 +96,8 @@ export const setupCpp = async (
     ownerFee,
     ownerFee
   );
-  console.log("UniswapCPP Pool Created: ", createLBP.data.toJSON());
+  const createRes: any = createLBP.data.toJSON();
+  console.log("UniswapCPP Pool Created: ", createRes);
 
   // Add Liquidity to the Pool
   const baseAssetAmount = new BigNumber("10000").times(DECIMALS);
@@ -105,7 +106,7 @@ export const setupCpp = async (
   const addLiqRes = await addFundstoThePool(
     api,
     walletSudo,
-    1,
+    createRes && createRes.length ? createRes[0] : 0,
     baseAssetAmount.toString(),
     quoteAssetAmount.toString()
   );
@@ -122,7 +123,7 @@ export const setupCpp = async (
 
   const kusdPicaRouteRes = await sendWait(
     api,
-    api.tx.dexRouter.updateRoute(KsmKusdRoute, [1]),
+    api.tx.dexRouter.updateRoute(KsmKusdRoute, [createRes && createRes.length ? createRes[0] : 0]),
     walletSudo
   );
 
@@ -135,7 +136,7 @@ export const setupStableSwap = async (
   walletMe: KeyringPair
 ) => {
   // Base Asset is KSM and Quote Asset is KUSD
-  let baseAssetId = 4;
+  let baseAssetId = 1;
   let quoteAssetId = 129;
 
   // Mint 999999 PICA and KSM
@@ -157,7 +158,8 @@ export const setupStableSwap = async (
     ownerFee,
     ownerFee
   );
-  console.log("StableSwap Pool Created: ", createStableSwap.data.toJSON());
+  const createRes: any = createStableSwap.data.toJSON();
+  console.log("StableSwap Pool Created: ", createRes);
 
   // Add Liquidity to the Pool
   const baseAssetAmount = new BigNumber("10000").times(DECIMALS);
@@ -166,7 +168,7 @@ export const setupStableSwap = async (
   const addLiqRes = await addFundstoThePool(
     api,
     walletSudo,
-    2,
+    createRes && createRes.length ? createRes[0] : 0,
     baseAssetAmount.toString(),
     quoteAssetAmount.toString()
   );
@@ -183,7 +185,7 @@ export const setupStableSwap = async (
 
   const kusdPicaRouteRes = await sendWait(
     api,
-    api.tx.dexRouter.updateRoute(KsmKusdRoute, [2]),
+    api.tx.dexRouter.updateRoute(KsmKusdRoute, [createRes && createRes.length ? createRes[0] : 0]),
     walletSudo
   );
 
@@ -195,7 +197,7 @@ export const setupPablo = async (
   walletSudo: KeyringPair,
   _walletUser: KeyringPair
 ) => {
-  await setupLBP(api, walletSudo, _walletUser);
+  // await setupLBP(api, walletSudo, _walletUser);
   await setupCpp(api, walletSudo, _walletUser);
   await setupStableSwap(api, walletSudo, _walletUser);
   return;
