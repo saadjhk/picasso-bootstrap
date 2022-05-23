@@ -27,10 +27,14 @@ export async function createLiquidityBootstrappingPool(
           new BigNumber(start.toString()).plus(startDelay).toString(),
         ),
         end: end,
-        initialWeight: api.createType("Permill", 50 * 10000), // api.consts.liquidityBootstrapping.maxInitialWeight 
+        initialWeight: api.createType("Permill", 50 * 10000),
         finalWeight: api.consts.pablo.lbpMinFinalWeight,
       }),
-      fee: api.createType('Permill', fee)
+      feeConfig: {
+        feeRate: api.createType("Permill", 0),
+        ownerFeeRate: api.createType("Permill", 0),
+        protocolFeeRate: api.createType("Permill", 0),
+      }
     }
   });
   return await sendAndWaitForSuccess(
@@ -56,8 +60,11 @@ export async function createConstantProductPool(
         base: api.createType('u128', baseAssetId),
         quote: api.createType('u128', quoteAssetId),
       }),
-      fee: api.createType('Permill', fee),
-      ownerFee: api.createType('Permill', ownerFee)
+      feeConfig: {
+        feeRate: api.createType("Permill", 0),
+        ownerFeeRate: api.createType("Permill", 0),
+        protocolFeeRate: api.createType("Permill", 0),
+      }
     }
   });
   return await sendAndWaitForSuccess(
@@ -85,8 +92,11 @@ export async function createStableSwapPool(
         quote: api.createType('u128', quoteAssetId),
       }),
       amplificationCoefficient: api.createType('u16', amplificationCoefficient),
-      fee: api.createType('Permill', fee),
-      ownerFee: api.createType('Permill', ownerFee)
+      feeConfig: {
+        feeRate: api.createType("Permill", 0),
+        ownerFeeRate: api.createType("Permill", 0),
+        protocolFeeRate: api.createType("Permill", 0),
+      }
     }
   });
   return await sendAndWaitForSuccess(

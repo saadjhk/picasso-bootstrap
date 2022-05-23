@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import * as R from "ramda";
 import { sendAndWaitForSuccess } from "polkadot-utils";
 import { ApiPromise } from "@polkadot/api";
-import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../interfaces";
+import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../../interfaces";
 import { toHexString, ethAccount } from "../../utils";
 import { base58 } from "micro-base";
 import BigNumber from "bignumber.js";
@@ -39,7 +39,7 @@ export const associateEth = async (
   const tx = await api.tx.crowdloanRewards
     .associate(rewardAccount.publicKey, {
       proof: { Ethereum: signature },
-    })
+    } as any)
     .send();
 
   return tx.hash;
