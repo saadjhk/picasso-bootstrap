@@ -38,7 +38,7 @@ export const setupLBP = async (
     {
       feeRate: defaultFeeRate,
       ownerFeeRate: defaultFeeRate,
-      protocolFeeRate: defaultFeeRate
+      protocolFeeRate: defaultFeeRate,
     },
     end
   );
@@ -68,7 +68,11 @@ export const setupLBP = async (
 
   const kusdPicaRouteRes = await sendWait(
     api,
-    api.tx.dexRouter.updateRoute(picaKusdRoute, [0]),
+    api.tx.sudo.sudo(
+      api.tx.dexRouter.updateRoute(picaKusdRoute, [
+        createRes && createRes.length ? createRes[0] : 0,
+      ])
+    ),
     walletSudo
   );
 
@@ -101,8 +105,8 @@ export const setupCpp = async (
     {
       feeRate: ownerFee,
       protocolFeeRate: ownerFee,
-      ownerFeeRate: ownerFee
-    }
+      ownerFeeRate: ownerFee,
+    },
   );
   const createRes: any = createLBP.data.toJSON();
   console.log("UniswapCPP Pool Created: ", createRes);
@@ -131,7 +135,11 @@ export const setupCpp = async (
 
   const kusdPicaRouteRes = await sendWait(
     api,
-    api.tx.dexRouter.updateRoute(KsmKusdRoute, [createRes && createRes.length ? createRes[0] : 0]),
+    api.tx.sudo.sudo(
+      api.tx.dexRouter.updateRoute(KsmKusdRoute, [
+        createRes && createRes.length ? createRes[0] : 0,
+      ])
+    ),
     walletSudo
   );
 
@@ -166,7 +174,7 @@ export const setupStableSwap = async (
     {
       feeRate: ownerFee,
       protocolFeeRate: ownerFee,
-      ownerFeeRate: ownerFee
+      ownerFeeRate: ownerFee,
     }
   );
   const createRes: any = createStableSwap.data.toJSON();
@@ -196,7 +204,11 @@ export const setupStableSwap = async (
 
   const kusdPicaRouteRes = await sendWait(
     api,
-    api.tx.dexRouter.updateRoute(KsmKusdRoute, [createRes && createRes.length ? createRes[0] : 0]),
+    api.tx.sudo.sudo(
+      api.tx.dexRouter.updateRoute(KsmKusdRoute, [
+        createRes && createRes.length ? createRes[0] : 0,
+      ])
+    ),
     walletSudo
   );
 

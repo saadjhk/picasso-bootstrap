@@ -71,7 +71,8 @@ export async function createConstantProductPool(
         feeRate: api.createType("Permill", feeConfig.feeRate),
         ownerFeeRate: api.createType("Permill", feeConfig.ownerFeeRate),
         protocolFeeRate: api.createType("Permill", feeConfig.protocolFeeRate),
-      }
+      },
+      baseWeight: api.createType("Permill", 50 * 10000)
     }
   });
   return await sendAndWaitForSuccess(
