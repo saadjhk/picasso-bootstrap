@@ -8,7 +8,11 @@ export async function createLiquidityBootstrappingPool(
   sudoKey: KeyringPair,
   baseAssetId: number,
   quoteAssetId: number,
-  fee: number,
+  feeConfig: {
+    feeRate: number,
+    ownerFeeRate: number,
+    protocolFeeRate: number
+  },
   end: any,
   startDelay = 25,
 ) {
@@ -31,9 +35,9 @@ export async function createLiquidityBootstrappingPool(
         finalWeight: api.consts.pablo.lbpMinFinalWeight,
       }),
       feeConfig: {
-        feeRate: api.createType("Permill", 0),
-        ownerFeeRate: api.createType("Permill", 0),
-        protocolFeeRate: api.createType("Permill", 0),
+        feeRate: api.createType("Permill", feeConfig.feeRate),
+        ownerFeeRate: api.createType("Permill", feeConfig.ownerFeeRate),
+        protocolFeeRate: api.createType("Permill", feeConfig.protocolFeeRate),
       }
     }
   });
@@ -50,8 +54,11 @@ export async function createConstantProductPool(
   sudoKey: KeyringPair,
   baseAssetId: number,
   quoteAssetId: number,
-  fee: number,
-  ownerFee: number
+  feeConfig: {
+    feeRate: number,
+    ownerFeeRate: number,
+    protocolFeeRate: number
+  }
 ) {
   const pool = api.createType('PalletPabloPoolInitConfiguration', {
     ConstantProduct: {
@@ -61,9 +68,9 @@ export async function createConstantProductPool(
         quote: api.createType('u128', quoteAssetId),
       }),
       feeConfig: {
-        feeRate: api.createType("Permill", 0),
-        ownerFeeRate: api.createType("Permill", 0),
-        protocolFeeRate: api.createType("Permill", 0),
+        feeRate: api.createType("Permill", feeConfig.feeRate),
+        ownerFeeRate: api.createType("Permill", feeConfig.ownerFeeRate),
+        protocolFeeRate: api.createType("Permill", feeConfig.protocolFeeRate),
       }
     }
   });
@@ -81,8 +88,11 @@ export async function createStableSwapPool(
   baseAssetId: number,
   quoteAssetId: number,
   amplificationCoefficient: number,
-  fee: number,
-  ownerFee: number
+  feeConfig: {
+    feeRate: number,
+    ownerFeeRate: number,
+    protocolFeeRate: number
+  },
 ) {
   const pool = api.createType('PalletPabloPoolInitConfiguration', {
     StableSwap: {
@@ -93,9 +103,9 @@ export async function createStableSwapPool(
       }),
       amplificationCoefficient: api.createType('u16', amplificationCoefficient),
       feeConfig: {
-        feeRate: api.createType("Permill", 0),
-        ownerFeeRate: api.createType("Permill", 0),
-        protocolFeeRate: api.createType("Permill", 0),
+        feeRate: api.createType("Permill", feeConfig.feeRate),
+        ownerFeeRate: api.createType("Permill", feeConfig.ownerFeeRate),
+        protocolFeeRate: api.createType("Permill", feeConfig.protocolFeeRate),
       }
     }
   });

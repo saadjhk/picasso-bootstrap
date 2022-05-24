@@ -26,7 +26,7 @@ export const setupLBP = async (
   ]);
 
   // 1.00 % owner fee for the pool
-  const ownerFee = 10000;
+  const defaultFeeRate = 10000;
 
   // Create LBP with Max Sale Duration
   const end = api.createType("u32", api.consts.pablo.lbpMaxSaleDuration);
@@ -35,9 +35,14 @@ export const setupLBP = async (
     walletSudo,
     baseAssetId,
     quoteAssetId,
-    ownerFee,
+    {
+      feeRate: defaultFeeRate,
+      ownerFeeRate: defaultFeeRate,
+      protocolFeeRate: defaultFeeRate
+    },
     end
   );
+  const createRes: any = createLBP.data.toJSON();
   console.log("LBP Pool Created: ", createLBP.data.toJSON());
 
   // Add Liquidity to the Pool
@@ -46,7 +51,7 @@ export const setupLBP = async (
   const addLiqRes = await addFundstoThePool(
     api,
     walletSudo,
-    0,
+    createRes && createRes.length ? createRes[0] : 0,
     baseAssetAmount.toString(),
     quoteAssetAmount.toString()
   );
@@ -93,8 +98,11 @@ export const setupCpp = async (
     walletSudo,
     baseAssetId,
     quoteAssetId,
-    ownerFee,
-    ownerFee
+    {
+      feeRate: ownerFee,
+      protocolFeeRate: ownerFee,
+      ownerFeeRate: ownerFee
+    }
   );
   const createRes: any = createLBP.data.toJSON();
   console.log("UniswapCPP Pool Created: ", createRes);
@@ -155,8 +163,11 @@ export const setupStableSwap = async (
     baseAssetId,
     quoteAssetId,
     amplificationCoEfficient,
-    ownerFee,
-    ownerFee
+    {
+      feeRate: ownerFee,
+      protocolFeeRate: ownerFee,
+      ownerFeeRate: ownerFee
+    }
   );
   const createRes: any = createStableSwap.data.toJSON();
   console.log("StableSwap Pool Created: ", createRes);
@@ -197,7 +208,7 @@ export const setupPablo = async (
   walletSudo: KeyringPair,
   _walletUser: KeyringPair
 ) => {
-  // await setupLBP(api, walletSudo, _walletUser);
+  await setupLBP(api, walletSudo, _walletUser);
   await setupCpp(api, walletSudo, _walletUser);
   await setupStableSwap(api, walletSudo, _walletUser);
   return;
