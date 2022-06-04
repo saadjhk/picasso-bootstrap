@@ -1,4 +1,4 @@
-import { ChartRange, processTvlChartSeries } from "src/test";
+import { ChartRange, processTvlChartSeries } from "@dev-test/tvlChart";
 
 describe('TVL Chart Series', () => {
   test('Test with Single day', () => {
