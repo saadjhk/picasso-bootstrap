@@ -71,7 +71,7 @@ describe("TVL Chart Series", () => {
       .valueOf();
     const subsquidData: [number, number][] = randomSubsquidData(
       dummyDateRange,
-      50
+      5000
     );
 
     let range: ChartRange = "24h";
