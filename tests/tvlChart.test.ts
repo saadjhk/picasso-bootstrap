@@ -1,4 +1,4 @@
-import { ChartRange, processTvlChartSeries } from "@dev-test/tvlChart";
+import { ChartRange, processSubsquidTvlChartData } from "@dev-test/tvlChart";
 import _ from "lodash";
 import moment from "moment";
 
@@ -30,6 +30,22 @@ function randomSubsquidData(
 }
 
 describe("TVL Chart Series", () => {
+  test("Test with Single Point", () => {
+    const subsquidData: [number, number][] = [
+      [1654278809477, 3],
+    ];
+
+    let range: ChartRange = "24h";
+    const series24h = processSubsquidTvlChartData(subsquidData, range);
+    range = "1w";
+    const series1w = processSubsquidTvlChartData(subsquidData, range);
+    range = "1m";
+    const series1m = processSubsquidTvlChartData(subsquidData, range);
+
+    expect(series24h.length).toBe(1);
+    expect(series1w.length).toBe(1);
+    expect(series1m.length).toBe(1);
+  });
   test("Test with Single day", () => {
     const subsquidData: [number, number][] = [
       [1654278809477, 3],
@@ -38,11 +54,11 @@ describe("TVL Chart Series", () => {
     ];
 
     let range: ChartRange = "24h";
-    const series24h = processTvlChartSeries(subsquidData, range);
+    const series24h = processSubsquidTvlChartData(subsquidData, range);
     range = "1w";
-    const series1w = processTvlChartSeries(subsquidData, range);
+    const series1w = processSubsquidTvlChartData(subsquidData, range);
     range = "1m";
-    const series1m = processTvlChartSeries(subsquidData, range);
+    const series1m = processSubsquidTvlChartData(subsquidData, range);
 
     expect(series24h.length).toBe(4);
     expect(series1w.length).toBe(1);
@@ -52,11 +68,11 @@ describe("TVL Chart Series", () => {
     const subsquidData: [number, number][] = [];
 
     let range: ChartRange = "24h";
-    const series24h = processTvlChartSeries(subsquidData, range);
+    const series24h = processSubsquidTvlChartData(subsquidData, range);
     range = "1w";
-    const series1w = processTvlChartSeries(subsquidData, range);
+    const series1w = processSubsquidTvlChartData(subsquidData, range);
     range = "1m";
-    const series1m = processTvlChartSeries(subsquidData, range);
+    const series1m = processSubsquidTvlChartData(subsquidData, range);
 
     expect(series24h.length).toBe(0);
     expect(series1w.length).toBe(0);
@@ -75,7 +91,7 @@ describe("TVL Chart Series", () => {
     );
 
     let range: ChartRange = "24h";
-    const series24h = processTvlChartSeries(subsquidData, range);
+    const series24h = processSubsquidTvlChartData(subsquidData, range);
 
     let firstSeriesTimeStamp = series24h[0][0],
       lastSeriesTimeStamp = series24h[series24h.length - 1][0];
@@ -103,7 +119,7 @@ describe("TVL Chart Series", () => {
     );
 
     let range: ChartRange = "1w";
-    const series24h = processTvlChartSeries(subsquidData, range);
+    const series24h = processSubsquidTvlChartData(subsquidData, range);
 
     let firstSeriesTimeStamp = series24h[0][0],
       lastSeriesTimeStamp = series24h[series24h.length - 1][0];

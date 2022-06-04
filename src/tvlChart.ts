@@ -1,6 +1,31 @@
+import _ from "lodash";
 import moment from "moment";
 
-export function getRangeLimitTs(
+export type ChartRange = "24h" | "1w" | "1m";
+
+export function generateRandomSubsquidTvlData(
+  ms: number,
+  limit: number = 100,
+  valueMin: number = 1000,
+  valueMax: number = 5000
+): [number, number][] {
+  const max = Date.now();
+  const min = max - ms;
+  let data: [number, number][] = [];
+
+  for (let i = 0; i < limit; i++) {
+    const randomInRangeTs = Math.floor(_.random(min, max));
+    const value = _.random(valueMin, valueMax);
+
+    data.push([randomInRangeTs, value]);
+  }
+
+  return data.sort((a, b) => {
+    return b[0] - a[0];
+  });
+}
+
+function getSelectedChartRangeLimitTimestamp(
   timestamp: number,
   rangeLimit: "start" | "end",
   chartInterval: ChartRange
@@ -23,7 +48,7 @@ export function getRangeLimitTs(
   }
 }
 
-function nextRangeTs(rangeTs: number, range: ChartRange): [number, number] {
+function getNextRangeGivenTimestamp(rangeTs: number, range: ChartRange): [number, number] {
   switch(range) {
     case "24h":
       let nextHourRange = moment(rangeTs).add(1, 'hour');
@@ -36,18 +61,18 @@ function nextRangeTs(rangeTs: number, range: ChartRange): [number, number] {
       return [nextMonthRange.valueOf(), nextMonthRange.endOf('month').valueOf()]
   }
 }
-export type ChartRange = "24h" | "1w" | "1m";
-export function processTvlChartSeries(
+
+export function processSubsquidTvlChartData(
   data: [number, number][],
   range: ChartRange
 ): [number, number][] {
   if (!data.length) return data;
 
   let rangeStart = Array.from(
-    new Set(data.map((i) => getRangeLimitTs(i[0], "start", range)))
+    new Set(data.map((i) => getSelectedChartRangeLimitTimestamp(i[0], "start", range)))
   );
   let rangeEnd = Array.from(
-    new Set(data.map((i) => getRangeLimitTs(i[0], "end", range)))
+    new Set(data.map((i) => getSelectedChartRangeLimitTimestamp(i[0], "end", range)))
   );
 
   let withMissingIntervals: [number, number][] = [];
@@ -62,11 +87,11 @@ export function processTvlChartSeries(
     }
 
     withMissingIntervals.push([rangeStart[i], totalValueLocked])
-    let nextRange = nextRangeTs(rangeStart[i], range)
+    let nextRange = getNextRangeGivenTimestamp(rangeStart[i], range)
 
     while (nextRange[0] !== rangeStart[i - 1] && i > 0) {
       withMissingIntervals.push([nextRange[0], totalValueLocked])
-      nextRange = nextRangeTs(nextRange[0], range)
+      nextRange = getNextRangeGivenTimestamp(nextRange[0], range)
     }
   }
   
