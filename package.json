@@ -9,6 +9,7 @@
     "bn.js": "^5.2.0",
     "convert-array-to-csv": "^2.0.0",
     "ethers": "^5.5.3",
+    "lodash": "^4.17.21",
     "micro-base": "^0.10.2",
     "moment": "^2.29.3",
     "polkadot-utils": "git+https://github.com/saadjhk/polkadot-utils.git",
@@ -21,10 +22,11 @@
     "test": "jest"
   },
   "devDependencies": {
-    "ts-jest": "^28.0.4",
     "@types/jest": "^28.1.0",
-    "jest": "^28.1.0",
+    "@types/lodash": "^4.14.182",
     "dotenv": "^11.0.0",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.4",
     "ts-node": "^10.4.0"
   }
 }
