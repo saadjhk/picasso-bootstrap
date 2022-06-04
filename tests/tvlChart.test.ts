@@ -90,4 +90,32 @@ describe("TVL Chart Series", () => {
 
     expect(hours).toEqual(series24h.length);
   });
+  test("Test with data generated (1w)", () => {
+    const dummyDateRange = 15 * DAYS;
+    let rightNow = Date.now();
+
+    const expectedMinimum = moment(rightNow - dummyDateRange)
+      .startOf("week")
+      .valueOf();
+    const subsquidData: [number, number][] = randomSubsquidData(
+      dummyDateRange,
+      5000
+    );
+
+    let range: ChartRange = "1w";
+    const series24h = processTvlChartSeries(subsquidData, range);
+
+    let firstSeriesTimeStamp = series24h[0][0],
+      lastSeriesTimeStamp = series24h[series24h.length - 1][0];
+    expect(firstSeriesTimeStamp).toBeGreaterThanOrEqual(expectedMinimum);
+
+    let weeks = 0,
+      weekStep = firstSeriesTimeStamp;
+    while (weekStep <= lastSeriesTimeStamp) {
+      weeks = weeks + 1;
+      weekStep += 7 * DAYS;
+    }
+
+    expect(weeks).toEqual(series24h.length);
+  });
 });
