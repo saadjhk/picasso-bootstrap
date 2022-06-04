@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import * as definitions from "../interfaces/definitions";
 import { setupPablo } from './pablo';
+import { processTvlChartSeries } from './test';
 
 const createBlock = async (apiPromise: ApiPromise, count: number) => {
   if (count <= 0) return

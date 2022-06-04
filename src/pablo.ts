@@ -102,11 +102,7 @@ export const setupCpp = async (
     walletSudo,
     baseAssetId,
     quoteAssetId,
-    {
-      feeRate: ownerFee,
-      protocolFeeRate: ownerFee,
-      ownerFeeRate: ownerFee,
-    },
+    ownerFee,
   );
   const createRes: any = createLBP.data.toJSON();
   console.log("UniswapCPP Pool Created: ", createRes);
@@ -171,11 +167,7 @@ export const setupStableSwap = async (
     baseAssetId,
     quoteAssetId,
     amplificationCoEfficient,
-    {
-      feeRate: ownerFee,
-      protocolFeeRate: ownerFee,
-      ownerFeeRate: ownerFee,
-    }
+    ownerFee
   );
   const createRes: any = createStableSwap.data.toJSON();
   console.log("StableSwap Pool Created: ", createRes);
@@ -222,6 +214,6 @@ export const setupPablo = async (
 ) => {
   await setupLBP(api, walletSudo, _walletUser);
   await setupCpp(api, walletSudo, _walletUser);
-  await setupStableSwap(api, walletSudo, _walletUser);
+  // await setupStableSwap(api, walletSudo, _walletUser);
   return;
 };
