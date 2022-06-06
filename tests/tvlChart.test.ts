@@ -134,4 +134,32 @@ describe("TVL Chart Series", () => {
 
     expect(weeks).toEqual(series24h.length);
   });
+  test("Test with data generated (1m)", () => {
+    const dummyDateRange = 60 * DAYS;
+    let rightNow = Date.now();
+
+    const expectedMinimum = moment(rightNow - dummyDateRange)
+      .startOf("month")
+      .valueOf();
+    const subsquidData: [number, number][] = randomSubsquidData(
+      dummyDateRange,
+      5000
+    );
+
+    let range: ChartRange = "1m";
+    const series24h = processSubsquidTvlChartData(subsquidData, range);
+
+    let firstSeriesTimeStamp = series24h[0][0],
+      lastSeriesTimeStamp = series24h[series24h.length - 1][0];
+    expect(firstSeriesTimeStamp).toBeGreaterThanOrEqual(expectedMinimum);
+
+    let months = 0,
+      monthStep = firstSeriesTimeStamp;
+    while (monthStep <= lastSeriesTimeStamp) {
+      months = months + 1;
+      monthStep = moment(monthStep).endOf('month').valueOf() + 1
+    }
+
+    expect(months).toEqual(series24h.length);
+  });
 });
