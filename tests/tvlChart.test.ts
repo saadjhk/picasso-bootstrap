@@ -119,10 +119,10 @@ describe("TVL Chart Series", () => {
     );
 
     let range: ChartRange = "1w";
-    const series24h = processSubsquidTvlChartData(subsquidData, range);
+    const series1w = processSubsquidTvlChartData(subsquidData, range);
 
-    let firstSeriesTimeStamp = series24h[0][0],
-      lastSeriesTimeStamp = series24h[series24h.length - 1][0];
+    let firstSeriesTimeStamp = series1w[0][0],
+      lastSeriesTimeStamp = series1w[series1w.length - 1][0];
     expect(firstSeriesTimeStamp).toBeGreaterThanOrEqual(expectedMinimum);
 
     let weeks = 0,
@@ -132,7 +132,7 @@ describe("TVL Chart Series", () => {
       weekStep += 7 * DAYS;
     }
 
-    expect(weeks).toEqual(series24h.length);
+    expect(weeks).toEqual(series1w.length);
   });
   test("Test with data generated (1m)", () => {
     const dummyDateRange = 60 * DAYS;
@@ -147,10 +147,10 @@ describe("TVL Chart Series", () => {
     );
 
     let range: ChartRange = "1m";
-    const series24h = processSubsquidTvlChartData(subsquidData, range);
+    const series1m = processSubsquidTvlChartData(subsquidData, range);
 
-    let firstSeriesTimeStamp = series24h[0][0],
-      lastSeriesTimeStamp = series24h[series24h.length - 1][0];
+    let firstSeriesTimeStamp = series1m[0][0],
+      lastSeriesTimeStamp = series1m[series1m.length - 1][0];
     expect(firstSeriesTimeStamp).toBeGreaterThanOrEqual(expectedMinimum);
 
     let months = 0,
@@ -160,6 +160,6 @@ describe("TVL Chart Series", () => {
       monthStep = moment(monthStep).endOf('month').valueOf() + 1
     }
 
-    expect(months).toEqual(series24h.length);
+    expect(months).toEqual(series1m.length);
   });
 });
