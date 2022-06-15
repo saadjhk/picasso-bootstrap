@@ -4,7 +4,10 @@ import { cryptoWaitReady } from '@polkadot/util-crypto'
 import { ethers } from "ethers";
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import * as definitions from "../interfaces/definitions";
+import { hexToU8a } from '@polkadot/util';
 import { setupPablo } from './pablo';
+import { mintAssetsToAddress } from './pallets/assets/extrinsics';
+import fs from "fs";
 
 const createBlock = async (apiPromise: ApiPromise, count: number) => {
   if (count <= 0) return
@@ -22,7 +25,8 @@ const main = async () => {
   const myDot2 = kr.addFromMnemonic(
     process.env.DOT_MNEMONIC1 ? process.env.DOT_MNEMONIC1 : '',
   )
-  const walletSudo = kr.addFromUri('//Alice') // alice
+  const walletSudo = kr.addFromSeed(hexToU8a(process.env.SUDO_MNEMONIC))
+  // const walletSudo = kr.addFromUri('//Alice') // alice
   const myEth1 = new ethers.Wallet(process.env.ETH_PK ? process.env.ETH_PK : '')
   const myEth2 = new ethers.Wallet(
     process.env.ETH_PK1 ? process.env.ETH_PK1 : '',
@@ -44,7 +48,18 @@ const main = async () => {
   const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady
 
-  await setupPablo(api, walletSudo, myDot1);
+  // console.log(walletSudo.publicKey.toString())
+  // await mintAssetsToAddress(api, [
+    // "5w53mgBc2w2kNQZgFBaYT5h79cQQNfv8vUuoa85zUe5VxBvQ",
+    // "5tirEmQwRYbyadq5QrrFvnPNBPf4WLXsh97qHJUqcqMADDQ9",
+    // "5z3wa9ojQra3HqeJthg9Q6hQnsRDsUgH6DC7ZXkb7YXofh3m",
+    // "5uxGz8eZmbjvVBMpun9nvQ3G8s5cWD5xHnzgU6SHyAnJf9Vy",
+    // "5vVWqFFPg258rCUy1HabDSf6z1bnRbKeDWKYF3XrVLvk3nEc",
+    // "5vVWqFFPg258rCUy1HabDSf6z1bnRbKeDWKYF3XrVLvk3nEc"
+    // "5ygiZBBgoTEjJqu3hpTQAw9oqaoEaz9eSJUBYGoTguG2qsQ3" // mine
+  // ], walletSudo, [1,4,129])
+  // await setupPablo(api, walletSudo, myDot1);
+  fs.writeFileSync('dalisudo.json',JSON.stringify(walletSudo.toJson('12345678')))
   process.exit(0);
 }
 
