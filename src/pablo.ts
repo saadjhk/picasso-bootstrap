@@ -215,7 +215,7 @@ export const setupPablo = async (
   _walletUser: KeyringPair
 ) => {
   await setupLBP(api, walletSudo, _walletUser);
-  // await setupCpp(api, walletSudo, _walletUser);
+  await setupCpp(api, walletSudo, _walletUser);
   // await setupStableSwap(api, walletSudo, _walletUser);
   return;
 };
