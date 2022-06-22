@@ -4,12 +4,15 @@ import { ApiPromise, WsProvider } from "@polkadot/api";
 import { getSubstrateWallets, getSudoWallet } from './keys';
 import * as definitions from "../interfaces/definitions";
 import { createRPC, createTypes } from './utils';
+import { setupPablo } from './pablo';
 
 const main = async () => {
   await cryptoWaitReady()
   const sudoWallet = getSudoWallet("dali-local");
   const dotWallets = getSubstrateWallets();
   const ethWallets = getSubstrateWallets();
+
+  if (!dotWallets.length || !ethWallets.length) throw new Error('Needs atleast one ETH and Substrate wallet')
 
   const rpc = createRPC(definitions);
   const types = createTypes(definitions);
@@ -18,6 +21,7 @@ const main = async () => {
   const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady
 
+  await setupPablo(api, sudoWallet, dotWallets[0])
   process.exit(0);
 }
 
