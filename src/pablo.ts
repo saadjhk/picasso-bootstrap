@@ -29,7 +29,6 @@ export const setupLBP = async (
   const defaultFeeRate = 10000;
 
   // Create LBP with Max Sale Duration
-  const end = api.createType("u32", api.consts.pablo.lbpMaxSaleDuration);
   const createLBP = await createLiquidityBootstrappingPool(
     api,
     walletSudo,
@@ -40,14 +39,17 @@ export const setupLBP = async (
       ownerFeeRate: defaultFeeRate,
       protocolFeeRate: defaultFeeRate,
     },
-    end
+    7200,
+    75,
+    25,
+    15
   );
   const createRes: any = createLBP.data.toJSON();
   console.log("LBP Pool Created: ", createLBP.data.toJSON());
 
   // Add Liquidity to the Pool
-  const baseAssetAmount = new BigNumber("10000").times(DECIMALS);
-  const quoteAssetAmount = new BigNumber("10000").times(DECIMALS);
+  const baseAssetAmount = new BigNumber("100000").times(DECIMALS);
+  const quoteAssetAmount = new BigNumber("100000").times(DECIMALS);
   const addLiqRes = await addFundstoThePool(
     api,
     walletSudo,
@@ -213,7 +215,7 @@ export const setupPablo = async (
   _walletUser: KeyringPair
 ) => {
   await setupLBP(api, walletSudo, _walletUser);
-  await setupCpp(api, walletSudo, _walletUser);
+  // await setupCpp(api, walletSudo, _walletUser);
   // await setupStableSwap(api, walletSudo, _walletUser);
   return;
 };

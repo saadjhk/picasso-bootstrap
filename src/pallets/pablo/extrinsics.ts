@@ -13,9 +13,13 @@ export async function createLiquidityBootstrappingPool(
     ownerFeeRate: number,
     protocolFeeRate: number
   },
-  end: any,
+  end: number = 7200,
+  initialWeight: number = 95,
+  finalWeight: number = 5,
   startDelay = 25,
 ) {
+  // 7200 min sale
+  // 216000 max sale
   const start = await api.query.system.number();
 
   const pool = api.createType('PalletPabloPoolInitConfiguration', {
@@ -30,9 +34,12 @@ export async function createLiquidityBootstrappingPool(
           'u32',
           new BigNumber(start.toString()).plus(startDelay).toString(),
         ),
-        end: end,
-        initialWeight: api.createType("Permill", 50 * 10000),
-        finalWeight: api.consts.pablo.lbpMinFinalWeight,
+        end: api.createType(
+          'u32',
+          new BigNumber(start.toString()).plus(startDelay).plus(end).toString(),
+        ),
+        initialWeight: api.createType("Permill", initialWeight * 10000),
+        finalWeight: api.createType("Permill", finalWeight * 10000),
       }),
       feeConfig: {
         feeRate: api.createType("Permill", feeConfig.feeRate),
