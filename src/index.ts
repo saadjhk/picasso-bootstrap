@@ -22,7 +22,7 @@ const main = async () => {
   const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady
 
-  // await setupPablo(api, sudoWallet, dotWallets[0])
+  await setupPablo(api, sudoWallet, dotWallets[0])
   await setupBonds(api, sudoWallet, dotWallets[0]);
   process.exit(0);
 }
