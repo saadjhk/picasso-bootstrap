@@ -5,6 +5,7 @@ import { getSubstrateWallets, getSudoWallet } from './keys';
 import * as definitions from "../interfaces/definitions";
 import { createRPC, createTypes } from './utils';
 import { setupPablo } from './pablo';
+import { setupBonds } from './bond';
 
 const main = async () => {
   await cryptoWaitReady()
@@ -21,7 +22,8 @@ const main = async () => {
   const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady
 
-  await setupPablo(api, sudoWallet, dotWallets[0])
+  // await setupPablo(api, sudoWallet, dotWallets[0])
+  await setupBonds(api, sudoWallet, dotWallets[0]);
   process.exit(0);
 }
 
