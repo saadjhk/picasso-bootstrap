@@ -4,7 +4,7 @@ import BigNumber from "bignumber.js";
 import { sendAndWaitForSuccess } from "polkadot-utils";
 
 export const DECIMALS = new BigNumber(10).pow(12); // default decimals
-export const MaxMint = new BigNumber('100000').times(DECIMALS);
+export const MaxMint = new BigNumber("10000000").times(DECIMALS);
 
 /***
  * This mints all specified assets to a specified wallet.

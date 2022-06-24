@@ -24,6 +24,8 @@ const main = async () => {
 
   await setupPablo(api, sudoWallet, dotWallets[0])
   await setupBonds(api, sudoWallet, dotWallets[0]);
+
+  await api.disconnect();
   process.exit(0);
 }
 

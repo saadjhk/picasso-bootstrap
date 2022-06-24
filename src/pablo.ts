@@ -110,8 +110,8 @@ export const setupCpp = async (
   console.log("UniswapCPP Pool Created: ", createRes);
 
   // Add Liquidity to the Pool
-  const baseAssetAmount = new BigNumber("10000").times(DECIMALS);
-  const quoteAssetAmount = new BigNumber("10000").times(DECIMALS);
+  const baseAssetAmount = new BigNumber("999999").times(DECIMALS);
+  const quoteAssetAmount = new BigNumber("999999").times(DECIMALS);
 
   const addLiqRes = await addFundstoThePool(
     api,
