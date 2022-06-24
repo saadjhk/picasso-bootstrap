@@ -12,10 +12,10 @@ async function setupBondOffer(
   let rewardAsset = 201;
   let principalAsset = 4;
 
-  // await mintAssetsToWallets(api, [wallet], walletSudo, [
-  //   principalAsset,
-  //   rewardAsset,
-  // ]);
+  await mintAssetsToWallets(api, [wallet], walletSudo, [
+    principalAsset,
+    rewardAsset,
+  ]);
 
   const requestParameters = {
     beneficiary: wallet.publicKey,
