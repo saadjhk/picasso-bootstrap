@@ -148,7 +148,7 @@ export async function buyFromPool(
   return await sendAndWaitForSuccess(
     api,
     walletId,
-    api.events.liquidityBootstrapping.Swapped.is,
+    api.events.pablo.Swapped.is,
     api.tx.liquidityBootstrapping.buy(
       poolIdParam,
       assetIdParam,
@@ -172,7 +172,7 @@ export async function sellToPool(
   return await sendAndWaitForSuccess(
     api,
     walletId,
-    api.events.liquidityBootstrapping.Swapped.is,
+    api.events.pablo.Swapped.is,
     api.tx.liquidityBootstrapping.sell(
       poolIdParam,
       assetIdParam,
@@ -206,17 +206,18 @@ export async function swapTokenPairs(
   minReceiveAmount = 0,
 ) {
   const poolIdParam = api.createType('u128', poolId)
-  const currencyPair = api.createType('ComposableTraitsDefiCurrencyPair', {
+  const currencyPair = api.createType('ComposableTraitsDefiCurrencyPairCurrencyId', {
     base: api.createType('u128', baseAssetId),
     quote: api.createType('u128', quoteAssetId),
   })
   const quoteAmountParam = api.createType('u128', quoteAmount)
   const minReceiveParam = api.createType('u128', minReceiveAmount)
   const keepAliveParam = api.createType('bool', true)
+
   return await sendAndWaitForSuccess(
     api,
     wallet,
-    api.events.liquidityBootstrapping.Swapped.is,
+    api.events.pablo.Swapped.is,
     api.tx.pablo.swap(
       poolIdParam,
       currencyPair as any,
@@ -226,3 +227,15 @@ export async function swapTokenPairs(
     )
   )
 }
+
+export async function enableTwap(api: ApiPromise, wallet: KeyringPair, poolId: number) {
+  const poolIdParam = api.createType('u128', poolId);
+
+  return await sendAndWaitForSuccess(
+    api,
+    wallet,
+    api.events.sudo.Sudid.is,
+    api.tx.sudo.sudo(api.tx.pablo.enableTwap(poolIdParam))
+  );
+}
+
