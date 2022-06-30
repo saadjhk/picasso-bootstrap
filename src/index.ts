@@ -4,18 +4,15 @@ import { ApiPromise, WsProvider } from "@polkadot/api";
 import { getSubstrateWallets, getSudoWallet } from "./keys";
 import * as definitions from "../interfaces/definitions";
 import { createRPC, createTypes, toChainUnits } from "./utils";
-import { setupPablo } from "./pablo";
-import { setupBonds } from "./bond";
-import { u8aToHex } from "@polkadot/util";
+import { setupSwaps } from "./pablo";
 
 const main = async () => {
   await cryptoWaitReady();
   const sudoWallet = getSudoWallet("dali-local");
   const dotWallets = getSubstrateWallets();
-  const ethWallets = getSubstrateWallets();
 
-  if (!dotWallets.length || !ethWallets.length)
-    throw new Error("Needs atleast one ETH and Substrate wallet");
+  if (!dotWallets.length)
+    throw new Error("Needs atleast one Substrate wallet");
 
   const rpc = createRPC(definitions);
   const types = createTypes(definitions);
@@ -24,9 +21,8 @@ const main = async () => {
   const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady;
 
-  await setupPablo(api, sudoWallet, dotWallets[0]);
-  await setupBonds(api, sudoWallet, dotWallets[0]);
-
+  await setupSwaps(api, sudoWallet, dotWallets[0]);
+  // await setupBonds(api, sudoWallet, dotWallets[0]);
   // const addLiqTx = api.tx.pablo.removeLiquidity(
   //   1,
   //   api.createType("u128", toChainUnits("50000").toString()),

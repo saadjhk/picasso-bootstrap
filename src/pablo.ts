@@ -86,35 +86,29 @@ export const setupLBP = async (
 export const setupCpp = async (
   api: ApiPromise,
   walletSudo: KeyringPair,
-  walletMe: KeyringPair
+  walletMe: KeyringPair,
+  baseAssetId = 1,
+  quoteAssetId = 129
 ): Promise<number> => {
-  let daliAssetId = 1;
-  // Base Asset is KSM and Quote Asset is KUSD
-  let baseAssetId = 4;
-  let quoteAssetId = 129;
-
-  // Mint 999999 PICA and KSM
+  // Mint 999999 PICA and KUSD
   await mintAssetsToWallets(api, [walletSudo, walletMe], walletSudo, [
-    daliAssetId,
     quoteAssetId,
     baseAssetId,
   ]);
 
   // 1.00 % owner fee for the pool
   const ownerFee = 10000;
-
-  const createLBP = await createConstantProductPool(
+  const createCpp = await createConstantProductPool(
     api,
     walletSudo,
     baseAssetId,
     quoteAssetId,
     ownerFee,
   );
-  const createRes: any = createLBP.data.toJSON();
+  const createRes: any = createCpp.data.toJSON();
   console.log("UniswapCPP Pool Created: ", createRes);
 
   const poolId: number = createRes[0];
-
   await enableTwap(api, walletSudo, poolId);
 
   // Add Liquidity to the Pool
@@ -131,7 +125,7 @@ export const setupCpp = async (
   console.log("UniswapCPP Liquidity Added: ", addLiqRes.data.toHuman());
 
   // Register in DEX Router
-  let KsmKusdRoute = api.createType(
+  let routeParams = api.createType(
     "ComposableTraitsDefiCurrencyPairCurrencyId",
     {
       base: api.createType("u128", baseAssetId),
@@ -139,30 +133,30 @@ export const setupCpp = async (
     }
   );
 
-  const kusdPicaRouteRes = await sendWait(
+  const dexRoute = await sendWait(
     api,
     api.tx.sudo.sudo(
-      api.tx.dexRouter.updateRoute(KsmKusdRoute, [
+      api.tx.dexRouter.updateRoute(routeParams, [
         createRes && createRes.length ? createRes[0] : 0,
       ])
     ),
     walletSudo
   );
 
-  console.log(kusdPicaRouteRes.toHuman());
+  console.log(dexRoute.toHuman());
 
   return Promise.resolve(poolId);
 };
 
-export const setupSwapTokenPairs = async (
+export const doSwaps = async (
     api: ApiPromise,
     walletSudo: KeyringPair,
     poolId: number,
     amount: number,
+    baseAssetId: number,
+    quoteAssetId: number
 ) => {
   // Base Asset is KSM and Quote Asset is KUSD
-  let baseAssetId = 4;
-  let quoteAssetId = 129;
 
   for (let i = 1; i <= amount; i++) {
     await swapTokenPairs(api, walletSudo, poolId, baseAssetId, quoteAssetId,  10 ** 12);
@@ -239,9 +233,19 @@ export const setupPablo = async (
   walletSudo: KeyringPair,
   _walletUser: KeyringPair
 ) => {
-  // await setupLBP(api, walletSudo, _walletUser);
+  await setupLBP(api, walletSudo, _walletUser);
+  await setupStableSwap(api, walletSudo, _walletUser);
+  return;
+};
+
+
+export const setupSwaps = async (
+  api: ApiPromise,
+  walletSudo: KeyringPair,
+  _walletUser: KeyringPair
+) => {
   const poolId = await setupCpp(api, walletSudo, _walletUser);
-  await setupSwapTokenPairs(api, walletSudo, poolId, 10);
+  await doSwaps(api, walletSudo, poolId, 10, 1, 129);
 
   // await setupStableSwap(api, walletSudo, _walletUser);
   return;
