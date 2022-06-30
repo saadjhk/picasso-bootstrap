@@ -7,6 +7,8 @@ import {
   createConstantProductPool,
   createLiquidityBootstrappingPool,
   createStableSwapPool,
+  enableTwap,
+  swapTokenPairs,
 } from "./pallets/pablo/extrinsics";
 import { sendWait } from "./utils/polkadot";
 
@@ -85,13 +87,15 @@ export const setupCpp = async (
   api: ApiPromise,
   walletSudo: KeyringPair,
   walletMe: KeyringPair
-) => {
+): Promise<number> => {
+  let daliAssetId = 1;
   // Base Asset is KSM and Quote Asset is KUSD
   let baseAssetId = 4;
   let quoteAssetId = 129;
 
   // Mint 999999 PICA and KSM
   await mintAssetsToWallets(api, [walletSudo, walletMe], walletSudo, [
+    daliAssetId,
     quoteAssetId,
     baseAssetId,
   ]);
@@ -108,6 +112,10 @@ export const setupCpp = async (
   );
   const createRes: any = createLBP.data.toJSON();
   console.log("UniswapCPP Pool Created: ", createRes);
+
+  const poolId: number = createRes[0];
+
+  await enableTwap(api, walletSudo, poolId);
 
   // Add Liquidity to the Pool
   const baseAssetAmount = new BigNumber("999999").times(DECIMALS);
@@ -142,7 +150,24 @@ export const setupCpp = async (
   );
 
   console.log(kusdPicaRouteRes.toHuman());
+
+  return Promise.resolve(poolId);
 };
+
+export const setupSwapTokenPairs = async (
+    api: ApiPromise,
+    walletSudo: KeyringPair,
+    poolId: number,
+    amount: number,
+) => {
+  // Base Asset is KSM and Quote Asset is KUSD
+  let baseAssetId = 4;
+  let quoteAssetId = 129;
+
+  for (let i = 1; i <= amount; i++) {
+    await swapTokenPairs(api, walletSudo, poolId, baseAssetId, quoteAssetId,  10 ** 12);
+  }
+}
 
 export const setupStableSwap = async (
   api: ApiPromise,
@@ -214,8 +239,10 @@ export const setupPablo = async (
   walletSudo: KeyringPair,
   _walletUser: KeyringPair
 ) => {
-  await setupLBP(api, walletSudo, _walletUser);
-  await setupCpp(api, walletSudo, _walletUser);
+  // await setupLBP(api, walletSudo, _walletUser);
+  const poolId = await setupCpp(api, walletSudo, _walletUser);
+  await setupSwapTokenPairs(api, walletSudo, poolId, 10);
+
   // await setupStableSwap(api, walletSudo, _walletUser);
   return;
 };

@@ -9,10 +9,12 @@ async function setupBondOffer(
   walletSudo: KeyringPair,
   wallet: KeyringPair
 ): Promise<void> {
+  let daliAsset = 1;
   let rewardAsset = 201;
   let principalAsset = 4;
 
   await mintAssetsToWallets(api, [wallet], walletSudo, [
+    daliAsset,
     principalAsset,
     rewardAsset,
   ]);
