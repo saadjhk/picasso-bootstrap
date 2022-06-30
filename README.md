@@ -12,7 +12,7 @@ DOT_MNEMONIC1=
 ETH_PK=
 ETH_PK1=
 ```
-1. Bootstrap
+# Bootstrap
 ```
 yarn start
 ```
