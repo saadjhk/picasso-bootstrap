@@ -1,9 +1,9 @@
 require("dotenv").config();
-import { cryptoWaitReady, signatureVerify } from "@polkadot/util-crypto";
+import { cryptoWaitReady } from "@polkadot/util-crypto";
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { getSubstrateWallets, getSudoWallet } from "./keys";
+import { getSubstrateWallets, getSudoWallet } from "./utils";
 import * as definitions from "../interfaces/definitions";
-import { createRPC, createTypes, toChainUnits } from "./utils";
+import { createRPC, createTypes } from "./utils";
 import { setupSwaps } from "./pablo";
 
 const main = async () => {

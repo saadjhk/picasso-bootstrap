@@ -19,7 +19,7 @@ export async function createOffer(
     asset: u128;
     bondPrice: u128;
     nbOfBonds: u128;
-    maturity: { Finite: { returnIn: u32 } };
+    maturity: { Finite: { returnIn: u32 } } | "Infinite";
     reward: {
       asset: u128;
       amount: u128;

@@ -43,7 +43,7 @@ export function getSudoWallet(chain: "dali-local" | "dali-rococo"): KeyringPair 
 /**
  * All in ss58 49
  */
-export const testingAddresses = [
+export const TESTING_ADDRESSES = [
     "5w53mgBc2w2kNQZgFBaYT5h79cQQNfv8vUuoa85zUe5VxBvQ",
     "5tirEmQwRYbyadq5QrrFvnPNBPf4WLXsh97qHJUqcqMADDQ9",
     "5z3wa9ojQra3HqeJthg9Q6hQnsRDsUgH6DC7ZXkb7YXofh3m",
