@@ -1,6 +1,6 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { sendAndWaitForSuccess } from "@dev-test/lib";
+import { sendAndWaitForSuccess } from "@picasso-bootstrap/lib";
 import BigNumber from "bignumber.js";
 
 export const DECIMALS = new BigNumber(10).pow(12); // default decimals

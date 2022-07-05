@@ -1,6 +1,6 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { sendAndWaitForSuccess } from "@dev-test/lib";
+import { sendAndWaitForSuccess } from "@picasso-bootstrap/lib";
 
 export const setRelayer = async (api: ApiPromise, relayerAccount: KeyringPair, sudoAccount: KeyringPair) => {
   return sendAndWaitForSuccess(

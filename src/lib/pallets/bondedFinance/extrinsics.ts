@@ -1,7 +1,7 @@
 import { IKeyringPair } from "@polkadot/types/types";
 import { ApiPromise } from "@polkadot/api";
 import { u32, u64, u128 } from "@polkadot/types-codec";
-import { sendAndWaitForSuccess } from "@dev-test/lib";
+import { sendAndWaitForSuccess } from "@picasso-bootstrap/lib";
 
 /**
  * Tests tx.bondedFinance.offer with provided parameters that should succeed.

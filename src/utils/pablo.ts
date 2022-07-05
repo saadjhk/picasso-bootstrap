@@ -1,4 +1,4 @@
-import { PabloPoolFeeConfig } from "@dev-test/types";
+import { PabloPoolFeeConfig } from "@picasso-bootstrap/types";
 import { ApiPromise } from "@polkadot/api";
 import { Permill } from "@polkadot/types/interfaces/runtime";
 

@@ -1,4 +1,4 @@
-import { BondOffer } from "@dev-test/types";
+import { BondOffer } from "@picasso-bootstrap/types";
 import { ApiPromise } from "@polkadot/api";
 
 export function toBondOffer(api: ApiPromise, offer: any): BondOffer {

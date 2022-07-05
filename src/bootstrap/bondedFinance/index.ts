@@ -1,11 +1,11 @@
-import { createOffer } from "@dev-test/lib/pallets/bondedFinance/extrinsics";
-import { BondOffer } from "@dev-test/types";
+import { createOffer } from "@picasso-bootstrap/lib/pallets/bondedFinance/extrinsics";
+import { BondOffer } from "@picasso-bootstrap/types";
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import config from "@dev-test/constants/config.json";
-import { toBondOffer, toChainUnits } from "@dev-test/utils";
+import config from "@picasso-bootstrap/constants/config.json";
+import { toBondOffer, toChainUnits } from "@picasso-bootstrap/utils";
 import BigNumber from "bignumber.js";
-import { mintAssetsToWallets } from "@dev-test/lib";
+import { mintAssetsToWallets } from "@picasso-bootstrap/lib";
 
 export async function populateBondOffers(api: ApiPromise, wallet: KeyringPair, walletSudo: KeyringPair): Promise<void> {
   await mintAssetsToWallets(api, [wallet], walletSudo, ["1"], toChainUnits(10));
