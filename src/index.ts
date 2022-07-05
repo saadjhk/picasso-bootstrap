@@ -5,13 +5,13 @@ import * as definitions from "../interfaces/definitions";
 import { getSudoWallet, getSubstrateWallets, createRPC, createTypes } from "./helpers";
 
 const main = async () => {
-  const sudoWallet = getSudoWallet("dali-local");
+  const sudoWallet = getSudoWallet(process.env.CHAIN_NAME || "dali-local");
   const dotWallets = getSubstrateWallets();
 
   const rpc = createRPC(definitions);
   const types = createTypes(definitions);
 
-  const provider = new WsProvider(process.env.PICASSO_RPC_URL, 1000);
+  const provider = new WsProvider(process.env.RPC_URL, 1000);
   const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady;
 

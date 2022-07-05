@@ -1,3 +1,6 @@
+# Bootstrap data for QA/ development of Picasso/Pablo
+Please have a look at ```src/constants/config.json``` to adjust paramters and enable disable bootstrapping modules. By default dali types are used.
+
 # Install Deps
 
 ```
@@ -7,12 +10,20 @@ yarn
 # Setup ENV
 
 ```
-PICASSO_RPC_URL=
+RPC_URL=
 GANACHE_URL=
+# e.g CHAIN_NAME dali-rococo, dali-local, picasso, composable
+CHAIN_NAME=
+# if your chain uses a different sudo key please provide it's seed
+SUDO_SEED=
 ```
 
-# Bootstrap
+# Start
 
 ```
 yarn start
+```
+# Prettier
+```
+yarn prettier
 ```

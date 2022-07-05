@@ -51,7 +51,7 @@ export const populate = async (
   relayAccounts: string[],
   ethAccounts: string[],
   rewardsPerAccount: string,
-  vestingPeriod: string,
+  vestingPeriod: string
 ) => {
   const _vestingPeriod = api.createType("u32", vestingPeriod);
   const _rewardsPerAccount = api.createType("u128", rewardsPerAccount);
@@ -104,11 +104,6 @@ export const addFundsToCrowdloan = async (
     api,
     walletSudo,
     api.events.balances.Transfer.is,
-    api.tx.assets.transfer(
-      1,
-      palletAccountId,
-      api.createType("u128", netRewards),
-      true
-    )
+    api.tx.assets.transfer(1, palletAccountId, api.createType("u128", netRewards), true)
   );
 };

@@ -26,12 +26,12 @@ export function getEthereumWallets(): ethers.Wallet[] {
   ];
 }
 
-export function getSudoWallet(chain: "dali-local" | "dali-rococo"): KeyringPair {
+export function getSudoWallet(chain: "dali-local" | string): KeyringPair {
   const kr = new Keyring({ type: "sr25519" });
   if (chain === "dali-local") {
     return kr.addFromUri("//Alice");
   } else {
-    let pk = process.env.SUDO_MNEMONIC && process.env.SUDO_MNEMONIC.length ? process.env.SUDO_MNEMONIC : undefined;
+    let pk = process.env.SUDO_SEED && process.env.SUDO_SEED.length ? process.env.SUDO_SEED : undefined;
     if (!pk?.length) throw new Error("Provide a sudo key env variable");
     return kr.addFromSeed(hexToU8a(pk));
   }
