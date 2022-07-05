@@ -6,27 +6,24 @@ import { privateKeyFromSeed } from "./eth";
 
 export function getSubstrateWallets(): KeyringPair[] {
   const kr = new Keyring({ type: "sr25519" });
-  let wallets: KeyringPair[] = [];
 
-  wallets.push(kr.addFromUri("//Saad-1"));
-  wallets.push(kr.addFromUri("//Saad-2"));
-  wallets.push(kr.addFromUri("//Saad-3"));
-  wallets.push(kr.addFromUri("//Saad-4"));
-  wallets.push(kr.addFromUri("//Saad-5"));
-
-  return wallets;
+  return [
+    kr.addFromUri("//Saad-1"),
+    kr.addFromUri("//Saad-2"),
+    kr.addFromUri("//Saad-3"),
+    kr.addFromUri("//Saad-4"),
+    kr.addFromUri("//Saad-5"),
+  ];
 }
 
 export function getEthereumWallets(): ethers.Wallet[] {
-  let wallets: ethers.Wallet[] = [];
-
-  wallets.push(new ethers.Wallet(privateKeyFromSeed(1)));
-  wallets.push(new ethers.Wallet(privateKeyFromSeed(2)));
-  wallets.push(new ethers.Wallet(privateKeyFromSeed(3)));
-  wallets.push(new ethers.Wallet(privateKeyFromSeed(4)));
-  wallets.push(new ethers.Wallet(privateKeyFromSeed(5)));
-
-  return wallets;
+  return [
+    new ethers.Wallet(privateKeyFromSeed(1)),
+    new ethers.Wallet(privateKeyFromSeed(2)),
+    new ethers.Wallet(privateKeyFromSeed(3)),
+    new ethers.Wallet(privateKeyFromSeed(4)),
+    new ethers.Wallet(privateKeyFromSeed(5))
+  ]
 }
 
 export function getSudoWallet(chain: "dali-local" | "dali-rococo"): KeyringPair {
