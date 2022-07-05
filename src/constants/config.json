@@ -1,4 +1,7 @@
 {
+  "bootstrapPools": true,
+  "bootstrapBonds": true,
+  "bootstrapCrowdloanRewards": true,
   "bondOffers": [
     {
       "asset": "4",
@@ -70,6 +73,9 @@
     }
   ],
   "crowdloanRewards": {
+    "palletAccountId": "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u",
+    "rewardsPerAccount": "1000000000000000",
+    "vestingPeriod": "100800",
     "relayChainContributors": [
       "5w53mgBc2w2kNQZgFBaYT5h79cQQNfv8vUuoa85zUe5VxBvQ",
       "5tirEmQwRYbyadq5QrrFvnPNBPf4WLXsh97qHJUqcqMADDQ9",
