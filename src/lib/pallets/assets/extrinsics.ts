@@ -17,20 +17,23 @@ export const MaxMint = new BigNumber("10000000").times(DECIMALS);
  * @param assetIDs All assets to be minted to wallet.
  * @param amount Mint amount.
  */
-export async function mintAssetsToWallets(api: ApiPromise, wallets: KeyringPair[], sudoKey: KeyringPair, assetIDs:string[], amount: BigNumber) {
+export async function mintAssetsToWallets(
+  api: ApiPromise,
+  wallets: KeyringPair[],
+  sudoKey: KeyringPair,
+  assetIDs: string[],
+  amount: BigNumber
+) {
   for (const asset of assetIDs) {
-    
     for (const wallet of wallets) {
       const mintResult = await sendAndWaitForSuccess(
         api,
         sudoKey,
         api.events.sudo.Sudid.is,
-        api.tx.sudo.sudo(
-          api.tx.assets.mintInto(asset, wallet.publicKey, amount.toString())
-        )
-      )
-  
-      console.log(`Minted %${amount.toString()} ${asset} for ${wallet.publicKey} ${mintResult.data.toHuman()}`)
+        api.tx.sudo.sudo(api.tx.assets.mintInto(asset, wallet.publicKey, amount.toString()))
+      );
+
+      console.log(`Minted %${amount.toString()} ${asset} for ${wallet.publicKey} ${mintResult.data.toHuman()}`);
     }
   }
 }
@@ -46,21 +49,24 @@ export async function mintAssetsToWallets(api: ApiPromise, wallets: KeyringPair[
  * @param assetIDs All assets to be minted to wallet.
  * @param amount Mint amount.
  */
- export async function mintAssetsToAddress(api: ApiPromise, wallets: string[], sudoKey: KeyringPair, assetIDs:number[]) {
+export async function mintAssetsToAddress(
+  api: ApiPromise,
+  wallets: string[],
+  sudoKey: KeyringPair,
+  assetIDs: number[]
+) {
   for (const asset of assetIDs) {
-    
     for (const wallet of wallets) {
-      const {data: [result]} = await sendAndWaitForSuccess(
+      const {
+        data: [result]
+      } = await sendAndWaitForSuccess(
         api,
         sudoKey,
         api.events.sudo.Sudid.is,
-        api.tx.sudo.sudo(
-          api.tx.assets.mintInto(asset, wallet, MaxMint.toString())
-        )
-      )
-  
-      console.log(result.toHuman())
+        api.tx.sudo.sudo(api.tx.assets.mintInto(asset, wallet, MaxMint.toString()))
+      );
 
+      console.log(result.toHuman());
     }
   }
 }

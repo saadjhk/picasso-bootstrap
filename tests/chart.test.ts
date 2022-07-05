@@ -1,4 +1,6 @@
-import { ChartRange, processSubsquidTvlChartData } from "@dev-test/tvlChart";
+import { processSubsquidTvlChartData } from "@dev-test/lib";
+import { ChartRange } from "@dev-test/types";
+import { generateRandomSubsquidTvlData } from "@dev-test/utils";
 import _ from "lodash";
 import moment from "moment";
 
@@ -7,33 +9,9 @@ const MINUTES = 60 * SECONDS;
 const HOURS = 60 * MINUTES;
 const DAYS = 24 * HOURS;
 
-function randomSubsquidData(
-  ms: number,
-  limit: number = 100,
-  valueMin: number = 1000,
-  valueMax: number = 5000
-): [number, number][] {
-  const max = Date.now();
-  const min = max - ms;
-  let data: [number, number][] = [];
-
-  for (let i = 0; i < limit; i++) {
-    const randomInRangeTs = Math.floor(_.random(min, max));
-    const value = _.random(valueMin, valueMax);
-
-    data.push([randomInRangeTs, value]);
-  }
-
-  return data.sort((a, b) => {
-    return b[0] - a[0];
-  });
-}
-
 describe("TVL Chart Series", () => {
   test("Test with Single Point", () => {
-    const subsquidData: [number, number][] = [
-      [1654278809477, 3],
-    ];
+    const subsquidData: [number, number][] = [[1654278809477, 3]];
 
     let range: ChartRange = "24h";
     const series24h = processSubsquidTvlChartData(subsquidData, range);
@@ -50,7 +28,7 @@ describe("TVL Chart Series", () => {
     const subsquidData: [number, number][] = [
       [1654278809477, 3],
       [1654271612229, 5],
-      [1654268015774, 8],
+      [1654268015774, 8]
     ];
 
     let range: ChartRange = "24h";
@@ -85,10 +63,7 @@ describe("TVL Chart Series", () => {
     const expectedMinimum = moment(rightNow - dummyDateRange)
       .startOf("hour")
       .valueOf();
-    const subsquidData: [number, number][] = randomSubsquidData(
-      dummyDateRange,
-      5000
-    );
+    const subsquidData: [number, number][] = generateRandomSubsquidTvlData(dummyDateRange, 5000);
 
     let range: ChartRange = "24h";
     const series24h = processSubsquidTvlChartData(subsquidData, range);
@@ -113,10 +88,7 @@ describe("TVL Chart Series", () => {
     const expectedMinimum = moment(rightNow - dummyDateRange)
       .startOf("week")
       .valueOf();
-    const subsquidData: [number, number][] = randomSubsquidData(
-      dummyDateRange,
-      5000
-    );
+    const subsquidData: [number, number][] = generateRandomSubsquidTvlData(dummyDateRange, 5000);
 
     let range: ChartRange = "1w";
     const series1w = processSubsquidTvlChartData(subsquidData, range);
@@ -141,10 +113,7 @@ describe("TVL Chart Series", () => {
     const expectedMinimum = moment(rightNow - dummyDateRange)
       .startOf("month")
       .valueOf();
-    const subsquidData: [number, number][] = randomSubsquidData(
-      dummyDateRange,
-      5000
-    );
+    const subsquidData: [number, number][] = generateRandomSubsquidTvlData(dummyDateRange, 5000);
 
     let range: ChartRange = "1m";
     const series1m = processSubsquidTvlChartData(subsquidData, range);
@@ -157,7 +126,7 @@ describe("TVL Chart Series", () => {
       monthStep = firstSeriesTimeStamp;
     while (monthStep <= lastSeriesTimeStamp) {
       months = months + 1;
-      monthStep = moment(monthStep).endOf('month').valueOf() + 1
+      monthStep = moment(monthStep).endOf("month").valueOf() + 1;
     }
 
     expect(months).toEqual(series1m.length);

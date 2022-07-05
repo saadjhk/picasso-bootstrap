@@ -22,7 +22,7 @@ docker compose -f archive/linux-local-docker-compose.yml up
 node -r dotenv/config lib/processor.js
 
 # 6. The above command will block the terminal
-#    being busy with fetching the chain data, 
+#    being busy with fetching the chain data,
 #    transforming and storing it in the target database.
 #
 #    To start the graphql server open the separate terminal

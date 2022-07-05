@@ -21,7 +21,7 @@ const main = async () => {
 };
 
 cryptoWaitReady().then(() => {
-  main().catch((err) => {
+  main().catch(err => {
     console.error(err.message);
     process.exit(0);
   });

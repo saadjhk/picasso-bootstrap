@@ -1,4 +1,3 @@
-
 import { IKeyringPair } from "@polkadot/types/types";
 import { ApiPromise } from "@polkadot/api";
 import { u32, u64, u128 } from "@polkadot/types-codec";
@@ -44,16 +43,16 @@ export async function createOffer(
  * @param {u128|number} nbOfBonds
  * @return Transaction event.
  */
- export async function txBondedFinanceBondSuccessTest(
-    api: ApiPromise,
-    wallet: IKeyringPair,
-    offerId: u64,
-    nbOfBonds: u128 | number
-  ) {
-    return await sendAndWaitForSuccess(
-      api,
-      wallet,
-      api.events.bondedFinance.NewBond.is,
-      api.tx.bondedFinance.bond(offerId, nbOfBonds, true)
-    );
-  }
+export async function txBondedFinanceBondSuccessTest(
+  api: ApiPromise,
+  wallet: IKeyringPair,
+  offerId: u64,
+  nbOfBonds: u128 | number
+) {
+  return await sendAndWaitForSuccess(
+    api,
+    wallet,
+    api.events.bondedFinance.NewBond.is,
+    api.tx.bondedFinance.bond(offerId, nbOfBonds, true)
+  );
+}
