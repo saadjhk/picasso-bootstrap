@@ -1,9 +1,8 @@
 require("dotenv").config();
 import { cryptoWaitReady } from "@polkadot/util-crypto";
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { getSubstrateWallets, getSudoWallet } from "./utils";
 import * as definitions from "../interfaces/definitions";
-import { createRPC, createTypes } from "./utils";
+import { getSudoWallet, getSubstrateWallets, createRPC, createTypes } from "./helpers";
 
 const main = async () => {
   const sudoWallet = getSudoWallet("dali-local");

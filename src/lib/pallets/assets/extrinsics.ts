@@ -1,7 +1,7 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
+import { sendAndWaitForSuccess } from "@dev-test/lib";
 import BigNumber from "bignumber.js";
-import { sendAndWaitForSuccess } from "polkadot-utils";
 
 export const DECIMALS = new BigNumber(10).pow(12); // default decimals
 export const MaxMint = new BigNumber("10000000").times(DECIMALS);

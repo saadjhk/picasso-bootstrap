@@ -1,2 +1,2 @@
-export * from "./chart";
+export * from "./polkadot";
 export * from "./pallets";

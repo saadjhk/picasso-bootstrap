@@ -1,6 +1,6 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { sendAndWaitForSuccess } from "polkadot-utils";
+import { sendAndWaitForSuccess } from "@dev-test/lib";
 
 export const setRelayer = async (api: ApiPromise, relayerAccount: KeyringPair, sudoAccount: KeyringPair) => {
   return sendAndWaitForSuccess(
@@ -11,7 +11,7 @@ export const setRelayer = async (api: ApiPromise, relayerAccount: KeyringPair, s
   );
 };
 
-// add dynamic parameters
+// todo: add dynamic parameters
 export const setNetwork = async (api: ApiPromise, relayerAccount: KeyringPair) => {
   return sendAndWaitForSuccess(
     api,

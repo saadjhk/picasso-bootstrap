@@ -5,8 +5,3 @@ export const toHexString = (bytes: Uint8Array) =>
 
 // The prefix is defined as pallet config
 export const proofMessage = (account: IKeyringPair) => "picasso-" + toHexString(account.publicKey);
-
-export function sleep(delay: number) {
-  var start = new Date().getTime();
-  while (new Date().getTime() < start + delay);
-}

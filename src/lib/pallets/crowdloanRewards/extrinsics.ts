@@ -1,12 +1,12 @@
 import { u128, u32 } from "@polkadot/types-codec";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { ethers } from "ethers";
-import { sendAndWaitForSuccess, sendUnsignedAndWaitForSuccess } from "polkadot-utils";
 import { ApiPromise } from "@polkadot/api";
 import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../../../interfaces";
 import { toHexString } from "@dev-test/utils";
 import { mintAssetsToWallets } from "../assets/extrinsics";
 import BigNumber from "bignumber.js";
+import { sendAndWaitForSuccess, sendUnsignedAndWaitForSuccess } from "@dev-test/lib";
 
 export const associateKSM = async (api: ApiPromise, contributorAccount: KeyringPair, rewardAccount: KeyringPair) => {
   const message = `<Bytes>picasso-${toHexString(rewardAccount.publicKey)}</Bytes>`;

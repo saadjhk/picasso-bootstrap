@@ -2,7 +2,7 @@ import Keyring from "@polkadot/keyring";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { hexToU8a } from "@polkadot/util";
 import { ethers } from "ethers";
-import { privateKeyFromSeed } from "./eth";
+import { privateKeyFromSeed } from "@dev-test/utils";
 
 export function getSubstrateWallets(): KeyringPair[] {
   const kr = new Keyring({ type: "sr25519" });
@@ -12,7 +12,7 @@ export function getSubstrateWallets(): KeyringPair[] {
     kr.addFromUri("//Saad-2"),
     kr.addFromUri("//Saad-3"),
     kr.addFromUri("//Saad-4"),
-    kr.addFromUri("//Saad-5"),
+    kr.addFromUri("//Saad-5")
   ];
 }
 
@@ -23,7 +23,7 @@ export function getEthereumWallets(): ethers.Wallet[] {
     new ethers.Wallet(privateKeyFromSeed(3)),
     new ethers.Wallet(privateKeyFromSeed(4)),
     new ethers.Wallet(privateKeyFromSeed(5))
-  ]
+  ];
 }
 
 export function getSudoWallet(chain: "dali-local" | "dali-rococo"): KeyringPair {
