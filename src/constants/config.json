@@ -55,21 +55,6 @@
       },
       "fee": "10000",
       "baseWeight": "500000"
-    },
-    {
-      "amplificationCoefficient": "10000",
-      "addDexRoute": true,
-      "addLiquidity": true,
-      "enableTwap": true,
-      "liquidityAmount": {
-        "base": "100000000000000000",
-        "quote": "100000000000000000"
-      },
-      "pair": {
-        "base": "4",
-        "quote": "1"
-      },
-      "fee": "10000"
     }
   ],
   "crowdloanRewards": {
