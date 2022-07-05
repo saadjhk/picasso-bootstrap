@@ -5,9 +5,10 @@ import * as R from "ramda";
 import { sendAndWaitForSuccess } from "polkadot-utils";
 import { ApiPromise } from "@polkadot/api";
 import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../../interfaces";
-import { toHexString, ethAccount } from "../../utils";
 import { base58 } from "micro-base";
 import BigNumber from "bignumber.js";
+import { toHexString } from "@dev-test/utils";
+import { ethAccountFromSeed } from "@dev-test/utils/eth";
 
 export const associateKSM = async (
   api: ApiPromise,
@@ -117,7 +118,7 @@ export const crowdloanRewardsPopulateTest = async (
         : [
             [
               api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
-                Ethereum: ethAccount(n).address,
+                Ethereum: ethAccountFromSeed(n).address,
               }),
               reward,
               vesting48weeks,
