@@ -1,19 +1,17 @@
 require("dotenv").config();
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { ApiPromise, WsProvider } from "@polkadot/api";
 import * as definitions from "../interfaces/definitions";
-import { getSudoWallet, getSubstrateWallets, createRPC, createTypes } from "./helpers";
+import { getSudoWallet, getSubstrateWallets, createRPC, createTypes, buildApi } from "./helpers";
 
 const main = async () => {
+  const rpcUrl = process.env.RPC_URL || "ws://127.0.0.1:9988";
   const sudoWallet = getSudoWallet(process.env.CHAIN_NAME || "dali-local");
   const dotWallets = getSubstrateWallets();
 
   const rpc = createRPC(definitions);
   const types = createTypes(definitions);
 
-  const provider = new WsProvider(process.env.RPC_URL, 1000);
-  const api = await ApiPromise.create({ provider, types, rpc });
-  await api.isReady;
+  const api = await buildApi(rpcUrl, types, rpc);
 
   await api.disconnect();
   process.exit(0);
