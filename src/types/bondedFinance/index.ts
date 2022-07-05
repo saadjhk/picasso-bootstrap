@@ -11,16 +11,3 @@ export type BondOffer = {
         maturity: u32
     }
 }
-
-export type HumanizedBondOffer = {
-    asset: string,
-    bondPrice: string,
-    nbOfBonds: string,
-    maturity: "Infinite" | { Finite: { returnIn: string } },
-    reward: {
-        asset: string,
-        amount: string,
-        maturity: string
-    }
-
-}

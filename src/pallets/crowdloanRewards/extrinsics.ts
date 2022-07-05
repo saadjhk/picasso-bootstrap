@@ -8,7 +8,7 @@ import { PalletCrowdloanRewardsModelsRemoteAccount } from "../../../interfaces";
 import { base58 } from "micro-base";
 import BigNumber from "bignumber.js";
 import { toHexString } from "@dev-test/utils";
-import { ethAccountFromSeed } from "@dev-test/utils/eth";
+import { privateKeyFromSeed } from "@dev-test/utils/eth";
 
 export const associateKSM = async (
   api: ApiPromise,
@@ -118,7 +118,7 @@ export const crowdloanRewardsPopulateTest = async (
         : [
             [
               api.createType("PalletCrowdloanRewardsModelsRemoteAccount", {
-                Ethereum: ethAccountFromSeed(n).address,
+                Ethereum: new ethers.Wallet(privateKeyFromSeed(n)).address,
               }),
               reward,
               vesting48weeks,

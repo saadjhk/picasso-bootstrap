@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "npx ts-node src/index.ts",
+    "prettier": "prettier ./src --write",
     "test": "jest"
   },
   "devDependencies": {

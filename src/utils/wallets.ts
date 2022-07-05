@@ -2,28 +2,29 @@ import Keyring from "@polkadot/keyring";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { hexToU8a } from "@polkadot/util";
 import { ethers } from "ethers";
+import { privateKeyFromSeed } from "./eth";
 
 export function getSubstrateWallets(): KeyringPair[] {
     const kr = new Keyring({ type: 'sr25519' });
     let wallets: KeyringPair[] = [];
 
-    let firstPK = process.env.DOT_MNEMONIC && process.env.DOT_MNEMONIC.length ? process.env.DOT_MNEMONIC : undefined;
-    let secondPK = process.env.DOT_MNEMONIC1 && process.env.DOT_MNEMONIC1.length ? process.env.DOT_MNEMONIC1 : undefined;
-
-    if (firstPK) wallets.push(kr.addFromMnemonic(firstPK))
-    if (secondPK) wallets.push(kr.addFromMnemonic(secondPK))
+    wallets.push(kr.addFromUri("//Saad-1"));
+    wallets.push(kr.addFromUri("//Saad-2")); 
+    wallets.push(kr.addFromUri("//Saad-3"));
+    wallets.push(kr.addFromUri("//Saad-4"));
+    wallets.push(kr.addFromUri("//Saad-5"));
 
     return wallets;
 }
 
-export function getEthersWallets(): ethers.Wallet[] {
+export function getEthereumWallets(): ethers.Wallet[] {
     let wallets: ethers.Wallet[] = [];
 
-    let firstPK = process.env.ETH_PK && process.env.ETH_PK.length ? process.env.ETH_PK : undefined;
-    let secondPK = process.env.ETH_PK1 && process.env.ETH_PK1.length ? process.env.ETH_PK1 : undefined;
-
-    if (firstPK) wallets.push(new ethers.Wallet(firstPK))
-    if (secondPK) wallets.push(new ethers.Wallet(secondPK))
+    wallets.push(new ethers.Wallet(privateKeyFromSeed(1)));
+    wallets.push(new ethers.Wallet(privateKeyFromSeed(2)));
+    wallets.push(new ethers.Wallet(privateKeyFromSeed(3)));
+    wallets.push(new ethers.Wallet(privateKeyFromSeed(4)));
+    wallets.push(new ethers.Wallet(privateKeyFromSeed(5)));
 
     return wallets;
 }

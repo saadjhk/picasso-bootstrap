@@ -4,23 +4,18 @@ import { ApiPromise, WsProvider } from "@polkadot/api";
 import { getSubstrateWallets, getSudoWallet } from "./utils";
 import * as definitions from "../interfaces/definitions";
 import { createRPC, createTypes } from "./utils";
-import { setupSwaps } from "./pablo";
 
 const main = async () => {
   const sudoWallet = getSudoWallet("dali-local");
   const dotWallets = getSubstrateWallets();
 
-  if (!dotWallets.length)
-    throw new Error("Needs atleast one Substrate wallet");
-
   const rpc = createRPC(definitions);
   const types = createTypes(definitions);
 
-  const provider = new WsProvider(process.env.PICASSO_RPC_URL || "", 1000);
+  const provider = new WsProvider(process.env.PICASSO_RPC_URL, 1000);
   const api = await ApiPromise.create({ provider, types, rpc });
   await api.isReady;
 
-  await setupSwaps(api, sudoWallet, dotWallets[0]);
   await api.disconnect();
   process.exit(0);
 };

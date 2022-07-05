@@ -1,3 +1,4 @@
+import { ComposableTraitsDefiCurrencyPairCurrencyId, PalletPabloPoolInitConfiguration } from '@composable';
 import { ApiPromise } from '@polkadot/api'
 import { KeyringPair } from '@polkadot/keyring/types'
 import BigNumber from 'bignumber.js';
@@ -5,80 +6,44 @@ import { sendAndWaitFor, sendAndWaitForSuccess } from 'polkadot-utils'
 
 export async function createLiquidityBootstrappingPool(
   api: ApiPromise,
-  sudoKey: KeyringPair,
-  baseAssetId: number,
-  quoteAssetId: number,
-  feeConfig: {
-    feeRate: number,
-    ownerFeeRate: number,
-    protocolFeeRate: number
-  },
-  end: number = 7200,
-  initialWeight: number = 95,
-  finalWeight: number = 5,
-  startDelay = 25,
+  ownerKey: KeyringPair,
+  config: PalletPabloPoolInitConfiguration
 ) {
-  // 7200 min sale
-  // 216000 max sale
-  const start = await api.query.system.number();
-
-  const pool = api.createType('PalletPabloPoolInitConfiguration', {
-    LiquidityBootstrapping: {
-      owner: api.createType('AccountId32', sudoKey.publicKey),
-      pair: api.createType('ComposableTraitsDefiCurrencyPairCurrencyId', {
-        base: api.createType('u128', baseAssetId),
-        quote: api.createType('u128', quoteAssetId),
-      }),
-      sale: api.createType('ComposableTraitsDexSale', {
-        start: api.createType(
-          'u32',
-          new BigNumber(start.toString()).plus(startDelay).toString(),
-        ),
-        end: api.createType(
-          'u32',
-          new BigNumber(start.toString()).plus(startDelay).plus(end).toString(),
-        ),
-        initialWeight: api.createType("Permill", initialWeight * 10000),
-        finalWeight: api.createType("Permill", finalWeight * 10000),
-      }),
-      feeConfig: {
-        feeRate: api.createType("Permill", feeConfig.feeRate),
-        ownerFeeRate: api.createType("Permill", feeConfig.ownerFeeRate),
-        protocolFeeRate: api.createType("Permill", feeConfig.protocolFeeRate),
-      }
-    }
-  });
   return await sendAndWaitForSuccess(
     api,
-    sudoKey,
+    ownerKey,
     api.events.pablo.PoolCreated.is,
-    api.tx.pablo.create(pool),
+    api.tx.pablo.create(config),
+  )
+}
+
+export async function updateDexRoute(
+  api: ApiPromise,
+  walletSudo: KeyringPair,
+  pair: ComposableTraitsDefiCurrencyPairCurrencyId,
+  poolId: number
+) {
+  let dexRoute = [poolId];
+  return await sendAndWaitForSuccess(
+    api,
+    walletSudo,
+    api.events.sudo.Sudid.is,
+    api.tx.sudo.sudo(
+      api.tx.dexRouter.updateRoute(pair, dexRoute)
+    )
   )
 }
 
 export async function createConstantProductPool(
   api: ApiPromise,
   sudoKey: KeyringPair,
-  baseAssetId: number,
-  quoteAssetId: number,
-  feeRate: number,
+  config: PalletPabloPoolInitConfiguration
 ) {
-  const pool = api.createType('PalletPabloPoolInitConfiguration', {
-    ConstantProduct: {
-      owner: api.createType('AccountId32', sudoKey.publicKey),
-      pair: api.createType('ComposableTraitsDefiCurrencyPairCurrencyId', {
-        base: api.createType('u128', baseAssetId),
-        quote: api.createType('u128', quoteAssetId),
-      }),
-      fee: api.createType("Permill", feeRate),
-      baseWeight: api.createType("Permill", 50 * 10000)
-    }
-  });
   return await sendAndWaitForSuccess(
     api,
     sudoKey,
     api.events.pablo.PoolCreated.is,
-    api.tx.pablo.create(pool),
+    api.tx.pablo.create(config),
   )
 }
 
@@ -110,10 +75,10 @@ export async function createStableSwapPool(
 }
 
 
-export async function addFundstoThePool(
+export async function addLiquidity(
   api: ApiPromise,
-  walletId: KeyringPair,
-  poolId: number,
+  wallet: KeyringPair,
+  poolId: BigNumber,
   baseAmount: string,
   quoteAmount: string,
 ) {
@@ -122,10 +87,10 @@ export async function addFundstoThePool(
   const keepAliveParam = api.createType('bool', true)
   return await sendAndWaitFor(
     api,
-    walletId,
+    wallet,
     api.events.pablo.LiquidityAdded.is,
     api.tx.pablo.addLiquidity(
-      poolId,
+      poolId.toString(),
       baseAmountParam,
       quoteAmountParam,
       0, // min mint amount
@@ -228,12 +193,12 @@ export async function swapTokenPairs(
   )
 }
 
-export async function enableTwap(api: ApiPromise, wallet: KeyringPair, poolId: number) {
+export async function enableTwap(api: ApiPromise, walletSudo: KeyringPair, poolId: number) {
   const poolIdParam = api.createType('u128', poolId);
 
   return await sendAndWaitForSuccess(
     api,
-    wallet,
+    walletSudo,
     api.events.sudo.Sudid.is,
     api.tx.sudo.sudo(api.tx.pablo.enableTwap(poolIdParam))
   );
