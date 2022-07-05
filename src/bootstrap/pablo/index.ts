@@ -7,16 +7,16 @@ import {
   toPabloPoolPair,
   toStableSwapPoolInitConfig
 } from "@picasso-bootstrap/utils";
+import config from "@picasso-bootstrap/constants/config.json";
+import BigNumber from "bignumber.js";
 import {
+  mintAssetsToWallets,
   addLiquidity,
   createConstantProductPool,
   createLiquidityBootstrappingPool,
   enableTwap,
   updateDexRoute
-} from "@picasso-bootstrap/lib/pallets/pablo/extrinsics";
-import config from "@picasso-bootstrap/constants/config.json";
-import BigNumber from "bignumber.js";
-import { mintAssetsToWallets } from "@picasso-bootstrap/lib";
+} from "@picasso-bootstrap/lib";
 
 export async function bootstrapPools(api: ApiPromise, wallets: KeyringPair[], walletSudo: KeyringPair): Promise<void> {
   // Mint 10 Tokens For Gas
