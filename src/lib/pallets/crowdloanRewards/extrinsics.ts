@@ -50,8 +50,8 @@ export const populate = async (
   walletSudo: KeyringPair,
   relayAccounts: string[],
   ethAccounts: string[],
-  vestingPeriod = 100800,
-  rewardsPerAccount = "1000000000000000"
+  rewardsPerAccount: string,
+  vestingPeriod: string,
 ) => {
   const _vestingPeriod = api.createType("u32", vestingPeriod);
   const _rewardsPerAccount = api.createType("u128", rewardsPerAccount);
@@ -93,12 +93,12 @@ export const addFundsToCrowdloan = async (
   walletSudo: KeyringPair,
   relayAccounts: Uint8Array[],
   ethAccounts: string[],
-  rewardsPerAccount = "1000000000000000"
+  rewardsPerAccount: string,
+  palletAccountId: string
 ) => {
   const sliced = relayAccounts.slice(0, 50).length + ethAccounts.slice(0, 50).length;
-
   const netRewards = new BigNumber(rewardsPerAccount).times(sliced);
-  // Crowdloan Pallet Account: 5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u
+
   await mintAssetsToWallets(api, [walletSudo], walletSudo, ["1"], netRewards);
   await sendAndWaitForSuccess(
     api,
@@ -106,7 +106,7 @@ export const addFundsToCrowdloan = async (
     api.events.balances.Transfer.is,
     api.tx.assets.transfer(
       1,
-      "5w3oyasYQg6vkbxZKeMG8Dz2evBw1P7Xr7xhVwk4qwwFkm8u",
+      palletAccountId,
       api.createType("u128", netRewards),
       true
     )
