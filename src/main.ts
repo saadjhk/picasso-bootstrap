@@ -19,6 +19,10 @@ const main = async () => {
   const types = createTypes(definitions);
   const api = await buildApi(rpcUrl, types, rpc);
 
+  // [WIP] bootstrapCrowdloanRewards
+  // if (config.bootstrapCrowdloanRewards) {
+  // }
+
   if (config.bootstrapBonds) {
     await bootstrapBondOffers(api, dotWallets[0], walletSudo);
   }
