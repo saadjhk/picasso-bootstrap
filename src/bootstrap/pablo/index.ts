@@ -75,16 +75,16 @@ export async function bootstrapPools(api: ApiPromise, wallets: KeyringPair[], wa
             pool.liquidityAmount.base,
             pool.liquidityAmount.quote
           );
-          logger.log('info', `Liquidity Added: ${liquidityAdded.data.toHuman()}`);
+          logger.log('info', `Liquidity Added to Pool: ${poolId.toString()}`);
         }
         if (pool.addDexRoute) {
           let pair = toPabloPoolPair(api, pool.pair.base, pool.pair.quote);
           const dexRouteAdded = await updateDexRoute(api, walletSudo, pair, poolId.toNumber());
-          logger.log('info', `Dex Route Added: ${dexRouteAdded.data.toHuman()}`);
+          logger.log('info', `Dex Route Added: ${pool.pair.base-pool.pair.quote}`);
         }
         if (pool.enableTwap) {
           let twapEnabled = await enableTwap(api, walletSudo, poolId.toNumber());
-          logger.log('info', `Twap Enabled: ${twapEnabled.data.toHuman()}`);
+          logger.log('info', `Twap Enabled: ${poolId.toString()}`);
         }
       }
 
