@@ -30,7 +30,7 @@ export async function createOffer(
     api,
     wallet,
     api.events.bondedFinance.NewOffer.is,
-    api.tx.bondedFinance.offer(requestParameters, true)
+    api.tx.bondedFinance.offer(requestParameters, false)
   );
 }
 

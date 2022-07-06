@@ -26,14 +26,16 @@ export async function mintAssetsToWallets(
 ) {
   for (const asset of assetIDs) {
     for (const wallet of wallets) {
-      const mintResult = await sendAndWaitForSuccess(
+      console.log(`Minting ${amount.toString()} ${asset} for ${wallet.publicKey.toString()}`);
+
+      await sendAndWaitForSuccess(
         api,
         sudoKey,
         api.events.sudo.Sudid.is,
         api.tx.sudo.sudo(api.tx.assets.mintInto(asset, wallet.publicKey, amount.toString()))
       );
 
-      console.log(`Minted %${amount.toString()} ${asset} for ${wallet.publicKey} ${mintResult.data.toHuman()}`);
+      console.log(`Minted ${amount.toString()} ${asset} for ${wallet.publicKey.toString()}`);
     }
   }
 }

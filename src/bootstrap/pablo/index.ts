@@ -20,7 +20,7 @@ import {
 
 export async function bootstrapPools(api: ApiPromise, wallets: KeyringPair[], walletSudo: KeyringPair): Promise<void> {
   // Mint 10 Tokens For Gas
-  await mintAssetsToWallets(api, wallets, walletSudo, ["1"], toChainUnits(10));
+  await mintAssetsToWallets(api, wallets, walletSudo, ["1"], toChainUnits(50));
 
   let walletIndex = 0;
   for (const pool of config.pools as any[]) {

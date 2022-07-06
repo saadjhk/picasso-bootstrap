@@ -67,7 +67,7 @@ export async function addLiquidity(
 ) {
   const baseAmountParam = api.createType("u128", baseAmount);
   const quoteAmountParam = api.createType("u128", quoteAmount);
-  const keepAliveParam = api.createType("bool", true);
+  const keepAliveParam = api.createType("bool", false);
   return await sendAndWaitFor(
     api,
     wallet,

@@ -8,12 +8,17 @@ import BigNumber from "bignumber.js";
 import { mintAssetsToWallets } from "@picasso/lib";
 
 export async function bootstrapBondOffers(api: ApiPromise, wallet: KeyringPair, walletSudo: KeyringPair): Promise<void> {
-  await mintAssetsToWallets(api, [wallet], walletSudo, ["1"], toChainUnits(10));
+  await mintAssetsToWallets(api, [wallet], walletSudo, ["1"], toChainUnits(50));
 
   const beneficiary = wallet.publicKey;
   for (const offer of config.bondOffers) {
-    await mintAssetsToWallets(api, [wallet], walletSudo, [offer.reward.asset], new BigNumber(offer.reward.amount));
+    const rewardAssetId = offer.reward.asset;
+    const rewardAssetAmount = offer.reward.amount;
+
+    console.log('Creating Bond Offer');
+    await mintAssetsToWallets(api, [wallet], walletSudo, [rewardAssetId], new BigNumber(rewardAssetAmount));
     let bondOffer: BondOffer & { beneficiary: Uint8Array } = { ...toBondOffer(api, offer), beneficiary };
+
     const created = await createOffer(api, wallet, bondOffer);
     console.log("Bond Offer Created: ", created.data.toString());
   }

@@ -400,7 +400,7 @@
     "@polkadot/util-crypto" "^9.7.2"
     rxjs "^7.5.5"
 
-"@polkadot/api@8.11.3", "@polkadot/api@^8.11.3":
+"@polkadot/api@8.11.3", "@polkadot/api@^8.3.2":
   version "8.11.3"
   resolved "https://registry.yarnpkg.com/@polkadot/api/-/api-8.11.3.tgz#fac0d773a2cacd07014872c20273940e99a09cb5"
   integrity sha512-qavEcu7cHtP/yCUOp/gStDlcsRVRY5CjLOAa6Lt3uXbv4eT2nh8x2TkUA2yYIff29XFMQVO2ybw7jrNz6ms1rg==
