@@ -6,7 +6,7 @@ import type {
   CustomRpcBalance,
   CustomRpcCurrencyId,
   SafeRpcWrapper
-} from "@composable";
+} from "@composable/common";
 import type { Enum, Null, Struct, u128, u16 } from "@polkadot/types-codec";
 import type { AccountId32, BlockNumber, Permill } from "@polkadot/types/interfaces/runtime";
 

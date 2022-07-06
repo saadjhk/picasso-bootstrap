@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-defs`, do not edit
 /* eslint-disable */
 
-import type { ComposableTraitsDefiCurrencyPairCurrencyId, CurrencyId } from "@composable";
+import type { ComposableTraitsDefiCurrencyPairCurrencyId, CurrencyId } from "@composable/common";
 import type { Enum, Null, Struct, bool, u128, u32 } from "@polkadot/types-codec";
 import type { ITuple } from "@polkadot/types-codec/types";
 import type { EthereumAccountId } from "@polkadot/types/interfaces/eth";

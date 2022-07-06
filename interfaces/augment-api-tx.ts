@@ -5,7 +5,7 @@ import type {
   ComposableTraitsDefiCurrencyPairCurrencyId,
   ComposableTraitsDefiSellCurrencyId,
   ComposableTraitsXcmXcmSellRequest
-} from "@composable";
+} from "@composable/common";
 import type {
   CommonMosaicRemoteAssetId,
   ComposableSupportEthereumAddress,
@@ -34,8 +34,8 @@ import type {
   PalletMosaicDecayBudgetPenaltyDecayer,
   PalletMosaicNetworkInfo,
   XcmVersionedMultiAsset
-} from "@composable";
-import type { PalletPabloPoolInitConfiguration } from "@composable";
+} from "@composable/crowdloanRewards";
+import type { PalletPabloPoolInitConfiguration } from "@composable/pablo";
 import type { ApiTypes } from "@polkadot/api-base/types";
 import type { Data } from "@polkadot/types";
 import type {

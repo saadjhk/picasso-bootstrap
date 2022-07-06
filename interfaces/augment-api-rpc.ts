@@ -1,9 +1,9 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { Asset } from "@composable";
-import type { CustomRpcBalance, CustomRpcCurrencyId } from "@composable";
-import type { PalletPabloPoolId, PalletPabloPriceAggregate } from "@composable";
+import type { Asset } from "@composable/assets";
+import type { CustomRpcBalance, CustomRpcCurrencyId } from "@composable/common";
+import type { PalletPabloPoolId, PalletPabloPriceAggregate } from "@composable/pablo";
 import type { AugmentedRpc } from "@polkadot/rpc-core/types";
 import type { Metadata, StorageKey } from "@polkadot/types";
 import type { Bytes, HashMap, Json, Null, Option, Text, U256, U64, Vec, bool, u32, u64 } from "@polkadot/types-codec";
@@ -694,6 +694,7 @@ declare module "@polkadot/rpc-core/types/jsonrpc" {
        **/
       methods: AugmentedRpc<() => Observable<RpcMethods>>;
     };
+    // @ts-ignore
     state: {
       /**
        * Perform a call to a builtin on the chain

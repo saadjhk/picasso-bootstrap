@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-defs`, do not edit
 /* eslint-disable */
 
-import type { Asset } from "@composable";
+import type { Asset } from "@composable/assets";
 import type {
   AssetsBalance,
   ComposableTraitsDefiCurrencyPairCurrencyId,
@@ -12,7 +12,7 @@ import type {
   CustomRpcBalance,
   CustomRpcCurrencyId,
   SafeRpcWrapper
-} from "@composable";
+} from "@composable/common";
 import type {
   CommonMosaicRemoteAssetId,
   ComposableSupportEthereumAddress,
@@ -102,7 +102,7 @@ import type {
   SpConsensusAuraSr25519AppSr25519Public,
   SpTrieStorageProof,
   XcmVersionedMultiAsset
-} from "@composable";
+} from "@composable/crowdloanRewards";
 import type {
   ComposableTraitsDexFee,
   PalletPabloPoolConfiguration,
@@ -111,7 +111,7 @@ import type {
   PalletPabloPriceAggregate,
   PalletPabloPriceCumulative,
   PalletPabloTimeWeightedAveragePrice
-} from "@composable";
+} from "@composable/pablo";
 import type { Data, StorageKey } from "@polkadot/types";
 import type {
   BitVec,

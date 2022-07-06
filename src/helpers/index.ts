@@ -1,2 +1,2 @@
-export * from "./wallets";
 export * from "./connectionHelpers";
+export * from "./wallets";

@@ -1,7 +1,8 @@
 require("dotenv").config();
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import * as definitions from "../interfaces/definitions";
-import { getSudoWallet, getSubstrateWallets, createRPC, createTypes, buildApi } from "./helpers";
+import { getSudoWallet, getSubstrateWallets } from "@picasso/helpers/wallets";
+import * as definitions from "@composable/definitions";
+import { createRPC, createTypes, buildApi } from "@picasso/helpers";
 
 const main = async () => {
   const rpcUrl = process.env.RPC_URL || "ws://127.0.0.1:9988";
@@ -13,6 +14,8 @@ const main = async () => {
   const rpc = createRPC(definitions);
   const types = createTypes(definitions);
   const api = await buildApi(rpcUrl, types, rpc);
+
+  console.log('Hello')
 
   await api.disconnect();
   process.exit(0);

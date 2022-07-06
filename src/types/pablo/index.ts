@@ -1,4 +1,4 @@
-import { u128, u32, u16 } from "@polkadot/types";
+import { u128 } from "@polkadot/types";
 import { Permill } from "@polkadot/types/interfaces/runtime";
 
 export interface PabloPoolPair {

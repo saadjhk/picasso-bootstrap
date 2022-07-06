@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { ComposableTraitsXcmCumulusMethodId } from "@composable";
+import type { ComposableTraitsXcmCumulusMethodId } from "@composable/common";
 import type {
   CommonMosaicRemoteAssetId,
   ComposableTraitsAssetsBasicAssetMetadata,
@@ -53,12 +53,12 @@ import type {
   PolkadotPrimitivesV1PersistedValidationData,
   SpConsensusAuraSr25519AppSr25519Public,
   SpTrieStorageProof
-} from "@composable";
+} from "@composable/crowdloanRewards";
 import type {
   PalletPabloPoolConfiguration,
   PalletPabloPriceCumulative,
   PalletPabloTimeWeightedAveragePrice
-} from "@composable";
+} from "@composable/pablo";
 import type { ApiTypes } from "@polkadot/api-base/types";
 import type { Data } from "@polkadot/types";
 import type {

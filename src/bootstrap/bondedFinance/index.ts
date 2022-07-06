@@ -1,13 +1,13 @@
-import { createOffer } from "@picasso-bootstrap/lib/pallets/bondedFinance/extrinsics";
-import { BondOffer } from "@picasso-bootstrap/types";
+import { createOffer } from "@picasso/lib/pallets/bondedFinance/extrinsics";
+import { BondOffer } from "@picasso/types";
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import config from "@picasso-bootstrap/constants/config.json";
-import { toBondOffer, toChainUnits } from "@picasso-bootstrap/utils";
+import config from "@picasso/constants/config.json";
+import { toBondOffer, toChainUnits } from "@picasso/utils";
 import BigNumber from "bignumber.js";
-import { mintAssetsToWallets } from "@picasso-bootstrap/lib";
+import { mintAssetsToWallets } from "@picasso/lib";
 
-export async function populateBondOffers(api: ApiPromise, wallet: KeyringPair, walletSudo: KeyringPair): Promise<void> {
+export async function bootstrapBondOffers(api: ApiPromise, wallet: KeyringPair, walletSudo: KeyringPair): Promise<void> {
   await mintAssetsToWallets(api, [wallet], walletSudo, ["1"], toChainUnits(10));
 
   const beneficiary = wallet.publicKey;
