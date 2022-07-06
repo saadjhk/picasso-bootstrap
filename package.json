@@ -1,4 +1,9 @@
 {
+  "name": "bootstrap-pallets",
+  "author": {
+    "name": "Saad Ahmed",
+    "email": "saadahm.siddiqui@gmail.com"
+  },
   "dependencies": {
     "@polkadot/api": "^8.3.2",
     "@polkadot/keyring": "^9.7.2",
