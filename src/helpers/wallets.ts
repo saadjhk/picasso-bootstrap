@@ -2,7 +2,7 @@ import Keyring from "@polkadot/keyring";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { hexToU8a } from "@polkadot/util";
 import { ethers } from "ethers";
-import { privateKeyFromSeed } from "@picasso/utils";
+import { privateKeyFromSeed } from "@bootstrap-pallets/utils";
 
 export function getSubstrateWallets(): KeyringPair[] {
   const kr = new Keyring({ type: "sr25519" });

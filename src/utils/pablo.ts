@@ -5,7 +5,7 @@ import { Permill } from "@polkadot/types/interfaces/runtime";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { BigNumber } from "bignumber.js";
 import { ComposableTraitsDefiCurrencyPairCurrencyId, PalletPabloPoolInitConfiguration } from "@composable/types";
-import { PabloPoolFeeConfig } from "@picasso/types";
+import { PabloPoolFeeConfig } from "@bootstrap-pallets/types";
 
 export function toPabloPoolPair(
   api: ApiPromise,

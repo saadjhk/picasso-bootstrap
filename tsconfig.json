@@ -99,7 +99,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "baseUrl": "./",
     "paths": {
-      "@picasso/*": ["./src/*"],
+      "@bootstrap-pallets/*": ["./src/*"],
       "@composable/*": ["./interfaces/*"],
       "@polkadot/api/augment": ["./interfaces/augment-api.ts"],
       "@polkadot/types/augment": ["./interfaces/augment-types.ts"]

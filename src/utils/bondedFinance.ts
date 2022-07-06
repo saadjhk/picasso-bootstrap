@@ -1,6 +1,6 @@
 
 import { ApiPromise } from "@polkadot/api";
-import { BondOffer } from "@picasso/types";
+import { BondOffer } from "@bootstrap-pallets/types";
 
 export function toBondOffer(api: ApiPromise, offer: any): BondOffer {
   const maturity =

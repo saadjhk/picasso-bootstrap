@@ -1,9 +1,9 @@
 require("dotenv").config();
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { getSudoWallet, getSubstrateWallets } from "@picasso/helpers/wallets";
+import { getSudoWallet, getSubstrateWallets } from "@bootstrap-pallets/helpers/wallets";
 import * as definitions from "@composable/definitions";
-import { createRPC, createTypes, buildApi } from "@picasso/helpers";
-import config from "@picasso/constants/config.json";
+import { createRPC, createTypes, buildApi } from "@bootstrap-pallets/helpers";
+import config from "@bootstrap-pallets/constants/config.json";
 import { bootstrapBondOffers } from "./bootstrap/bondedFinance";
 import { bootstrapPools } from "./bootstrap/pablo";
 import { bootstrapAssets } from "./bootstrap/assets";

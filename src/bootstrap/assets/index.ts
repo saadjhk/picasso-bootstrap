@@ -1,4 +1,4 @@
-import { mintAssetsToAddress } from "@picasso/lib";
+import { mintAssetsToAddress } from "@bootstrap-pallets/lib";
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 

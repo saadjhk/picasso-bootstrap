@@ -1,9 +1,9 @@
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
-import { sendAndWaitForSuccess } from "@picasso/lib";
+import { sendAndWaitForSuccess } from "@bootstrap-pallets/lib";
 import BigNumber from "bignumber.js";
 import { u8aToHex } from "@polkadot/util";
-import { fromChainUnits, logger } from "@picasso/utils";
+import { fromChainUnits, logger } from "@bootstrap-pallets/utils";
 
 /***
  * This mints all specified assets to a specified wallet.

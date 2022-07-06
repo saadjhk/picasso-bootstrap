@@ -3,7 +3,7 @@ import { PalletPabloPoolInitConfiguration } from "@composable/pablo";
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import BigNumber from "bignumber.js";
-import { sendAndWaitForSuccess, sendAndWaitFor } from "@picasso/lib";
+import { sendAndWaitForSuccess, sendAndWaitFor } from "@bootstrap-pallets/lib";
 
 export async function createLiquidityBootstrappingPool(
   api: ApiPromise,
