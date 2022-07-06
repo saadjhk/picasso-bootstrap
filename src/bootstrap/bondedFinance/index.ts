@@ -16,7 +16,7 @@ export async function bootstrapBondOffers(api: ApiPromise, wallet: KeyringPair, 
     const rewardAssetId = offer.reward.asset;
     const rewardAssetAmount = offer.reward.amount;
 
-    logger.log("info", `Minting ${rewardAssetId} ${rewardAssetAmount} for ${u8aToHex(wallet.publicKey)}`);
+    logger.log("info", `Minting  ${rewardAssetAmount} ${rewardAssetId} for ${u8aToHex(wallet.publicKey)}`);
     await mintAssetsToWallets(api, [wallet], walletSudo, [rewardAssetId], new BigNumber(rewardAssetAmount));
     
     logger.log("info", 'Creating Bond Offer');
