@@ -80,7 +80,7 @@ export async function bootstrapPools(api: ApiPromise, wallets: KeyringPair[], wa
         if (pool.addDexRoute) {
           let pair = toPabloPoolPair(api, pool.pair.base, pool.pair.quote);
           await updateDexRoute(api, walletSudo, pair, poolId.toNumber());
-          logger.log('info', `Dex Route Added: ${pool.pair.base-pool.pair.quote}`);
+          logger.log('info', `Dex Route Added: ${pool.pair.base}-${pool.pair.quote}`);
         }
         if (pool.enableTwap) {
           await enableTwap(api, walletSudo, poolId.toNumber());
