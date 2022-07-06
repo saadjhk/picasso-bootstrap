@@ -68,7 +68,7 @@ export async function bootstrapPools(api: ApiPromise, wallets: KeyringPair[], wa
             new BigNumber(pool.liquidityAmount.quote)
           );
 
-          const liquidityAdded = await addLiquidity(
+          await addLiquidity(
             api,
             wallets[walletIndex],
             poolId,
@@ -79,11 +79,11 @@ export async function bootstrapPools(api: ApiPromise, wallets: KeyringPair[], wa
         }
         if (pool.addDexRoute) {
           let pair = toPabloPoolPair(api, pool.pair.base, pool.pair.quote);
-          const dexRouteAdded = await updateDexRoute(api, walletSudo, pair, poolId.toNumber());
+          await updateDexRoute(api, walletSudo, pair, poolId.toNumber());
           logger.log('info', `Dex Route Added: ${pool.pair.base-pool.pair.quote}`);
         }
         if (pool.enableTwap) {
-          let twapEnabled = await enableTwap(api, walletSudo, poolId.toNumber());
+          await enableTwap(api, walletSudo, poolId.toNumber());
           logger.log('info', `Twap Enabled: ${poolId.toString()}`);
         }
       }
