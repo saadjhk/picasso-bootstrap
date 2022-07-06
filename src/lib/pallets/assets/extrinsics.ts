@@ -2,9 +2,8 @@ import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import { sendAndWaitForSuccess } from "@picasso/lib";
 import BigNumber from "bignumber.js";
-
-export const DECIMALS = new BigNumber(10).pow(12); // default decimals
-export const MaxMint = new BigNumber("10000000").times(DECIMALS);
+import { u8aToHex } from "@polkadot/util";
+import { fromChainUnits, logger } from "@picasso/utils";
 
 /***
  * This mints all specified assets to a specified wallet.
@@ -26,8 +25,6 @@ export async function mintAssetsToWallets(
 ) {
   for (const asset of assetIDs) {
     for (const wallet of wallets) {
-      console.log(`Minting ${amount.toString()} ${asset} for ${wallet.publicKey.toString()}`);
-
       await sendAndWaitForSuccess(
         api,
         sudoKey,
@@ -35,7 +32,7 @@ export async function mintAssetsToWallets(
         api.tx.sudo.sudo(api.tx.assets.mintInto(asset, wallet.publicKey, amount.toString()))
       );
 
-      console.log(`Minted ${amount.toString()} ${asset} for ${wallet.publicKey.toString()}`);
+      logger.log("info", `Minted ${fromChainUnits(amount.toString()).toString()} ${asset} for ${u8aToHex(wallet.publicKey)}`);
     }
   }
 }
@@ -55,7 +52,8 @@ export async function mintAssetsToAddress(
   api: ApiPromise,
   wallets: string[],
   sudoKey: KeyringPair,
-  assetIDs: number[]
+  assetIDs: string[],
+  amount: string
 ) {
   for (const asset of assetIDs) {
     for (const wallet of wallets) {
@@ -65,10 +63,10 @@ export async function mintAssetsToAddress(
         api,
         sudoKey,
         api.events.sudo.Sudid.is,
-        api.tx.sudo.sudo(api.tx.assets.mintInto(asset, wallet, MaxMint.toString()))
+        api.tx.sudo.sudo(api.tx.assets.mintInto(asset, wallet, amount))
       );
 
-      console.log(result.toHuman());
+      logger.log("info", `Minted ${fromChainUnits(amount.toString()).toString()} ${asset} for ${wallet}`);
     }
   }
 }

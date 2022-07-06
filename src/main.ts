@@ -6,12 +6,13 @@ import { createRPC, createTypes, buildApi } from "@picasso/helpers";
 import config from "@picasso/constants/config.json";
 import { bootstrapBondOffers } from "./bootstrap/bondedFinance";
 import { bootstrapPools } from "./bootstrap/pablo";
+import { bootstrapAssets } from "./bootstrap/assets";
 
 const main = async () => {
   const rpcUrl = process.env.RPC_URL || "ws://127.0.0.1:9988";
   const chainName = process.env.CHAIN_NAME || "dali-local";
   
-  const sudoWallet = getSudoWallet(chainName);
+  const walletSudo = getSudoWallet(chainName);
   const dotWallets = getSubstrateWallets();
 
   const rpc = createRPC(definitions);
@@ -19,11 +20,15 @@ const main = async () => {
   const api = await buildApi(rpcUrl, types, rpc);
 
   if (config.bootstrapBonds) {
-    await bootstrapBondOffers(api, dotWallets[0], sudoWallet);
+    await bootstrapBondOffers(api, dotWallets[0], walletSudo);
   }
 
   if (config.bootstrapPools) {
-    await bootstrapPools(api, dotWallets, sudoWallet);
+    await bootstrapPools(api, dotWallets, walletSudo);
+  }
+
+  if (config.mintAssetsToWallets) {
+    await bootstrapAssets(api, walletSudo, config.mintAssets as [string, string, string][]);
   }
 
   await api.disconnect();

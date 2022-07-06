@@ -3,9 +3,10 @@ import { BondOffer } from "@picasso/types";
 import { ApiPromise } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 import config from "@picasso/constants/config.json";
-import { toBondOffer, toChainUnits } from "@picasso/utils";
+import { logger, toBondOffer, toChainUnits } from "@picasso/utils";
 import BigNumber from "bignumber.js";
 import { mintAssetsToWallets } from "@picasso/lib";
+import { u8aToHex } from "@polkadot/util";
 
 export async function bootstrapBondOffers(api: ApiPromise, wallet: KeyringPair, walletSudo: KeyringPair): Promise<void> {
   await mintAssetsToWallets(api, [wallet], walletSudo, ["1"], toChainUnits(50));
@@ -15,11 +16,13 @@ export async function bootstrapBondOffers(api: ApiPromise, wallet: KeyringPair, 
     const rewardAssetId = offer.reward.asset;
     const rewardAssetAmount = offer.reward.amount;
 
-    console.log('Creating Bond Offer');
+    logger.log("info", `Minting ${rewardAssetId} ${rewardAssetAmount} for ${u8aToHex(wallet.publicKey)}`);
     await mintAssetsToWallets(api, [wallet], walletSudo, [rewardAssetId], new BigNumber(rewardAssetAmount));
+    
+    logger.log("info", 'Creating Bond Offer');
     let bondOffer: BondOffer & { beneficiary: Uint8Array } = { ...toBondOffer(api, offer), beneficiary };
-
     const created = await createOffer(api, wallet, bondOffer);
-    console.log("Bond Offer Created: ", created.data.toString());
+    
+    logger.log("info", "Bond Offer Created: " + created.data.toString());
   }
 }

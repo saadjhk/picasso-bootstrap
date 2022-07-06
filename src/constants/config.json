@@ -2,6 +2,7 @@
   "bootstrapPools": true,
   "bootstrapBonds": true,
   "bootstrapCrowdloanRewards": true,
+  "mintAssetsToWallets": true,
   "bondOffers": [
     {
       "asset": "4",
@@ -85,5 +86,9 @@
       "0x8288ec58506b8ab4137d84a62c85e90c01e9d5aa",
       "0x6528f1110c293afa7b28aa2ba79eb038194eb182"
     ]
-  }
+  },
+  "mintAssets": [
+    ["5uxGz8eZmbjvVBMpun9nvQ3G8s5cWD5xHnzgU6SHyAnJf9Vy", "1", "50000000000000"],
+    ["5z3wa9ojQra3HqeJthg9Q6hQnsRDsUgH6DC7ZXkb7YXofh3m", "1", "50000000000000"]
+  ] 
 }
